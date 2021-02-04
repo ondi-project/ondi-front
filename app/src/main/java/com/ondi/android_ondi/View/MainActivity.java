@@ -33,6 +33,7 @@ import com.amazonaws.services.kinesisvideosignaling.model.GetIceServerConfigResu
 import com.amazonaws.services.kinesisvideosignaling.model.IceServer;
 import com.ondi.android_ondi.OndiApplication;
 import com.ondi.android_ondi.R;
+import com.ondi.android_ondi.View.Login.LoginActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 AWSMobileClient.getInstance().signOut();
-                startActivity(new Intent(MainActivity.this, SignUpActivity.class));
+                startActivity(new Intent(MainActivity.this, LoginActivity.class));
                 finish();
             }
         });

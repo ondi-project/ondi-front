@@ -90,26 +90,15 @@ public class RegisterFragment extends Fragment {
 
             //id로 바꾸기 더러움
             switch (adapterView.getSelectedItem().toString()){
-                case "카테고리를 선택하세요.":{
+                case "카테고리를 선택하세요.":
                     ((TextView)adapterView.getChildAt(0)).setTextColor(ContextCompat.getColor(context, R.color.colorGrey));
                     break;
-                }
-                case "여성의류":{
+                case "여성의류":
+                case "남성의류":
+                case "패션잡화":
+                case "뷰티/미용":
                     ((TextView)adapterView.getChildAt(0)).setTextColor(Color.BLACK);
                     break;
-                }
-                case "남성의류":{
-                    ((TextView)adapterView.getChildAt(0)).setTextColor(Color.BLACK);
-                    break;
-                }
-                case "패션잡화":{
-                    ((TextView)adapterView.getChildAt(0)).setTextColor(Color.BLACK);
-                    break;
-                }
-                case "뷰티/미용":{
-                    ((TextView)adapterView.getChildAt(0)).setTextColor(Color.BLACK);
-                    break;
-                }
             }
         }
 
