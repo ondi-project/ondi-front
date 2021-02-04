@@ -13,14 +13,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".View.Payment.PaymentActivity"></activity>
+        <activity android:name=".View.Payment.PaymentActivity"/>
         <activity android:name=".View.Menu.ProductDetail.ProductDetailActivity" />
         <activity android:name=".View.Login.LoginActivity" />
         <activity android:name=".View.Splash.SplashActivity" />
-        <activity android:name=".View.Menu.MainActivity" />
+        <activity android:name=".View.SignUpActivity" />
         <activity android:name=".View.MainActivity" />
         <activity android:name=".View.StreamingActivity" />
-        <activity android:name=".View.SignUpActivity">
+        <activity android:name=".View.Menu.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

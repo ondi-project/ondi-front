@@ -63,9 +63,9 @@ dependencies {
     // ViewPager2
     implementation "androidx.viewpager2:viewpager2:1.0.0"
 
-    implementation 'com.amazonaws:aws-android-sdk-mobile-client:2.15.1'
+    //AWS Cognito
+    implementation 'com.amazonaws:aws-android-sdk-mobile-client:2.16.5'
     implementation 'com.amazonaws:aws-android-sdk-cognito:2.15.1'
-    implementation 'com.amazonaws:aws-android-sdk-s3:2.15.1'
 
     //AWS Kinesis Video Streams WebRTC
     def aws_version = '2.16.5'
@@ -86,7 +86,6 @@ dependencies {
     }
 
     implementation 'org.awaitility:awaitility:3.0.0'
-    implementation 'com.google.code.gson:gson:2.8.6'
     implementation 'org.slf4j:slf4j-api:1.7.29'
     implementation 'com.google.guava:guava:28.1-android' // AwsV4Signer.java
     implementation 'org.apache.commons:commons-lang3:3.9' // AwsV4Signer.java
