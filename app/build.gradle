@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.ondi.android_ondi"
-        minSdkVersion 23
+        minSdkVersion 24
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -19,6 +19,14 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
     }
 }
 
@@ -52,6 +60,31 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment:2.3.0-alpha01'
     implementation "androidx.navigation:navigation-ui:2.3.0-alpha01"
 
+    implementation 'com.amazonaws:aws-android-sdk-mobile-client:2.15.1'
+    implementation 'com.amazonaws:aws-android-sdk-cognito:2.15.1'
+    implementation 'com.amazonaws:aws-android-sdk-s3:2.15.1'
 
+    //AWS Kinesis Video Streams WebRTC
+    def aws_version = '2.16.5'
+    implementation("com.amazonaws:aws-android-sdk-mobile-client:$aws_version@aar") {
+        transitive = true
+    }
+    implementation("com.amazonaws:aws-android-sdk-kinesisvideo:$aws_version@aar") {
+        transitive = true
+    }
+    implementation("com.amazonaws:aws-android-sdk-kinesisvideo-signaling:$aws_version@jar") {
+        transitive = true
+    }
 
+    implementation 'org.webrtc:google-webrtc:1.0.32006'
+
+    implementation ('org.glassfish.tyrus.bundles:tyrus-standalone-client:1.13') {
+        exclude module : 'javax.inject'
+    }
+
+    implementation 'org.awaitility:awaitility:3.0.0'
+    implementation 'com.google.code.gson:gson:2.8.6'
+    implementation 'org.slf4j:slf4j-api:1.7.29'
+    implementation 'com.google.guava:guava:28.1-android' // AwsV4Signer.java
+    implementation 'org.apache.commons:commons-lang3:3.9' // AwsV4Signer.java
 }
