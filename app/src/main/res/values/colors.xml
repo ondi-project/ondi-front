@@ -7,4 +7,20 @@
     <color name="colorWhite">@android:color/white</color>
     <color name="colorGrey">@android:color/tertiary_text_light</color>
     <color name="colorTransparent">@android:color/transparent</color>
+
+    <color name="dark_slate_blue">#193566</color>
+    <color name="bluey_grey">#899bba</color>
+    <color name="black">#000000</color>
+    <color name="greyish_brown">#474747</color>
+    <color name="white">#ffffff</color>
+    <color name="vermillion">#e21e1e</color>
+    <color name="greyish_brown_two">#404040</color>
+    <color name="very_light_pink">#bebebe</color>
+    <color name="carmine">#950a0e</color>
+    <color name="rouge">#be1d22</color>
+    <color name="light_grey_blue">#97a7c3</color>
+    <color name="bluey_grey_two">#9aa4b4</color>
+    <color name="blue_grey">#7586a3</color>
+    <color name="lavender_pink">#e693e6</color>
+
 </resources>
