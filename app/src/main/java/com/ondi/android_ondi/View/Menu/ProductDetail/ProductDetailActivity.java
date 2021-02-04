@@ -12,14 +12,17 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.MultiTransformation;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
+import com.ondi.android_ondi.Dialog.AuctionDialog;
 import com.ondi.android_ondi.R;
 import com.ondi.android_ondi.View.Login.SignInFragment;
 import com.ondi.android_ondi.View.Payment.PaymentActivity;
@@ -27,6 +30,7 @@ import com.ondi.android_ondi.View.Payment.PaymentActivity;
 import java.util.ArrayList;
 
 public class ProductDetailActivity extends AppCompatActivity {
+    Context context;
     ViewPager2 viewPager;
     LinearLayout layoutIndicator;
     ArrayList<String> imgList = new ArrayList<>();
@@ -37,9 +41,19 @@ public class ProductDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_product_detail);
         test_insertData();
 
+        initView();
         setToolbar(); //커스텀 툴바 적용
         setViewPager();
         setClickListener();
+    }
+
+    private void initView() {
+        context = this;
+        ImageView img_seller = findViewById(R.id.img_seller_detail);
+        Glide.with(this).load(R.drawable.test_user).circleCrop().into(img_seller);
+
+        Switch btn_live = findViewById(R.id.btn_live);
+        btn_live.setOnCheckedChangeListener(new CheckChangeListener());
     }
 
     private void setClickListener() {
@@ -69,9 +83,6 @@ public class ProductDetailActivity extends AppCompatActivity {
     }
 
     private void test_insertData() {
-        ImageView img_seller = findViewById(R.id.img_seller_detail);
-        Glide.with(this).load(R.drawable.test_user).circleCrop().into(img_seller);
-
         imgList.add("https://cdn.pixabay.com/photo/2014/03/03/16/15/mosque-279015_1280.jpg");
         imgList.add("https://cdn.pixabay.com/photo/2014/03/03/16/15/mosque-279015_1280.jpg");
         imgList.add("https://cdn.pixabay.com/photo/2014/03/03/16/15/mosque-279015_1280.jpg");
@@ -143,6 +154,20 @@ public class ProductDetailActivity extends AppCompatActivity {
                 case R.id.btn_chat :{
                     //거래하기 페이지 (채팅)
                 }
+            }
+        }
+    }
+
+    public class CheckChangeListener implements CompoundButton.OnCheckedChangeListener{
+        @Override
+        public void onCheckedChanged(CompoundButton compoundButton, boolean is_checked) {
+            if(is_checked){
+                //off->on
+                AuctionDialog auctionDialog = new AuctionDialog(context);
+                auctionDialog.show();
+            }
+            else{
+                //on->off
             }
         }
     }

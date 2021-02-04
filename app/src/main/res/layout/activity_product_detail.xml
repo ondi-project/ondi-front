@@ -25,40 +25,40 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/viewpager_product_detail"
-        android:layout_width="match_parent"
-        android:layout_height="300dp" />
-
-    <LinearLayout
-        android:id="@+id/layout_indicators"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal" />
-
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="15dp">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp">
 
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/viewpager_product_detail"
+                android:layout_width="match_parent"
+                android:layout_height="300dp" />
+
             <LinearLayout
+                android:id="@+id/layout_indicators"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:orientation="horizontal"
-                android:weightSum="4">
+                android:weightSum="4"
+                android:layout_marginTop="25dp">
 
                 <ImageView
                     android:id="@+id/img_seller_detail"
                     android:layout_width="0dp"
-                    android:layout_height="100dp"
+                    android:layout_height="match_parent"
                     android:layout_weight="1" />
 
                 <LinearLayout
@@ -146,15 +146,46 @@
                                 android:layout_marginStart="5dp"/>
                         </LinearLayout>
                     </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/layout_on_air"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="5dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="ON AIR"
+                            android:textStyle="bold"/>
+                        <Switch
+                            android:id="@+id/btn_live"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            tools:ignore="UseSwitchCompatOrMaterialXml" />
+                    </LinearLayout>
+
                 </LinearLayout>
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end">
+                <ImageView
+                    android:id="@+id/btn_favorite_detail"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/ic_baseline_favorite_border_24"
+                    android:layout_marginEnd="20dp"/>
+            </LinearLayout>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:background="#D1CFCF"
                 android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"/>
+                android:layout_marginEnd="10dp"
+                android:layout_marginTop="5dp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -170,7 +201,7 @@
                     android:layout_weight="1"
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="5dp"
-                    android:elevation="5dp">
+                    >
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -187,8 +218,7 @@
                     android:gravity="center"
                     android:layout_weight="1"
                     android:layout_marginStart="5dp"
-                    android:layout_marginEnd="10dp"
-                    android:elevation="10dp">
+                    android:layout_marginEnd="10dp">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -204,6 +234,11 @@
                 android:layout_height="match_parent"
                 android:text="사양은 홈페이지 랄랄라랄. 속도 빠르고 랄라라. &#10;사양은 홈페이지 랄랄라랄. 속도 빠르고 랄라라.사양은 홈페이지 랄랄라랄. 속도 빠르고 랄라라."
                 android:layout_marginTop="10dp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="50dp"/>
+
         </LinearLayout>
 
     </ScrollView>
