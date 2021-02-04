@@ -23,6 +23,22 @@
             android:layout_gravity="center"
             android:src="@drawable/ic_launcher_foreground"
             app:tint="@color/colorAccent" />
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_baseline_alarm_24"
+            app:tint="@color/colorPrimaryDark"
+            android:layout_gravity="end"
+            android:layout_marginEnd="20dp"/>
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_baseline_chat_24"
+            app:tint="@color/colorPrimaryDark"
+            android:layout_gravity="end"
+            android:layout_marginEnd="15dp"/>
+
     </androidx.appcompat.widget.Toolbar>
 
     <FrameLayout

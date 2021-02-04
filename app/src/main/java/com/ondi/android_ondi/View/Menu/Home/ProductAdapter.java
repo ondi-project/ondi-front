@@ -1,10 +1,14 @@
 package com.ondi.android_ondi.View.Menu.Home;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.ImageDecoder;
+import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,6 +21,8 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.ondi.android_ondi.Model.ProductModel;
 import com.ondi.android_ondi.R;
+import com.ondi.android_ondi.View.Login.SignInFragment;
+import com.ondi.android_ondi.View.Menu.ProductDetail.ProductDetailActivity;
 
 import java.util.ArrayList;
 
@@ -40,6 +46,15 @@ public class ProductAdapter  extends RecyclerView.Adapter<ProductAdapter.ItemVie
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
         holder.bind(productList.get(position),context);
+
+        //상품 클릭
+        ImageView img_product = holder.itemView.findViewById(R.id.img_product);
+        img_product.setOnClickListener(new ClickListener(position));
+
+        //좋아요 버튼 클릭
+        ImageView btn_favorite = holder.itemView.findViewById(R.id.btn_favorite);
+        btn_favorite.setOnClickListener(new ClickListener(position));
+
     }
 
     @Override
@@ -73,6 +88,40 @@ public class ProductAdapter  extends RecyclerView.Adapter<ProductAdapter.ItemVie
             }
             else{
                 Glide.with(context).load(R.drawable.ic_baseline_favorite_border_24).into(btn_favorite);
+            }
+        }
+    }
+
+    public class ClickListener implements View.OnClickListener {
+        int position;
+
+        public ClickListener(int position) {
+            this.position = position;
+        }
+
+        @Override
+        public void onClick(View view) {
+            switch (view.getId()){
+                case R.id.img_product :{
+                    //상세페이지로 이동
+                    Intent intent = new Intent(context, ProductDetailActivity.class);
+                    context.startActivity(intent);
+                    break;
+                }
+                case R.id.btn_favorite:{
+                    if(productList.get(position).isFavorite_check()){
+                        //이미 좋아요 눌려있는 경우 -> 해제
+                        productList.get(position).setFavorite_check(false);
+                        //api요청
+                    }
+                    else{
+                        //안눌려있는 경우 -> 등록
+                        productList.get(position).setFavorite_check(true);
+                        //api 요청
+                    }
+                    notifyItemChanged(position);
+                    break;
+                }
             }
         }
     }
