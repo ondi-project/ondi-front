@@ -1,14 +1,11 @@
-package com.ondi.android_ondi.View.Menu.Home;
+package com.ondi.android_ondi.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.ImageDecoder;
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -21,7 +18,6 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.ondi.android_ondi.Model.ProductModel;
 import com.ondi.android_ondi.R;
-import com.ondi.android_ondi.View.Login.SignInFragment;
 import com.ondi.android_ondi.View.Menu.ProductDetail.ProductDetailActivity;
 
 import java.util.ArrayList;

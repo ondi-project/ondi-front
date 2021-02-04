@@ -1,4 +1,4 @@
-package com.ondi.android_ondi.View.Menu.ProductDetail;
+package com.ondi.android_ondi.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;

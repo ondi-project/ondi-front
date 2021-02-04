@@ -57,6 +57,7 @@
         app:itemTextColor="@drawable/menu_selector_color"
         app:labelVisibilityMode="labeled"
         android:layout_gravity="bottom"
-        android:layout_alignParentBottom="true"/>
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorWhite"/>
 
 </RelativeLayout>

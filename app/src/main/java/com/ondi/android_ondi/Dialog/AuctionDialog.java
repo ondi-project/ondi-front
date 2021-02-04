@@ -7,7 +7,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.ondi.android_ondi.R;
-import com.ondi.android_ondi.View.Menu.Home.ProductAdapter;
 
 public class AuctionDialog {
     Context context;

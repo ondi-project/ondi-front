@@ -18,13 +18,9 @@ import android.widget.LinearLayout;
 import android.widget.Switch;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.MultiTransformation;
-import com.bumptech.glide.load.resource.bitmap.CenterCrop;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-import com.bumptech.glide.request.RequestOptions;
+import com.ondi.android_ondi.Adapter.ViewPagerAdapter;
 import com.ondi.android_ondi.Dialog.AuctionDialog;
 import com.ondi.android_ondi.R;
-import com.ondi.android_ondi.View.Login.SignInFragment;
 import com.ondi.android_ondi.View.Payment.PaymentActivity;
 
 import java.util.ArrayList;
