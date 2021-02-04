@@ -1,4 +1,4 @@
-package com.ondi.android_ondi.View.Menu;
+package com.ondi.android_ondi.View.Menu.Home;
 
 import android.os.Bundle;
 

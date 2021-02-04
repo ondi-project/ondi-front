@@ -1,4 +1,4 @@
-package com.ondi.android_ondi;
+package com.ondi.android_ondi.View.Menu;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -8,11 +8,12 @@ import androidx.fragment.app.FragmentManager;
 import android.os.Bundle;
 import android.view.MenuItem;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.ondi.android_ondi.View.Menu.CategoryFragment;
-import com.ondi.android_ondi.View.Menu.HistoryFragment;
-import com.ondi.android_ondi.View.Menu.HomeFragment;
-import com.ondi.android_ondi.View.Menu.MyPageFragment;
-import com.ondi.android_ondi.View.Menu.TransactionFragment;
+import com.ondi.android_ondi.R;
+import com.ondi.android_ondi.View.Menu.Category.CategoryFragment;
+import com.ondi.android_ondi.View.Menu.History.HistoryFragment;
+import com.ondi.android_ondi.View.Menu.Home.HomeFragment;
+import com.ondi.android_ondi.View.Menu.MyPage.MyPageFragment;
+import com.ondi.android_ondi.View.Menu.Transaction.TransactionFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -30,11 +31,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         setToolbar(); //커스텀 툴바 적용
-        setBottomNavigation(); //바텀 네비게이션
+        setFragmentManager(); //바텀 네비게이션
 
     }
 
-    private void setBottomNavigation() {
+    private void setFragmentManager() {
         bottomNavigationView = findViewById(R.id.bottom_navigation_view);
         fragmentManager.beginTransaction().replace(R.id.layout_main_container,homeFragment).commitAllowingStateLoss();
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {

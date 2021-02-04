@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
-import com.ondi.android_ondi.MainActivity;
+import com.ondi.android_ondi.View.Menu.MainActivity;
 import com.ondi.android_ondi.R;
 
 public class SplashActivity extends AppCompatActivity {
