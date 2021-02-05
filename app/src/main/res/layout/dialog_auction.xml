@@ -18,7 +18,7 @@
             android:text="라이브 옥션을 &#10;예약 하시겠습니까?"
             android:textSize="30sp"
             android:textStyle="bold"
-            android:textColor="#042453"
+            android:textColor="@color/dark_slate_blue"
             android:layout_marginTop="40dp"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"/>
@@ -36,6 +36,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="시작 금액을 입력해주세요."
+                android:textColor="@color/blue_grey"
                 android:inputType="number"
                 android:background="@null"/>
         </LinearLayout>
@@ -53,6 +54,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="원하시는 날짜를 알려주세요."
+                android:textColor="@color/blue_grey"
                 android:inputType="date"
                 android:background="@null"/>
         </LinearLayout>
@@ -70,6 +72,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="원하시는 시간을 알려주세요."
+                android:textColor="@color/blue_grey"
                 android:inputType="time"
                 android:background="@null"/>
         </LinearLayout>
@@ -83,7 +86,10 @@
             android:layout_marginStart="10dp"
             android:layout_marginEnd="5dp"
             android:layout_marginTop="30dp"
-            android:layout_marginBottom="40dp">
+            android:layout_marginBottom="40dp"
+            android:foreground="@drawable/custom_ripple_effect"
+            android:clickable="true"
+            android:focusable="true">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
