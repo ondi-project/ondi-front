@@ -47,7 +47,7 @@ public class ViewPagerAdapter  extends RecyclerView.Adapter<ViewPagerAdapter.Ite
     }
 
     public static class ItemViewHolder extends RecyclerView.ViewHolder {
-        String baseUrl = "http://3.34.125.92:8000";
+        String baseUrl = "https://c9e33e74f42d.ngrok.io";
         ImageView img_product;
 
         public ItemViewHolder(@NonNull View itemView) {

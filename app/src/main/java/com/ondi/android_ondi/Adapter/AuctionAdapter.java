@@ -1,6 +1,7 @@
 package com.ondi.android_ondi.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,7 +42,7 @@ public class AuctionAdapter extends RecyclerView.Adapter<AuctionAdapter.ItemView
         Glide.with(context).load("https://c9e33e74f42d.ngrok.io" + product.getP_image())
                 .apply(RequestOptions.bitmapTransform(new RoundedCorners(20))).into(holder.productIv);
         holder.productName.setText(product.getP_name());
-        holder.productPrice.setText(product.getP_price());
+        holder.productPrice.setText(String.valueOf(product.getP_price()));
     }
 
     @Override
@@ -56,6 +57,9 @@ public class AuctionAdapter extends RecyclerView.Adapter<AuctionAdapter.ItemView
 
         public ItemViewHolder(@NonNull View itemView) {
             super(itemView);
+            productIv = itemView.findViewById(R.id.iv_auction_item);
+            productName = itemView.findViewById(R.id.tv_auction_item_title);
+            productPrice = itemView.findViewById(R.id.tv_auction_item_price);
         }
     }
 

@@ -31,11 +31,12 @@ import com.amazonaws.services.kinesisvideosignaling.AWSKinesisVideoSignalingClie
 import com.amazonaws.services.kinesisvideosignaling.model.GetIceServerConfigRequest;
 import com.amazonaws.services.kinesisvideosignaling.model.GetIceServerConfigResult;
 import com.amazonaws.services.kinesisvideosignaling.model.IceServer;
+import com.ondi.android_ondi.Model.AuthModel;
 import com.ondi.android_ondi.OndiApplication;
 import com.ondi.android_ondi.R;
 import com.ondi.android_ondi.View.Call.BuyerCallActivity;
-import com.ondi.android_ondi.View.Login.LoginActivity;
 import com.ondi.android_ondi.View.Call.SellerCallActivity;
+import com.ondi.android_ondi.View.Payment.PaymentActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,13 +62,11 @@ public class ChatActivity extends AppCompatActivity {
             KEY_SEND_AUDIO,
     };
 
-    public final String MY_CLIENT_ID = "client-id-0602";
-
     public static List<ResourceEndpointListItem> mEndpointList = new ArrayList<>();
     public static List<IceServer> mIceServerList = new ArrayList<>();
     public static String mChannelArn = null;
 
-    private boolean isMaster = true;
+    private boolean isMaster = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,12 +79,9 @@ public class ChatActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_chat);
 
-//        Button logout_btn = findViewById(R.id.btn_logout);
-//        logout_btn.setOnClickListener(view -> {
-//            AWSMobileClient.getInstance().signOut();
-//            startActivity(new Intent(ChatActivity.this, LoginActivity.class));
-//            finish();
-//        });
+        if (getIntent().getIntExtra("seller", 0) == AuthModel.getInstance().user.getId()) {
+            isMaster = true;
+        }
 
         ImageView backBtn = findViewById(R.id.iv_chat_back);
         Button paymentBtn = findViewById(R.id.btn_chat_payment);
@@ -95,7 +91,7 @@ public class ChatActivity extends AppCompatActivity {
         callBtn.setOnClickListener(this::callButtonClick);
         //임시
         paymentBtn.setOnClickListener(v -> {
-            isMaster = !isMaster;
+            startActivity(new Intent(this, PaymentActivity.class));
         });
     }
 
@@ -135,12 +131,11 @@ public class ChatActivity extends AppCompatActivity {
 
     private Bundle setExtras() {
         final Bundle extras = new Bundle();
-        final String channelName = "sss";
-        final String clientId = MY_CLIENT_ID;
+        final String channelName = String.valueOf(getIntent().getIntExtra("seller", 0));
         final String region = OndiApplication.getRegion();
 
         extras.putString(KEY_CHANNEL_NAME, channelName);
-        extras.putString(KEY_CLIENT_ID, clientId);
+        extras.putString(KEY_CLIENT_ID, isMaster? "" : AuthModel.getInstance().user.getUsername());
         extras.putString(KEY_REGION, region);
         extras.putString(KEY_CHANNEL_ARN, mChannelArn);
         extras.putBoolean(KEY_IS_MASTER, isMaster);
@@ -176,7 +171,7 @@ public class ChatActivity extends AppCompatActivity {
         extras.putBoolean(KEY_OF_OPTIONS[0], true); // Send Video 옵션 선택
         extras.putBoolean(KEY_OF_OPTIONS[1], true); // Send Audio 옵션 선택
 
-        extras.putBoolean(KEY_CAMERA_FRONT_FACING, true); // 전면 카메라 설정(후면은 false)
+        extras.putBoolean(KEY_CAMERA_FRONT_FACING, false); // 전면 카메라 설정(후면은 false)
 
         return extras;
     }

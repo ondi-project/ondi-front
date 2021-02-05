@@ -75,8 +75,8 @@ public class BuyerCallActivity extends AppCompatActivity {
     private static final String AudioTrackID = "KvsAudioTrack";
     private static final String VideoTrackID = "KvsVideoTrack";
     private static final String LOCAL_MEDIA_STREAM_LABEL = "KvsLocalMediaStream";
-    private static final int VIDEO_SIZE_WIDTH = 400;
-    private static final int VIDEO_SIZE_HEIGHT = 300;
+    private static final int VIDEO_SIZE_WIDTH = 720;
+    private static final int VIDEO_SIZE_HEIGHT = 1280;
     private static final int VIDEO_FPS = 30;
     private static final boolean ENABLE_INTEL_VP8_ENCODER = true;
     private static final boolean ENABLE_H264_HIGH_PROFILE = true;

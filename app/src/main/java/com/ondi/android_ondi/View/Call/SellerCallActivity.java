@@ -116,8 +116,8 @@ public class SellerCallActivity extends AppCompatActivity {
     private int originalAudioMode;
     private boolean originalSpeakerphoneOn;
 
-    private static final int VIDEO_SIZE_WIDTH = 400;
-    private static final int VIDEO_SIZE_HEIGHT = 300;
+    private static final int VIDEO_SIZE_WIDTH = 720;
+    private static final int VIDEO_SIZE_HEIGHT = 1280;
     private static final int VIDEO_FPS = 30;
 
     private boolean gotException = false;

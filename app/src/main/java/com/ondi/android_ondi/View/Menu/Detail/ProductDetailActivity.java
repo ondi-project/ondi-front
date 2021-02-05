@@ -47,7 +47,6 @@ public class ProductDetailActivity extends AppCompatActivity {
     ArrayList<String> imgList = new ArrayList<>();
     ArrayList<String> hashTagList = new ArrayList<>();
 
-    String baseUrl = "http://3.34.125.92:8000";
     int p_id;
 
     @Override
@@ -65,7 +64,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         context = this;
 
         ImageView img_seller = findViewById(R.id.img_seller_detail);
-        Glide.with(this).load(baseUrl+product.getP_name()).circleCrop().into(img_seller);
+        Glide.with(this).load("https://c9e33e74f42d.ngrok.io" + product.getP_image()).circleCrop().into(img_seller);
 
         TextView text_price_detail = findViewById(R.id.text_price_detail);
         text_price_detail.setText(product.getP_price());
@@ -146,7 +145,7 @@ public class ProductDetailActivity extends AppCompatActivity {
     }
 
     private void setViewPager() {
-        imgList.add(baseUrl+product.getP_image());
+        imgList.add(product.getP_image());
         viewPager = findViewById(R.id.viewpager_product_detail);
         layoutIndicator = findViewById(R.id.layout_indicators);
 
@@ -248,6 +247,7 @@ public class ProductDetailActivity extends AppCompatActivity {
                 }
                 case R.id.btn_chat :{
                     Intent intent = new Intent(context, ChatActivity.class);
+                    intent.putExtra("seller", product.getP_seller());
                     startActivity(intent);
                     break;
                 }

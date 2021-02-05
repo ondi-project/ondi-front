@@ -18,9 +18,11 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.amazonaws.mobile.client.AWSMobileClient;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.ondi.android_ondi.R;
 import com.ondi.android_ondi.View.Chat.ChatActivity;
+import com.ondi.android_ondi.View.Login.LoginActivity;
 import com.ondi.android_ondi.View.Menu.Category.CategoryFragment;
 import com.ondi.android_ondi.View.Menu.Category.ListFragment;
 import com.ondi.android_ondi.View.Menu.Auction.AuctionFragment;
@@ -106,9 +108,11 @@ public class MainActivity extends AppCompatActivity {
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        ImageView chatIv = findViewById(R.id.iv_main_chat);
-        chatIv.setOnClickListener(view -> {
-            startActivity(new Intent(this, ChatActivity.class));
+        ImageView chatBtn = findViewById(R.id.iv_main_chat);
+        chatBtn.setOnClickListener(v -> {
+            AWSMobileClient.getInstance().signOut();
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
         });
     }
 

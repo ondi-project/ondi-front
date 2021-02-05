@@ -87,15 +87,15 @@ public class CategoryFragment extends Fragment {
     }
 
     public void test_insertData(){
-        imageList.add(R.drawable.test);
-        imageList.add(R.drawable.test_user);
-        imageList.add(R.drawable.test);
-        imageList.add(R.drawable.test_user);
+        imageList.add(R.drawable.ic_for_children);
+        imageList.add(R.drawable.ic_for_dog);
+        imageList.add(R.drawable.ic_for_children);
+        imageList.add(R.drawable.ic_for_dog);
     }
 
     public void addFilpperImage(int image){
         ImageView imageView = new ImageView(context);
-        imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         imageView.setBackgroundResource(image);
 
         viewFlipper.addView(imageView);
