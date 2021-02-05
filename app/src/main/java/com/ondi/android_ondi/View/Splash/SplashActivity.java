@@ -33,7 +33,7 @@ public class SplashActivity extends AppCompatActivity {
         final Handler handler  = new Handler();
         final Runnable r = () -> {
             final AWSMobileClient auth = AWSMobileClient.getInstance();
-            auth.signOut();
+
             AsyncTask.execute(() -> {
                 if (auth.isSignedIn()) {
                     String name = PreferenceManager.getString(this, "name");

@@ -14,7 +14,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.ondi.android_ondi.Model.AuctionModel;
-import com.ondi.android_ondi.Model.ProductModel;
 import com.ondi.android_ondi.R;
 
 import java.util.ArrayList;
@@ -38,8 +37,8 @@ public class AuctionAdapter extends RecyclerView.Adapter<AuctionAdapter.ItemView
 
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
-        ProductModel.Product product = auctionList.get(position).getL_product();
-        Glide.with(context).load("http://3.34.125.92:8000" + product.getP_image())
+        AuctionModel.Product product = auctionList.get(position).getL_product();
+        Glide.with(context).load("https://c9e33e74f42d.ngrok.io" + product.getP_image())
                 .apply(RequestOptions.bitmapTransform(new RoundedCorners(20))).into(holder.productIv);
         holder.productName.setText(product.getP_name());
         holder.productPrice.setText(product.getP_price());
@@ -47,7 +46,7 @@ public class AuctionAdapter extends RecyclerView.Adapter<AuctionAdapter.ItemView
 
     @Override
     public int getItemCount() {
-        return auctionList.size();
+        return auctionList != null? auctionList.size() : 0;
     }
 
     public static class ItemViewHolder extends RecyclerView.ViewHolder {

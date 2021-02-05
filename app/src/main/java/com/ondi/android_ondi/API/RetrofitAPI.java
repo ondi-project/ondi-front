@@ -42,7 +42,7 @@ public interface RetrofitAPI {
     @GET("/main/search")
     Call<List<ProductModel.Product>> getSearchList(@Query("p_search") String search);
 
-    @POST("/main/post/")
+    @POST("/main/post")
     @Multipart
     Call<ResponseModel> postProduct(@PartMap HashMap<String,RequestBody> fields); //todo error
 
@@ -52,9 +52,6 @@ public interface RetrofitAPI {
     @GET("/main/category")
     Call<ArrayList<ProductModel.Product>> getCategoryList(@Query("p_category") String p_category,@Query("view_option") String option);
 
-
-
-
-    @GET("/main/livelist/")
+    @GET("/main/livelist")
     Call<ArrayList<AuctionModel>> getAuctionList();
 }

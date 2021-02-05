@@ -12,9 +12,7 @@ import android.view.ViewGroup;
 
 import com.ondi.android_ondi.API.RetrofitClient;
 import com.ondi.android_ondi.Adapter.AuctionAdapter;
-import com.ondi.android_ondi.Adapter.ProductAdapter;
 import com.ondi.android_ondi.Model.AuctionModel;
-import com.ondi.android_ondi.Model.ProductModel;
 import com.ondi.android_ondi.R;
 
 import java.util.ArrayList;
@@ -40,7 +38,8 @@ public class AuctionFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_auction, container, false);
+        mainView = inflater.inflate(R.layout.fragment_auction, container, false);
+        return mainView;
     }
 
     private void getData() {
@@ -61,7 +60,7 @@ public class AuctionFragment extends Fragment {
     }
 
     private void setRecyclerView() {
-        RecyclerView recyclerView = mainView.findViewById(R.id.recycler_home);
+        RecyclerView recyclerView = mainView.findViewById(R.id.recycler_auction);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
         AuctionAdapter adapter = new AuctionAdapter(getContext(), auctionList);
         recyclerView.setAdapter(adapter);

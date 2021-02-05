@@ -1,11 +1,7 @@
 package com.ondi.android_ondi.Model;
 
-import android.view.ViewDebug;
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.ondi.android_ondi.Defined.DefinedCategory;
-import com.ondi.android_ondi.Dialog.AuctionDialog;
 
 import java.util.List;
 
