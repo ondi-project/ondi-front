@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
@@ -17,12 +18,16 @@ import android.widget.Toast;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.ondi.android_ondi.R;
 import com.ondi.android_ondi.View.Menu.Category.CategoryFragment;
-import com.ondi.android_ondi.View.Menu.History.HistoryFragment;
+import com.ondi.android_ondi.View.Menu.Category.ListFragment;
+import com.ondi.android_ondi.View.Menu.Auction.AuctionFragment;
 import com.ondi.android_ondi.View.Menu.Home.HomeFragment;
+import com.ondi.android_ondi.View.Menu.MyPage.Like.LikeFragment;
 import com.ondi.android_ondi.View.Menu.MyPage.MyPageFragment;
-import com.ondi.android_ondi.View.Menu.Transaction.RegisterFragment;
+import com.ondi.android_ondi.View.Menu.MyPage.Purchase.PurchaseHistoryFragment;
+import com.ondi.android_ondi.View.Menu.MyPage.Review.ReviewFragment;
+import com.ondi.android_ondi.View.Menu.MyPage.Sale.SaleHistoryFragment;
+import com.ondi.android_ondi.View.Menu.Register.RegisterFragment;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -31,11 +36,17 @@ public class MainActivity extends AppCompatActivity {
 
     private FragmentManager fragmentManager = getSupportFragmentManager();
     private HomeFragment homeFragment = new HomeFragment();
-    private HistoryFragment historyFragment = new HistoryFragment();
+    private AuctionFragment auctionFragment = new AuctionFragment();
     private RegisterFragment registerFragment = new RegisterFragment();
     private CategoryFragment categoryFragment = new CategoryFragment();
     private MyPageFragment myPageFragment = new MyPageFragment();
     private BottomNavigationView bottomNavigationView;
+
+    private ListFragment listFragment = new ListFragment();
+    private SaleHistoryFragment saleHistoryFragment = new SaleHistoryFragment();
+    private PurchaseHistoryFragment purchaseHistoryFragment = new PurchaseHistoryFragment();
+    private LikeFragment likeFragment = new LikeFragment();
+    private ReviewFragment reviewFragment = new ReviewFragment();
 
     private static final int REQUEST_CODE = 0;
 
@@ -61,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     }
                     case R.id.navigation_menu_history: {
-                        fragmentManager.beginTransaction().replace(R.id.layout_main_container, historyFragment).setReorderingAllowed(true).commitAllowingStateLoss();
+                        fragmentManager.beginTransaction().replace(R.id.layout_main_container, auctionFragment).setReorderingAllowed(true).commitAllowingStateLoss();
                         break;
                     }
                     case R.id.navigation_menu_transaction: {
@@ -86,12 +97,35 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
+        actionBar.setHomeAsUpIndicator(R.drawable.icon_ionic_ios_arrow_back);
         actionBar.setDisplayShowCustomEnabled(true);
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
+    /** 마이페이지 화면 이동**/
+    public void goToSaleHistory(){
+        fragmentManager.beginTransaction().replace(R.id.layout_main_container, saleHistoryFragment).setReorderingAllowed(true).commitAllowingStateLoss();
+    }
 
+    public void goToPurchaseHistory(){
+        fragmentManager.beginTransaction().replace(R.id.layout_main_container, purchaseHistoryFragment).setReorderingAllowed(true).commitAllowingStateLoss();
+    }
+
+    public void goToLike(){
+        fragmentManager.beginTransaction().replace(R.id.layout_main_container, likeFragment).setReorderingAllowed(true).commitAllowingStateLoss();
+    }
+
+    public void goToReview(){
+        fragmentManager.beginTransaction().replace(R.id.layout_main_container, reviewFragment).setReorderingAllowed(true).commitAllowingStateLoss();
+    }
+
+    /** 카테고리 화면에서 카테고리 선택 -> 리스트 화면 **/
+    public void goToCategory(String category){
+        fragmentManager.beginTransaction().replace(R.id.layout_main_container, listFragment).setReorderingAllowed(true).commitAllowingStateLoss();
+    }
+
+    /** 상품등록 화면에서 사진 업로드 -> 갤러리 **/
     public void openGallery() {
         Intent intent = new Intent();
         intent.setType("image/*");
@@ -106,6 +140,7 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
                 ArrayList<Uri> uriArrayList = new ArrayList<>();
+                ArrayList<Bitmap> bitmapList = new ArrayList<>();
                 if (data.getClipData() != null) { // 사진 여러개 선택한 경우
                     int count = data.getClipData().getItemCount();
                     if (count > 12) {
@@ -113,22 +148,21 @@ public class MainActivity extends AppCompatActivity {
                         return;
                     }
                     for (int i = 0; i < data.getClipData().getItemCount(); i++) {
-                        if (i == 0) {
-                            //첫번째 선택 이미지를 썸네일 이미지로
+                        //첫번째 선택 이미지를 썸네일 이미지로
+                        try {
                             InputStream in;
-                            try {
-                                in = getContentResolver().openInputStream(data.getClipData().getItemAt(0).getUri());
-                                Bitmap img = BitmapFactory.decodeStream(in);
-                                in.close();
-                                registerFragment.setImageView(img,data.getClipData().getItemCount());
-                            }catch (IOException e) {
-                                e.printStackTrace();
-                            }
+                            in = getContentResolver().openInputStream(data.getClipData().getItemAt(i).getUri());
+                            Bitmap img = BitmapFactory.decodeStream(in);
+                            in.close();
+                            bitmapList.add(img);
+                        } catch (IOException e) {
+                            e.printStackTrace();
                         }
                         Uri imageUri = data.getClipData().getItemAt(i).getUri();
                         uriArrayList.add(imageUri);
                         //이미지 들고있다가 등록 버튼 누를 시 서버에 저장.
                     }
+                    registerFragment.setImageView(bitmapList, data.getClipData().getItemCount());
                 }
             }
         } else if (resultCode == RESULT_CANCELED) {
@@ -136,5 +170,21 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:{
+                Fragment f = fragmentManager.findFragmentById(R.id.layout_main_container);
+                if(f instanceof ListFragment){
+                    fragmentManager.beginTransaction().replace(R.id.layout_main_container, categoryFragment).setReorderingAllowed(true).commitAllowingStateLoss();
+                }
+                else if(f instanceof SaleHistoryFragment || f instanceof PurchaseHistoryFragment || f instanceof LikeFragment || f instanceof ReviewFragment ){
+                    fragmentManager.beginTransaction().replace(R.id.layout_main_container, myPageFragment).setReorderingAllowed(true).commitAllowingStateLoss();
+                }
+                return true;
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
 }

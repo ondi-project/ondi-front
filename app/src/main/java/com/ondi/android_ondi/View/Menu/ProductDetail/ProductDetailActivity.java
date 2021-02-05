@@ -4,6 +4,8 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Context;
@@ -18,6 +20,8 @@ import android.widget.LinearLayout;
 import android.widget.Switch;
 
 import com.bumptech.glide.Glide;
+import com.ondi.android_ondi.Adapter.ProductAdapter;
+import com.ondi.android_ondi.Adapter.TagAdapter;
 import com.ondi.android_ondi.Adapter.ViewPagerAdapter;
 import com.ondi.android_ondi.Dialog.AuctionDialog;
 import com.ondi.android_ondi.R;
@@ -29,7 +33,10 @@ public class ProductDetailActivity extends AppCompatActivity {
     Context context;
     ViewPager2 viewPager;
     LinearLayout layoutIndicator;
+
+    //데이터 받아서 처리해야함
     ArrayList<String> imgList = new ArrayList<>();
+    ArrayList<String> hashTagList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +57,11 @@ public class ProductDetailActivity extends AppCompatActivity {
 
         Switch btn_live = findViewById(R.id.btn_live);
         btn_live.setOnCheckedChangeListener(new CheckChangeListener());
+
+        RecyclerView recyclerView = findViewById(R.id.recycler_hash_tag);
+        recyclerView.setLayoutManager(new GridLayoutManager(this,3));
+        TagAdapter adapter = new TagAdapter(this,hashTagList);
+        recyclerView.setAdapter(adapter);
     }
 
     private void setClickListener() {
@@ -84,6 +96,10 @@ public class ProductDetailActivity extends AppCompatActivity {
         imgList.add("https://cdn.pixabay.com/photo/2014/03/03/16/15/mosque-279015_1280.jpg");
         imgList.add("https://cdn.pixabay.com/photo/2014/03/03/16/15/mosque-279015_1280.jpg");
         imgList.add("https://cdn.pixabay.com/photo/2014/03/03/16/15/mosque-279015_1280.jpg");
+
+        hashTagList.add("전자제품");
+        hashTagList.add("노트북");
+        hashTagList.add("삼성");
     }
 
     private void setToolbar() {
@@ -92,7 +108,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowCustomEnabled(true);
         actionBar.setDisplayShowTitleEnabled(false);
-        actionBar.setHomeAsUpIndicator(R.drawable.ic_baseline_arrow_back_ios_24);
+        actionBar.setHomeAsUpIndicator(R.drawable.icon_ionic_ios_arrow_back);
         actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
@@ -125,7 +141,7 @@ public class ProductDetailActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
-            case android.R.id.home:{ //toolbar의 back키 눌렀을 때 동작
+            case android.R.id.home:{
                 finish();
                 return true;
             }
@@ -163,7 +179,7 @@ public class ProductDetailActivity extends AppCompatActivity {
                 auctionDialog.show();
             }
             else{
-                //on->off
+                //on->off 동작할게 있나
             }
         }
     }

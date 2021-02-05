@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".View.Menu.Transaction.RegisterFragment"
+    tools:context=".View.Menu.Register.RegisterFragment"
     android:background="@color/colorWhite">
 
     <ScrollView
@@ -20,9 +20,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="상품을 &#10;등록해보세요!"
-                android:textColor="#042453"
+                android:textColor="@color/dark_slate_blue"
                 android:textSize="30sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:letterSpacing="-0.01"
+                android:lineSpacingExtra="8sp"
+                />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -39,7 +42,6 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:id="@+id/img_thumbnail"
                         android:layout_width="45dp"
                         android:layout_height="45dp"
                         android:layout_centerInParent="true"
@@ -65,10 +67,14 @@
                             android:text="/12" />
                     </LinearLayout>
                 </RelativeLayout>
-                <HorizontalScrollView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-                </HorizontalScrollView>
+
+               <androidx.recyclerview.widget.RecyclerView
+                   android:id="@+id/recycler_photo"
+                   android:layout_width="match_parent"
+                   android:layout_height="match_parent"
+                   tools:listitem="@layout/item_photo"
+                   android:layout_gravity="center_vertical"/>
+
             </LinearLayout>
 
             <LinearLayout
@@ -84,6 +90,8 @@
                     android:layout_height="wrap_content"
                     android:background="@null"
                     android:hint="상품명을 입력해주세요."
+                    android:textSize="12sp"
+                    android:textColor="@color/blue_grey"
                     android:inputType="number" />
             </LinearLayout>
 
@@ -109,6 +117,8 @@
                     android:layout_height="wrap_content"
                     android:background="@null"
                     android:hint="상품 금액을 입력해주세요."
+                    android:textSize="12sp"
+                    android:textColor="@color/blue_grey"
                     android:inputType="number" />
 
                 <LinearLayout
@@ -123,7 +133,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="협상가능"/>
+                        android:text="협상가능"
+                        android:textColor="@color/blue_grey"/>
                 </LinearLayout>
             </LinearLayout>
 
@@ -146,9 +157,28 @@
                     android:layout_height="wrap_content"
                     android:background="@null"
                     android:hint="중고거래에 올릴 게시글 내용을 작성해주세요."
-                    android:textSize="15sp"
-                    android:inputType="number"
+                    android:textSize="12sp"
+                    android:textColor="@color/blue_grey"
+                    android:inputType="text"
                     android:paddingBottom="100dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/custom_round_rectangle_stroke_grey"
+                android:padding="15dp">
+
+                <EditText
+                    android:id="@+id/input_product_tag"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:hint="#연관 태그 입력"
+                    android:textSize="12sp"
+                    android:textColor="@color/blue_grey"
+                    android:inputType="text" />
             </LinearLayout>
 
             <LinearLayout
@@ -160,7 +190,10 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="5dp"
                 android:layout_marginTop="30dp"
-                android:layout_marginBottom="40dp">
+                android:layout_marginBottom="40dp"
+                android:foreground="@drawable/custom_ripple_effect"
+                android:clickable="true"
+                android:focusable="true">
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

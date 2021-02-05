@@ -48,7 +48,7 @@ public class ProductAdapter  extends RecyclerView.Adapter<ProductAdapter.ItemVie
         img_product.setOnClickListener(new ClickListener(position));
 
         //좋아요 버튼 클릭
-        ImageView btn_favorite = holder.itemView.findViewById(R.id.btn_favorite);
+        ImageView btn_favorite = holder.itemView.findViewById(R.id.btn_like);
         btn_favorite.setOnClickListener(new ClickListener(position));
 
     }
@@ -62,14 +62,14 @@ public class ProductAdapter  extends RecyclerView.Adapter<ProductAdapter.ItemVie
         TextView text_product_name;
         TextView text_product_price;
         ImageView img_product;
-        ImageView btn_favorite;
+        ImageView btn_like;
 
         public ItemViewHolder(@NonNull View itemView) {
             super(itemView);
             text_product_name = itemView.findViewById(R.id.text_product_name);
             text_product_price = itemView.findViewById(R.id.text_product_price);
             img_product = itemView.findViewById(R.id.img_product);
-            btn_favorite = itemView.findViewById(R.id.btn_favorite);
+            btn_like = itemView.findViewById(R.id.btn_like);
         }
 
         public void bind(ProductModel product,Context context){
@@ -80,10 +80,10 @@ public class ProductAdapter  extends RecyclerView.Adapter<ProductAdapter.ItemVie
 
             if(product.isFavorite_check()){
                 //좋아요 설정 됨
-                Glide.with(context).load(R.drawable.ic_baseline_favorite_24).into(btn_favorite);
+                Glide.with(context).load(R.drawable.ic_baseline_favorite_24).into(btn_like);
             }
             else{
-                Glide.with(context).load(R.drawable.ic_baseline_favorite_border_24).into(btn_favorite);
+                Glide.with(context).load(R.drawable.ic_baseline_favorite_border_24).into(btn_like);
             }
         }
     }
@@ -104,7 +104,7 @@ public class ProductAdapter  extends RecyclerView.Adapter<ProductAdapter.ItemVie
                     context.startActivity(intent);
                     break;
                 }
-                case R.id.btn_favorite:{
+                case R.id.btn_like:{
                     if(productList.get(position).isFavorite_check()){
                         //이미 좋아요 눌려있는 경우 -> 해제
                         productList.get(position).setFavorite_check(false);
