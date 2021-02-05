@@ -6,20 +6,27 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.ondi.android_ondi.API.RetrofitClient;
 import com.ondi.android_ondi.Adapter.ProductAdapter2;
+import com.ondi.android_ondi.Model.AuthModel;
 import com.ondi.android_ondi.Model.ProductModel;
 import com.ondi.android_ondi.R;
 
+import java.io.IOException;
 import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Response;
 
 
 public class CompleteFragment extends Fragment {
     View mainView;
-    ArrayList<ProductModel.Product> test_productList = new ArrayList<>();
+    ArrayList<ProductModel.Product> productList = new ArrayList<>();
 
     public CompleteFragment() {
         // Required empty public constructor
@@ -33,27 +40,48 @@ public class CompleteFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getData();
+    }
+
+    private void getData() {
+        Call<ArrayList<ProductModel.Product>> call = RetrofitClient.getApiService().getSoldList(AuthModel.getInstance().user.getId());
+        call.enqueue(new retrofit2.Callback<ArrayList<ProductModel.Product>>() {
+            @Override
+            public void onResponse(Call<ArrayList<ProductModel.Product>> call, Response<ArrayList<ProductModel.Product>> response) {
+                if(response.isSuccessful()){
+                    productList = response.body();
+                    setRecyclerView();
+                }
+                else{
+                    if (response.code() != 200) {
+                        try {
+                            Log.v("Error code",response.errorBody().string()+ " "+response.errorBody().contentType());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<ProductModel.Product>> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mainView = inflater.inflate(R.layout.fragment_complete, container, false);
-        test_insertData();
-        setRecyclerView();
         return mainView;
     }
 
-    private void test_insertData() {
-        test_productList.clear();
-        test_productList.removeAll(test_productList);
-        //test_productList.add(new ProductModel("상품이름","100000",false));
-    }
 
     private void setRecyclerView() {
         RecyclerView recyclerView = mainView.findViewById(R.id.recycler_list_complete);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
-        ProductAdapter2 adapter = new ProductAdapter2(getContext(),test_productList);
+        ProductAdapter2 adapter = new ProductAdapter2(getContext(), productList);
         recyclerView.setAdapter(adapter);
     }
 }

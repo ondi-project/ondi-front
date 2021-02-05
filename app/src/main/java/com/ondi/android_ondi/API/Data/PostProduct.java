@@ -1,10 +1,10 @@
 package com.ondi.android_ondi.API.Data;
 
 import java.io.File;
+import java.io.Serializable;
 
-import okhttp3.MultipartBody;
 
-public class PostProduct {
+public class PostProduct implements Serializable {
     public PostProduct(String p_category, String p_name, int p_price, String p_content, File p_image, String p_tag, boolean p_nego, int p_seller) {
         this.p_category = p_category;
         this.p_name = p_name;
