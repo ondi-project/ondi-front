@@ -49,6 +49,7 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -98,7 +99,6 @@ public class SellerCallActivity extends AppCompatActivity {
     private VideoCapturer videoCapturer;
 
     private SurfaceViewRenderer localView;
-    private SurfaceViewRenderer remoteView;
 
     private VideoSource videoSource;
     private VideoTrack localVideoTrack;
@@ -123,8 +123,6 @@ public class SellerCallActivity extends AppCompatActivity {
     private AWSCredentials mCreds = null;
 
     private Map<String, PeerConnection> peerList = new HashMap<>();
-
-    private List<String> clientIdList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -203,9 +201,6 @@ public class SellerCallActivity extends AppCompatActivity {
          */
         videoCapturer.startCapture(VIDEO_SIZE_WIDTH, VIDEO_SIZE_HEIGHT, VIDEO_FPS);
         localVideoTrack.setEnabled(true);
-
-        remoteView = findViewById(R.id.remote_view);
-        remoteView.init(rootEglBase.getEglBaseContext(), null);
     }
 
     @Override
@@ -234,16 +229,10 @@ public class SellerCallActivity extends AppCompatActivity {
             rootEglBase = null;
         }
 
-        if (remoteView != null) {
-            remoteView.release();
-            remoteView = null;
-        }
-
-        if(peerList.size() > 0){
-            for(String clientId: clientIdList){
-                peerList.get(clientId).dispose();
-                peerList.remove(clientId);
-            }
+        Iterator<String> iter = peerList.keySet().iterator();
+        while (iter.hasNext()) {
+            peerList.get(iter.next()).dispose();
+            iter.remove();
         }
 
         if (videoSource != null) {
@@ -270,8 +259,6 @@ public class SellerCallActivity extends AppCompatActivity {
             client = null;
         }
 
-        finish();
-
         super.onDestroy();
     }
 
@@ -283,12 +270,6 @@ public class SellerCallActivity extends AppCompatActivity {
         URI signedUri;
 
         runOnUiThread(() -> mCreds = OndiApplication.getCredentialsProvider().getCredentials());
-
-        if (master) {
-            for(String clientId: clientIdList){
-                createLocalPeerConnection(clientId);
-            }
-        }
 
         signedUri = getSignedUri(masterEndpoint, viewerEndpoint);
 
@@ -303,7 +284,6 @@ public class SellerCallActivity extends AppCompatActivity {
                 final String sdp = Event.parseOfferEvent(offerEvent);
 
                 String recipientClientId = offerEvent.getSenderClientId();
-                clientIdList.add(recipientClientId);
                 PeerConnection localPeer = createLocalPeerConnection(recipientClientId);
 
                 peerList.put(recipientClientId, localPeer);
@@ -331,11 +311,9 @@ public class SellerCallActivity extends AppCompatActivity {
 
                 if(iceCandidate != null) {
                     // Remote sent us ICE candidates, add to local peer connection
-                    for(String clientId: clientIdList){
-                        final boolean addIce = peerList.get(clientId).addIceCandidate(iceCandidate);
+                    final boolean addIce = peerList.get(message.getSenderClientId()).addIceCandidate(iceCandidate);
 
-                        Log.d(TAG, "Added ice candidate " + iceCandidate + " " + (addIce ? "Successfully" : "Failed"));
-                    }
+                    Log.d(TAG, "Added ice candidate " + iceCandidate + " " + (addIce ? "Successfully" : "Failed"));
                 } else {
                     Log.e(TAG, "Invalid Ice candidate");
                 }
@@ -480,7 +458,7 @@ public class SellerCallActivity extends AppCompatActivity {
                         + sdpMLineIndex
                         + "}";
 
-        String senderClientId = (master) ? "" : mClientId;
+        String senderClientId = "";
 
         return new Message("ICE_CANDIDATE", clientId, senderClientId,
                 new String(Base64.encode(messagePayload.getBytes(),
@@ -490,13 +468,9 @@ public class SellerCallActivity extends AppCompatActivity {
     private URI getSignedUri(String masterEndpoint, String viewerEndpoint) {
         URI signedUri;
 
-        if (master) {
-            signedUri = AwsV4Signer.sign(URI.create(masterEndpoint), mCreds.getAWSAccessKeyId(),
-                    mCreds.getAWSSecretKey(), mCreds instanceof AWSSessionCredentials ? ((AWSSessionCredentials) mCreds).getSessionToken() : "", URI.create(mWssEndpoint), mRegion);
-        } else {
-            signedUri = AwsV4Signer.sign(URI.create(viewerEndpoint), mCreds.getAWSAccessKeyId(),
-                    mCreds.getAWSSecretKey(), mCreds instanceof AWSSessionCredentials ? ((AWSSessionCredentials)mCreds).getSessionToken() : "", URI.create(mWssEndpoint), mRegion);
-        }
+        signedUri = AwsV4Signer.sign(URI.create(masterEndpoint), mCreds.getAWSAccessKeyId(),
+                mCreds.getAWSSecretKey(), mCreds instanceof AWSSessionCredentials ? ((AWSSessionCredentials) mCreds).getSessionToken() : "", URI.create(mWssEndpoint), mRegion);
+
         return signedUri;
     }
 
@@ -508,7 +482,6 @@ public class SellerCallActivity extends AppCompatActivity {
         finish();
         Toast.makeText(this, "Connection error to signaling", Toast.LENGTH_LONG).show();
     }
-
 
     // MainActivity에서 스트리밍 관련 데이터 받아옴
     private void getStreamingDataFromIntent() {
