@@ -78,7 +78,7 @@ public class SellerCallActivity extends AppCompatActivity {
     private String mRegion;
 
     private boolean master = true;
-    private boolean isAudioSent = false;
+    private boolean isAudioSent = true;
 
     private boolean mCameraFacingFront = true;
 
@@ -495,7 +495,7 @@ public class SellerCallActivity extends AppCompatActivity {
             mClientId = UUID.randomUUID().toString();
         }
         master = intent.getBooleanExtra(KEY_IS_MASTER, true);
-        isAudioSent = intent.getBooleanExtra(KEY_SEND_AUDIO, false);
+        isAudioSent = intent.getBooleanExtra(KEY_SEND_AUDIO, true);
         mUserNames = intent.getStringArrayListExtra(KEY_ICE_SERVER_USER_NAME);
         mPasswords = intent.getStringArrayListExtra(KEY_ICE_SERVER_PASSWORD);
         mTTLs = intent.getIntegerArrayListExtra(KEY_ICE_SERVER_TTL);
