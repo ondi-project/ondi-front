@@ -1,24 +1,15 @@
 package com.ondi.android_ondi.Adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.MultiTransformation;
-import com.bumptech.glide.load.resource.bitmap.CenterCrop;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-import com.bumptech.glide.request.RequestOptions;
-import com.ondi.android_ondi.Model.ProductModel;
 import com.ondi.android_ondi.R;
-import com.ondi.android_ondi.View.Menu.ProductDetail.ProductDetailActivity;
 
 import java.util.ArrayList;
 

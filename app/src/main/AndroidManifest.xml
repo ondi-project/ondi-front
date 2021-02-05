@@ -12,8 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".View.Payment.PaymentActivity"></activity>
-        <activity android:name=".View.Menu.ProductDetail.ProductDetailActivity" />
+        <activity android:name=".View.Menu.Detail.SellerDetailActivity"></activity>
+        <activity android:name=".View.Payment.PaymentActivity" />
+        <activity android:name=".View.Menu.Detail.ProductDetailActivity" />
         <activity android:name=".View.Login.LoginActivity" />
         <activity android:name=".View.Menu.MainActivity" />
         <activity android:name=".View.Splash.SplashActivity">
