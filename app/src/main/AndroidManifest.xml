@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".OndiApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -12,11 +13,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".View.Payment.PaymentActivity"></activity>
+        <activity android:name=".View.Payment.PaymentActivity"/>
         <activity android:name=".View.Menu.ProductDetail.ProductDetailActivity" />
-        <activity android:name=".View.Login.LoginActivity" />
         <activity android:name=".View.Menu.MainActivity" />
-        <activity android:name=".View.Splash.SplashActivity">
+        <activity android:name=".View.Login.LoginActivity" />
+        <activity android:name=".View.Splash.SplashActivity" />
+        <activity android:name=".View.SellerCallActivity" />
+        <activity android:name=".View.BuyerCallActivity" />
+        <activity android:name=".View.ReadyCallActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
