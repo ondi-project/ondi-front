@@ -58,6 +58,7 @@
                     android:gravity="center_vertical"
                     android:layout_marginStart="40dp">
                     <TextView
+                        android:id="@+id/text_name_seller"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif"
@@ -66,8 +67,9 @@
                         android:textColor="@color/dark_slate_blue"
                         android:letterSpacing="-0.01"
                         android:lineSpacingExtra="6sp"
-                        android:text="name" />
+                        android:text="Huni" />
                     <TextView
+                        android:id="@+id/text_email_seller"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textStyle="normal"
@@ -75,12 +77,7 @@
                         android:textColor="@color/dark_slate_blue"
                         android:letterSpacing="-0.01"
                         android:lineSpacingExtra="22sp"
-                        android:text="# 상점이름"
-                        android:layout_marginTop="10dp"/>
-                    <RatingBar
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        style="?android:attr/ratingBarStyleSmall"
+                        android:text="huni@gmail.com"
                         android:layout_marginTop="10dp"/>
                 </LinearLayout>
             </LinearLayout>
@@ -105,18 +102,43 @@
                     android:src="@drawable/icon_awesome_receipt"
                     android:layout_alignParentStart="true"
                     android:layout_marginStart="10dp"/>
-                <TextView
-                    android:id="@+id/text_report_count"
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textStyle="normal"
-                    android:textSize="14sp"
-                    android:textColor="@color/dark_blue_grey"
-                    android:letterSpacing="-0.01"
-                    android:lineSpacingExtra="22sp"
-                    android:text="신고횟수"
-                    android:layout_toEndOf="@id/img_report"
-                    android:layout_marginStart="20dp"/>
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_toEndOf="@id/img_report">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textStyle="normal"
+                        android:textSize="14sp"
+                        android:textColor="@color/dark_blue_grey"
+                        android:letterSpacing="-0.01"
+                        android:lineSpacingExtra="22sp"
+                        android:text="신고횟수"
+                        android:layout_marginStart="20dp"/>
+                    <TextView
+                        android:id="@+id/text_report_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textStyle="normal"
+                        android:textSize="14sp"
+                        android:textColor="@color/dark_blue_grey"
+                        android:letterSpacing="-0.01"
+                        android:lineSpacingExtra="22sp"
+                        android:text="0"
+                        android:layout_marginStart="5dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textStyle="normal"
+                        android:textSize="14sp"
+                        android:textColor="@color/dark_blue_grey"
+                        android:letterSpacing="-0.01"
+                        android:lineSpacingExtra="22sp"
+                        android:text="회"
+                        android:layout_marginStart="5dp"/>
+                </LinearLayout>
             </RelativeLayout>
 
             <RelativeLayout
@@ -140,18 +162,42 @@
                     android:layout_alignParentStart="true"
                     android:layout_marginStart="10dp"
                     android:layout_centerVertical="true"/>
-                <TextView
-                    android:id="@+id/text_sale_count"
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textStyle="normal"
-                    android:textSize="14sp"
-                    android:textColor="@color/dark_blue_grey"
-                    android:letterSpacing="-0.01"
-                    android:lineSpacingExtra="22sp"
-                    android:text="판매내역"
-                    android:layout_toEndOf="@id/img_receipt"
-                    android:layout_marginStart="20dp"/>
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_toEndOf="@id/img_receipt">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textStyle="normal"
+                        android:textSize="14sp"
+                        android:textColor="@color/dark_blue_grey"
+                        android:letterSpacing="-0.01"
+                        android:lineSpacingExtra="22sp"
+                        android:text="판매내역"
+                        android:layout_marginStart="20dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textStyle="normal"
+                        android:textSize="14sp"
+                        android:textColor="@color/dark_blue_grey"
+                        android:letterSpacing="-0.01"
+                        android:lineSpacingExtra="22sp"
+                        android:text="20"
+                        android:layout_marginStart="5dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textStyle="normal"
+                        android:textSize="14sp"
+                        android:textColor="@color/dark_blue_grey"
+                        android:letterSpacing="-0.01"
+                        android:lineSpacingExtra="22sp"
+                        android:text="회"
+                        android:layout_marginStart="5dp"/>
+                </LinearLayout>
             </RelativeLayout>
 
             <TextView
@@ -162,7 +208,7 @@
                 android:textColor="@color/dark_slate_blue"
                 android:letterSpacing="-0.01"
                 android:lineSpacingExtra="20sp"
-                android:text="받은 거래 후기 1개"
+                android:text="받은 거래 후기"
                 android:layout_marginTop="25dp"/>
 
             <View
@@ -178,7 +224,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="25dp"
-                tools:listitem="@layout/item_review" />
+                tools:listitem="@layout/item_review"/>
 
             <View
                 android:layout_width="match_parent"
