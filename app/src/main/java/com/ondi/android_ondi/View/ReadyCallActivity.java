@@ -274,8 +274,6 @@ public class ReadyCallActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             if (result != null) {
-//                AlertDialog.Builder diag = new AlertDialog.Builder(mFragment.get().getContext());
-//                diag.setPositiveButton("OK", null).setMessage(result).create().show();
                 Log.d(TAG, "onPostExecute: OK!");
             }
         }

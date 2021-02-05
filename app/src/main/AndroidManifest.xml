@@ -22,10 +22,10 @@
         <activity android:name=".View.Menu.ProductDetail.ProductDetailActivity" />
         <activity android:name=".View.Menu.MainActivity" />
         <activity android:name=".View.Login.LoginActivity" />
-        <activity android:name=".View.Splash.SplashActivity" />
+        <activity android:name=".View.ReadyCallActivity" />
         <activity android:name=".View.SellerCallActivity" />
         <activity android:name=".View.BuyerCallActivity" />
-        <activity android:name=".View.ReadyCallActivity">
+        <activity android:name=".View.Splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
