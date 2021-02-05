@@ -84,6 +84,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
                         @Override
                         public void onResponse(Call<AuthModel> call, Response<AuthModel> response) {
                             if(response.isSuccessful()){
+                                AuthModel.getInstance().user = response.body().user;
                                 runOnUiThread(() -> Toast.makeText(getContext(), "회원가입 완료", Toast.LENGTH_SHORT).show());
                                 ((LoginActivity)getActivity()).goToSignIn();
                             }

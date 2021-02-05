@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 public class PurchaseHistoryFragment extends Fragment {
     View mainView;
-    ArrayList<ProductModel> test_productList = new ArrayList<>();
+    ArrayList<ProductModel.Product> test_productList = new ArrayList<>();
 
     public PurchaseHistoryFragment() {
         // Required empty public constructor
@@ -46,7 +46,7 @@ public class PurchaseHistoryFragment extends Fragment {
     private void test_insertData() {
         test_productList.clear();
         test_productList.removeAll(test_productList);
-        test_productList.add(new ProductModel("상품이름","100000",false));
+        //test_productList.add(new ProductModel("상품이름","100000",false));
     }
 
     private void setRecyclerView() {

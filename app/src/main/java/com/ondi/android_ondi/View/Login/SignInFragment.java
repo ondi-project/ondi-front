@@ -98,6 +98,7 @@ public class SignInFragment extends Fragment {
                     @Override
                     public void onResponse(Call<AuthModel> call, Response<AuthModel> response) {
                         if(response.isSuccessful()){
+                            AuthModel.getInstance().user = response.body().user;
                             runOnUiThread(() -> Toast.makeText(getContext(), "로그인 성공", Toast.LENGTH_SHORT).show());
                             startActivity(new Intent(getContext(), MainActivity.class));
                         }

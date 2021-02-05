@@ -10,31 +10,64 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.ondi.android_ondi.API.Data.PostProduct;
+import com.ondi.android_ondi.API.Data.PostRegister;
+import com.ondi.android_ondi.API.RetrofitClient;
 import com.ondi.android_ondi.Adapter.PhotoAdapter;
 import com.ondi.android_ondi.Defined.DefinedCategory;
+import com.ondi.android_ondi.Model.AuthModel;
+import com.ondi.android_ondi.Model.ProductModel;
+import com.ondi.android_ondi.Model.ResponseModel;
 import com.ondi.android_ondi.R;
+import com.ondi.android_ondi.View.Login.LoginActivity;
 import com.ondi.android_ondi.View.Menu.MainActivity;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.function.ToLongBiFunction;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static com.amazonaws.mobile.auth.core.internal.util.ThreadUtils.runOnUiThread;
 
 public class RegisterFragment extends Fragment {
 
     Context context;
     View mainView;
     ArrayList<String> spinnerList = new ArrayList<>();
+    ArrayList<Bitmap> bitmapList = null;
 
     RelativeLayout btn_upload_photo;
+    EditText input_product_name;
+    String spinnerType;
+    EditText input_product_price;
+    CheckBox checkbox_deal;
+    EditText input_product_description;
+    EditText input_product_tag;
     LinearLayout btn_register;
 
     public static RegisterFragment newInstance(String param1, String param2) {
@@ -67,6 +100,12 @@ public class RegisterFragment extends Fragment {
 
         btn_register = mainView.findViewById(R.id.btn_register);
         btn_register.setOnClickListener(new ClickListener());
+
+        input_product_name = mainView.findViewById(R.id.input_product_name);
+        input_product_price = mainView.findViewById(R.id.input_product_price);
+        checkbox_deal = mainView.findViewById(R.id.checkbox_deal);
+        input_product_description = mainView.findViewById(R.id.input_product_description);
+        input_product_tag = mainView.findViewById(R.id.input_product_tag);
     }
 
     public void initSpinnerData() {
@@ -87,33 +126,7 @@ public class RegisterFragment extends Fragment {
 
             //todo spinner커스텀
             Object selectedItem = adapterView.getSelectedItem();
-            if (DefinedCategory.getInstance().NOTHING.equals(selectedItem)) {
-                //((TextView)view).setTextColor(ContextCompat.getColor(context, R.color.blue_grey));
-            }
-            else if (DefinedCategory.getInstance().DIGITAL.equals(selectedItem)) {
-
-            }
-            else if (DefinedCategory.getInstance().CLOTH.equals(selectedItem)) {
-
-            }
-            else if (DefinedCategory.getInstance().BEAUTY.equals(selectedItem)) {
-
-            }
-            else if (DefinedCategory.getInstance().ACCESSORY.equals(selectedItem)) {
-
-            }
-            else if (DefinedCategory.getInstance().FURNITURE.equals(selectedItem)) {
-
-            }
-            else if (DefinedCategory.getInstance().BABY.equals(selectedItem)) {
-
-            }
-            else if (DefinedCategory.getInstance().SPORTS.equals(selectedItem)) {
-
-            }
-            else if (DefinedCategory.getInstance().ETC.equals(selectedItem)) {
-
-            }
+            spinnerType = selectedItem.toString();
         }
 
         @Override
@@ -123,6 +136,7 @@ public class RegisterFragment extends Fragment {
     }
 
     public void setImageView(ArrayList<Bitmap> bitmapList,int count){
+        this.bitmapList = bitmapList;
         RecyclerView recyclerView = mainView.findViewById(R.id.recycler_photo);
         recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
         PhotoAdapter adapter = new PhotoAdapter(getContext(),bitmapList);
@@ -142,11 +156,77 @@ public class RegisterFragment extends Fragment {
                 }
                 case R.id.btn_register :{
                     //todo 서버에 저장 요청
+                    try {
+                        postProduct();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
 
                 }
             }
         }
     }
 
+    private void postProduct() throws IOException {
+       String name =  input_product_name.getText().toString();
+       String price = input_product_price.getText().toString();
+       String content = input_product_description.getText().toString();
+       boolean deal = checkbox_deal.isChecked();
+       String tag = input_product_tag.getText().toString();
+
+        if(bitmapList.isEmpty()){
+            //사진 없음
+            Toast.makeText(context,"이미지를 선택해주세요.", Toast.LENGTH_SHORT);
+        }
+        else
+        {
+            File imageFile = createFileFromBitmap(bitmapList.get(0));
+            RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"),imageFile);
+            MultipartBody.Part uploadFile = MultipartBody.Part.createFormData("file",imageFile.getPath(),requestBody);
+
+            //Call<ResponseModel> call = RetrofitClient.getApiService().postProduct(spinnerType,name,Integer.parseInt(price),content,tag,deal,AuthModel.getInstance().user.getId(),uploadFile);
+            Call<ResponseModel> call = RetrofitClient.getApiService().postProduct(new PostProduct(spinnerType,name,Integer.parseInt(price),content,uploadFile,tag,deal,AuthModel.getInstance().user.getId()));
+            call.enqueue(new Callback<ResponseModel>() {
+                @Override
+                public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+                    if(response.isSuccessful()){
+                        System.out.println("result: "+response.body());
+                        runOnUiThread(() -> Toast.makeText(getContext(), "물품 등록 완료", Toast.LENGTH_SHORT).show());
+                    }
+                    else{
+                        if (response.code() != 200) {
+                            try {
+                                Log.v("Error code",response.errorBody().string()+ " "+response.errorBody().contentType());
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        runOnUiThread(() -> Toast.makeText(getContext(), "물품 등록 실패: "+response.message(), Toast.LENGTH_SHORT).show());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseModel> call, Throwable t) {
+                    System.out.println("message: "+t.getMessage());
+                    t.printStackTrace();
+                }
+            });
+        }
+    }
+
+    private File createFileFromBitmap(Bitmap bitmap) throws IOException {
+        File newFile = new File(getActivity().getFilesDir(),makeImageFileName());
+        FileOutputStream fileOutputStream = new FileOutputStream(newFile);
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, fileOutputStream);
+        fileOutputStream.close();
+        return newFile;
+    }
+
+    private String makeImageFileName(){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd_hhmmss");
+        Date date = new Date();
+        String strDate = simpleDateFormat.format(date);
+        return  strDate + ".png";
+    }
 
 }

@@ -15,12 +15,14 @@ public class AuthModel {
         return instance;
     }
 
-    String access_token;
-    String refresh_token;
+    public String access_token;
+    public String refresh_token;
     @SerializedName("user")
-    User user;
+    public User user;
 
     public class User{
+
+        int id;
         String username;
         String first_name;
         String last_name;
@@ -35,7 +37,8 @@ public class AuthModel {
         String phone;
         String image;
 
-        public User(String username, String first_name, String last_name, String email, List<String> groups, List<String> user_permissions, boolean is_staff, boolean is_active, boolean is_superuser, String date_joined, String last_login, String phone, String image) {
+        public User(int id,String username, String first_name, String last_name, String email, List<String> groups, List<String> user_permissions, boolean is_staff, boolean is_active, boolean is_superuser, String date_joined, String last_login, String phone, String image) {
+            this.id = id;
             this.username = username;
             this.first_name = first_name;
             this.last_name = last_name;
@@ -49,6 +52,14 @@ public class AuthModel {
             this.last_login = last_login;
             this.phone = phone;
             this.image = image;
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
         }
 
         public String getUsername() {

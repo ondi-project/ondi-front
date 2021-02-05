@@ -14,15 +14,19 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.ondi.android_ondi.API.RetrofitClient;
 import com.ondi.android_ondi.Adapter.ProductAdapter;
 import com.ondi.android_ondi.Model.ProductModel;
 import com.ondi.android_ondi.R;
 
 import java.util.ArrayList;
 
+import retrofit2.Call;
+import retrofit2.Response;
+
 public class HomeFragment extends Fragment {
     View mainView;
-    ArrayList<ProductModel> test_productList = new ArrayList<>();
+    ArrayList<ProductModel.Product> productList;
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -35,14 +39,31 @@ public class HomeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        test_insertData();
+        getData();
+    }
+
+    private void getData() {
+        Call<ArrayList<ProductModel.Product>> call = RetrofitClient.getApiService().getMainList();
+        call.enqueue(new retrofit2.Callback<ArrayList<ProductModel.Product>>() {
+            @Override
+            public void onResponse(Call<ArrayList<ProductModel.Product>> call, Response<ArrayList<ProductModel.Product>> response) {
+                productList = (ArrayList<ProductModel.Product>) response.body();
+                System.out.println("test: "+productList.get(0).getP_name());
+                setRecyclerView();
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<ProductModel.Product>> call, Throwable t) {
+                t.printStackTrace();
+            }
+
+        });
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mainView = inflater.inflate(R.layout.fragment_home, container, false);
-        setRecyclerView();
         setEditListener();
         return mainView;
     }
@@ -62,15 +83,8 @@ public class HomeFragment extends Fragment {
     private void setRecyclerView() {
         RecyclerView recyclerView = mainView.findViewById(R.id.recycler_home);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
-        ProductAdapter adapter = new ProductAdapter(getContext(),test_productList);
+        ProductAdapter adapter = new ProductAdapter(getContext(), productList);
         recyclerView.setAdapter(adapter);
     }
 
-    private void test_insertData() {
-        test_productList.add(new ProductModel("상품이름","100000",false));
-        test_productList.add(new ProductModel("상품이름","200000",true));
-        test_productList.add(new ProductModel("상품이름","300000",false));
-        test_productList.add(new ProductModel("상품이름","400000",false));
-        test_productList.add(new ProductModel("상품이름","500000",true));
-    }
 }

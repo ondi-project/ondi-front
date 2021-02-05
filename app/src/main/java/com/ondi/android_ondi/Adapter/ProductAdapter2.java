@@ -26,9 +26,9 @@ public class ProductAdapter2 extends RecyclerView.Adapter<ProductAdapter2.ItemVi
     //마이페이지 - 거래 리스트에 사용되는 adapter. fragment종류에 따라서 visibility 바꾸면 복잡할 것 같아서 새로 만듬.
 
     Context context;
-    ArrayList<ProductModel> productList;
+    ArrayList<ProductModel.Product> productList;
 
-    public ProductAdapter2(Context context, ArrayList<ProductModel> list) {
+    public ProductAdapter2(Context context, ArrayList<ProductModel.Product> list) {
         this.context = context;
         this.productList = list;
     }
@@ -68,11 +68,11 @@ public class ProductAdapter2 extends RecyclerView.Adapter<ProductAdapter2.ItemVi
             img_product = itemView.findViewById(R.id.img_product);
         }
 
-        public void bind(ProductModel product,Context context){
+        public void bind(ProductModel.Product product,Context context){
             MultiTransformation multiOption = new MultiTransformation(new CenterCrop(), new RoundedCorners(16));
             Glide.with(context).load(R.drawable.test).apply(RequestOptions.bitmapTransform(multiOption)).override(120,120).into(img_product);
-            text_product_name.setText(product.getProductName());
-            text_product_price.setText(product.getProductPrice());
+            text_product_name.setText(product.getP_name());
+            text_product_price.setText(product.getP_price());
         }
     }
 
