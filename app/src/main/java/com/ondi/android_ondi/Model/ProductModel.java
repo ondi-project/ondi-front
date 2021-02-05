@@ -1,13 +1,26 @@
 package com.ondi.android_ondi.Model;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
-import okhttp3.MultipartBody;
+import java.util.List;
 
 public class ProductModel {
 
     public List<Product> productList;
+
+    public class ProductDetail{
+        @SerializedName("product")
+        public ProductInfo info;
+        public boolean like;
+        public boolean livebutton;
+    }
+
+    public class ProductInfo{
+        public Product p;
+        @SerializedName("p_seller")
+        public AuthModel user;
+    }
 
     public ProductModel(List<Product> productList) {
         this.productList = productList;
@@ -16,23 +29,32 @@ public class ProductModel {
     public List<Product> getProductList() {
         return productList;
     }
-
     public void setProductList(List<Product> productList) {
         this.productList = productList;
     }
 
     public class Product {
-        int p_seller;
+        int id;
+        @Expose
+        String p_category;
         String p_name;
         String p_price;
-        MultipartBody.Part p_image;
+        @Expose
+        String p_content;
+        String p_image;
+        @Expose
+        String p_tag;
+        @Expose
+        boolean p_nego;
         String p_date;
         int p_viewcount;
         int p_likecount;
+        @Expose
+        int p_live;
         transient boolean favorite_check;
 
-        public Product(int id, String p_name, String p_price, MultipartBody.Part p_image, String p_date, int p_viewcount, int p_likecount, boolean favorite_check) {
-            this.p_seller = id;
+        public Product(int id, String p_name, String p_price, String p_image, String p_date, int p_viewcount, int p_likecount, boolean favorite_check) {
+            this.id = id;
             this.p_name = p_name;
             this.p_price = p_price;
             this.p_image = p_image;
@@ -43,11 +65,11 @@ public class ProductModel {
         }
 
         public int getId() {
-            return p_seller;
+            return id;
         }
 
         public void setId(int id) {
-            this.p_seller = id;
+            this.id = id;
         }
 
         public String getP_name() {
@@ -66,11 +88,11 @@ public class ProductModel {
             this.p_price = p_price;
         }
 
-        public MultipartBody.Part getP_image() {
+        public String getP_image() {
             return p_image;
         }
 
-        public void setP_image(MultipartBody.Part p_image) {
+        public void setP_image(String p_image) {
             this.p_image = p_image;
         }
 

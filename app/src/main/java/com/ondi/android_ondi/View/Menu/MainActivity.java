@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setHomeAsUpIndicator(R.drawable.icon_ionic_ios_arrow_back);
+        //actionBar.setHomeAsUpIndicator(R.drawable.icon_ionic_ios_arrow_back);
         actionBar.setDisplayShowCustomEnabled(true);
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -123,6 +123,7 @@ public class MainActivity extends AppCompatActivity {
     /** 카테고리 화면에서 카테고리 선택 -> 리스트 화면 **/
     public void goToCategory(String category){
         fragmentManager.beginTransaction().replace(R.id.layout_main_container, listFragment).setReorderingAllowed(true).commitAllowingStateLoss();
+        listFragment.setCategory(category);
     }
 
     /** 상품등록 화면에서 사진 업로드 -> 갤러리 **/

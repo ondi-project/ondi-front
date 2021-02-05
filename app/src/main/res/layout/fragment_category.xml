@@ -19,7 +19,7 @@
             android:layout_marginTop="30dp"
             android:letterSpacing="-0.01"
             android:lineSpacingExtra="6sp"
-            android:text="추천 서비스"
+            android:text="카테고리별 보기"
             android:textColor="@color/dark_slate_blue"
             android:textSize="30sp"
             android:textStyle="bold" />
@@ -116,31 +116,7 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="70dp"
-                        android:layout_height="70dp"
-                        android:layout_margin="10dp"
-                        android:background="@drawable/custom_round_rectangle_white"
-                        android:elevation="5dp"
-                        android:gravity="center"
-                        android:foreground="@drawable/custom_ripple_effect"
-                        android:clickable="true"
-                        android:focusable="true">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/icon_ionic_ios_tv"
-                            android:clickable="false"/>
-                    </LinearLayout>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
-                    <LinearLayout
+                        android:id="@+id/btn_accessory"
                         android:layout_width="70dp"
                         android:layout_height="70dp"
                         android:layout_margin="10dp"
@@ -157,26 +133,16 @@
                             android:src="@drawable/icon_awesome_shopping_bag"
                             android:clickable="false"/>
                     </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
 
                     <LinearLayout
-                        android:layout_width="70dp"
-                        android:layout_height="70dp"
-                        android:layout_margin="10dp"
-                        android:background="@drawable/custom_round_rectangle_white"
-                        android:elevation="5dp"
-                        android:gravity="center"
-                        android:foreground="@drawable/custom_ripple_effect"
-                        android:clickable="true"
-                        android:focusable="true">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/icon_awesome_tag"
-                            android:clickable="false"/>
-                    </LinearLayout>
-
-                    <LinearLayout
+                        android:id="@+id/btn_furniture"
                         android:layout_width="70dp"
                         android:layout_height="70dp"
                         android:layout_margin="10dp"
@@ -195,6 +161,26 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/btn_baby"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/custom_round_rectangle_white"
+                        android:elevation="5dp"
+                        android:gravity="center"
+                        android:foreground="@drawable/custom_ripple_effect"
+                        android:clickable="true"
+                        android:focusable="true">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/icon_awesome_baby_carriage"
+                            android:clickable="false"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/btn_ticket"
                         android:layout_width="70dp"
                         android:layout_height="70dp"
                         android:layout_margin="10dp"
@@ -209,6 +195,24 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:src="@drawable/icon_awesome_ticket_alt"
+                            android:clickable="false"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/custom_round_rectangle_white"
+                        android:elevation="5dp"
+                        android:gravity="center"
+                        android:foreground="@drawable/custom_ripple_effect"
+                        android:clickable="true"
+                        android:focusable="true">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/icon_ionic_ios_tv"
                             android:clickable="false"/>
                     </LinearLayout>
 
@@ -234,7 +238,7 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/icon_awesome_baby_carriage"
+                            android:src="@drawable/icon_awesome_tag"
                             android:clickable="false"/>
                     </LinearLayout>
 
