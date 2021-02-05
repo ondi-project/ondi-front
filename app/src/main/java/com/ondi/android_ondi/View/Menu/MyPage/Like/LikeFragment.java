@@ -19,7 +19,7 @@ import java.util.ArrayList;
 
 public class LikeFragment extends Fragment {
     View mainView;
-    ArrayList<ProductModel> test_productList = new ArrayList<>();
+    ArrayList<ProductModel.Product> test_productList = new ArrayList<>();
 
     public LikeFragment() {
         // Required empty public constructor
@@ -47,11 +47,11 @@ public class LikeFragment extends Fragment {
     private void test_insertData() {
         test_productList.clear();
         test_productList.removeAll(test_productList);
-        test_productList.add(new ProductModel("상품이름","100000",false));
-        test_productList.add(new ProductModel("상품이름","200000",true));
-        test_productList.add(new ProductModel("상품이름","300000",false));
-        test_productList.add(new ProductModel("상품이름","400000",false));
-        test_productList.add(new ProductModel("상품이름","500000",true));
+//        test_productList.add(new ProductModel("상품이름","100000",false));
+//        test_productList.add(new ProductModel("상품이름","200000",true));
+//        test_productList.add(new ProductModel("상품이름","300000",false));
+//        test_productList.add(new ProductModel("상품이름","400000",false));
+//        test_productList.add(new ProductModel("상품이름","500000",true));
     }
 
     private void setRecyclerView() {

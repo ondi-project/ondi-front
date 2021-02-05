@@ -17,14 +17,22 @@ import android.widget.Toast;
 import com.amazonaws.mobile.client.AWSMobileClient;
 import com.amazonaws.mobile.client.Callback;
 import com.amazonaws.mobile.client.results.SignInResult;
+import com.ondi.android_ondi.API.Data.PostLogin;
+import com.ondi.android_ondi.API.RetrofitClient;
+import com.ondi.android_ondi.Model.AuthModel;
 import com.ondi.android_ondi.R;
 import com.ondi.android_ondi.View.Menu.MainActivity;
+
+import java.io.IOException;
+
+import retrofit2.Call;
+import retrofit2.Response;
 
 import static com.amazonaws.mobile.auth.core.internal.util.ThreadUtils.runOnUiThread;
 
 public class SignInFragment extends Fragment {
 
-    EditText emailEdt, passwordEdt;
+    EditText nameEdt,emailEdt, passwordEdt;
     Button btn_sign_in;
     TextView btn_sign_up;
 
@@ -50,6 +58,7 @@ public class SignInFragment extends Fragment {
     }
 
     private void initView(View view) {
+        nameEdt = view.findViewById(R.id.edt_sing_in_name);
         emailEdt = view.findViewById(R.id.edt_sing_in_email);
         passwordEdt = view.findViewById(R.id.edt_sing_in_pwd);
         btn_sign_up = view.findViewById(R.id.btn_sing_in_sign_up);
@@ -77,12 +86,39 @@ public class SignInFragment extends Fragment {
 
     public void signInButtonClick(View view) {
         // 로그인 시도
+        String name = nameEdt.getText().toString();
         String email = emailEdt.getText().toString();
         String password = passwordEdt.getText().toString();
+
         AWSMobileClient.getInstance().signIn(email, password, null, new Callback<SignInResult>() {
             @Override
             public void onResult(SignInResult result) {
-                startActivity(new Intent(getContext(), MainActivity.class));
+                Call<AuthModel> call = RetrofitClient.getApiService().loginUser(new PostLogin(name,email,password));
+                call.enqueue(new retrofit2.Callback<AuthModel>() {
+                    @Override
+                    public void onResponse(Call<AuthModel> call, Response<AuthModel> response) {
+                        if(response.isSuccessful()){
+                            AuthModel.getInstance().user = response.body().user;
+                            runOnUiThread(() -> Toast.makeText(getContext(), "로그인 성공", Toast.LENGTH_SHORT).show());
+                            startActivity(new Intent(getContext(), MainActivity.class));
+                        }
+                        else{
+                            if (response.code() != 200) {
+                                try {
+                                    Log.v("Error code 400",response.errorBody().string()+ " "+response.errorBody().contentType());
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                            runOnUiThread(() -> Toast.makeText(getContext(), "로그인 실패: "+response.message(), Toast.LENGTH_SHORT).show());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<AuthModel> call, Throwable t) {
+                        t.printStackTrace();
+                    }
+                });
             }
 
             @Override
