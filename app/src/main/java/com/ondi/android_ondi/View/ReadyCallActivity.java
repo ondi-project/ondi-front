@@ -38,7 +38,7 @@ import com.ondi.android_ondi.View.Login.LoginActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class ReadyCallActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
 
     private static final String KEY_CHANNEL_NAME = "channelName";
@@ -59,14 +59,15 @@ public class MainActivity extends AppCompatActivity {
             KEY_SEND_AUDIO,
     };
 
-    public final String MY_CHANNEL_NAME = "demo-channel-0603";
     public final String MY_CLIENT_ID = "client-id-0602";
 
     public static List<ResourceEndpointListItem> mEndpointList = new ArrayList<>();
     public static List<IceServer> mIceServerList = new ArrayList<>();
     public static String mChannelArn = null;
 
-    EditText channelNameEdt;
+    private boolean isMaster = true;
+
+    private EditText channelNameEdt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,30 +78,38 @@ public class MainActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO}, 9393);
         }
 
-        setContentView(R.layout.activity_main2);
+        setContentView(R.layout.activity_ready_call);
 
         channelNameEdt = findViewById(R.id.edt_channel_name);
         Button logout_btn = findViewById(R.id.btn_logout);
-        logout_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AWSMobileClient.getInstance().signOut();
-                startActivity(new Intent(MainActivity.this, LoginActivity.class));
-                finish();
-            }
+        logout_btn.setOnClickListener(view -> {
+            AWSMobileClient.getInstance().signOut();
+            startActivity(new Intent(ReadyCallActivity.this, LoginActivity.class));
+            finish();
+        });
+        Button viewerBtn = findViewById(R.id.btn_viewer);
+        viewerBtn.setOnClickListener(view -> {
+            isMaster = false;
         });
     }
-
 
     public void startButtonClick(View view) {
         String region = OndiApplication.getRegion();
         String channelName = channelNameEdt.getText().toString();
 
-        updateSignalingChannelInfo(region, channelName, ChannelRole.MASTER);
+        if (isMaster) {
+            startStreaming(region, channelName, ChannelRole.MASTER, SellerCallActivity.class);
+        } else {
+            startStreaming(region, channelName, ChannelRole.VIEWER, BuyerCallActivity.class);
+        }
+    }
+
+    private void startStreaming(String region, String channelName, ChannelRole role, Class<?> destination) {
+        updateSignalingChannelInfo(region, channelName, role);
 
         if (mChannelArn != null) {
-            Bundle extras = setExtras(true);
-            Intent intent = new Intent(this, StreamingActivity.class);
+            Bundle extras = setExtras();
+            Intent intent = new Intent(this, destination);
             intent.putExtras(extras);
             startActivity(intent);
         }
@@ -118,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private Bundle setExtras(boolean isMaster) {
+    private Bundle setExtras() {
         final Bundle extras = new Bundle();
         final String channelName = channelNameEdt.getText().toString();
         final String clientId = MY_CLIENT_ID;
@@ -161,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
         extras.putBoolean(KEY_OF_OPTIONS[0], true); // Send Video 옵션 선택
         extras.putBoolean(KEY_OF_OPTIONS[1], true); // Send Audio 옵션 선택
 
-        extras.putBoolean(KEY_CAMERA_FRONT_FACING, false); // 전면 카메라 설정(후면은 false)
+        extras.putBoolean(KEY_CAMERA_FRONT_FACING, true); // 전면 카메라 설정(후면은 false)
 
         return extras;
     }

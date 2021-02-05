@@ -26,11 +26,10 @@ public class SplashActivity extends AppCompatActivity {
             AsyncTask.execute(() -> {
                 if (auth.isSignedIn()) {
                     startActivity(new Intent(getApplicationContext(),MainActivity.class));
-                    finish();
                 } else {
                     startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-                    finish();
                 }
+                finish();
             });
         };
         handler.postDelayed(r,2000);
