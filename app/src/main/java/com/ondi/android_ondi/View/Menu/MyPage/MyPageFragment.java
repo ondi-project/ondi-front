@@ -1,21 +1,36 @@
 package com.ondi.android_ondi.View.Menu.MyPage;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.ondi.android_ondi.API.Data.PostLogin;
+import com.ondi.android_ondi.API.RetrofitClient;
+import com.ondi.android_ondi.Model.AuthModel;
 import com.ondi.android_ondi.R;
 import com.ondi.android_ondi.View.Menu.MainActivity;
 import com.ondi.android_ondi.View.Menu.Register.RegisterFragment;
 
+import java.io.IOException;
+
+import retrofit2.Call;
+import retrofit2.Response;
+
+import static com.amazonaws.mobile.auth.core.internal.util.ThreadUtils.runOnUiThread;
+
 public class MyPageFragment extends Fragment {
     View mainView;
-    RelativeLayout btn_upload_photo;
+    AuthModel.User user;
 
     public MyPageFragment() {
         // Required empty public constructor
@@ -31,26 +46,57 @@ public class MyPageFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
+    private void getData() {
+        Call<AuthModel> call = RetrofitClient.getApiService().getUserInfo();
+        call.enqueue(new retrofit2.Callback<AuthModel>() {
+            @Override
+            public void onResponse(Call<AuthModel> call, Response<AuthModel> response) {
+                if(response.isSuccessful()){
+                    user = response.body().user;
+                    initView();
+                }
+                else{
+                    if (response.code() != 200) {
+                        try {
+                            Log.v("Error code",response.errorBody().string()+ " "+response.errorBody().contentType());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AuthModel> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mainView = inflater.inflate(R.layout.fragment_my_page, container, false);
-        initView();
+        getData();
         return mainView;
     }
 
     private void initView() {
-        btn_upload_photo = mainView.findViewById(R.id.btn_upload_photo_mypage);
-        btn_upload_photo.setOnClickListener(new ClickListener());
 
+        LinearLayout btn_edit_profile = mainView.findViewById(R.id.btn_edit_profile);
+        //메뉴
         RelativeLayout btn_sale_history = mainView.findViewById(R.id.btn_sale_history);
-        btn_sale_history.setOnClickListener(new ClickListener());
         RelativeLayout btn_purchase_history = mainView.findViewById(R.id.btn_purchase_history);
-        btn_purchase_history.setOnClickListener(new ClickListener());
         RelativeLayout btn_like = mainView.findViewById(R.id.btn_like);
-        btn_like.setOnClickListener(new ClickListener());
         RelativeLayout btn_review = mainView.findViewById(R.id.btn_review);
+
+        TextView text_user_name = mainView.findViewById(R.id.text_user_name);
+
+        btn_sale_history.setOnClickListener(new ClickListener());
+        btn_purchase_history.setOnClickListener(new ClickListener());
+        btn_like.setOnClickListener(new ClickListener());
         btn_review.setOnClickListener(new ClickListener());
+
     }
 
     public class ClickListener implements View.OnClickListener {

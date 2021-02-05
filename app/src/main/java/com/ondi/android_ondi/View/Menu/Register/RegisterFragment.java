@@ -175,7 +175,7 @@ public class RegisterFragment extends Fragment {
         else
         {
             File imageFile = createFileFromBitmap(bitmapList.get(0));
-            RequestBody p_image = RequestBody.create(MediaType.parse("multipart/form-data"),imageFile);
+            RequestBody p_image = RequestBody.create(MediaType.parse("image/*"),imageFile);
             map.put("p_image",p_image);
             RequestBody p_category = RequestBody.create(MediaType.parse("text/plain"), spinnerType);
             map.put("p_category",p_category);

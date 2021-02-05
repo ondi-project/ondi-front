@@ -24,14 +24,17 @@ import retrofit2.http.Query;
 
 public interface RetrofitAPI {
 
-    //auth api
+    /**AUTH API**/
     @POST("/auth/register/")
     Call<AuthModel> postUser(@Body PostRegister user);
 
     @POST("/auth/login/")
     Call<AuthModel> loginUser(@Body PostLogin user);
 
-    //main api
+    @GET("/auth/user")
+    Call<AuthModel> getUserInfo();
+
+    /**MAIN API**/
     @GET("/main")
     Call<ArrayList<ProductModel.Product>> getMainList();
 
