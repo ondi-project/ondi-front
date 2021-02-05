@@ -21,6 +21,7 @@ import com.ondi.android_ondi.API.Data.PostLogin;
 import com.ondi.android_ondi.API.RetrofitClient;
 import com.ondi.android_ondi.Model.AuthModel;
 import com.ondi.android_ondi.R;
+import com.ondi.android_ondi.Utils.PreferenceManager;
 import com.ondi.android_ondi.View.Menu.MainActivity;
 
 import java.io.IOException;
@@ -99,6 +100,11 @@ public class SignInFragment extends Fragment {
                     public void onResponse(Call<AuthModel> call, Response<AuthModel> response) {
                         if(response.isSuccessful()){
                             AuthModel.getInstance().user = response.body().user;
+
+                            PreferenceManager.setString(getContext(), "name", name);
+                            PreferenceManager.setString(getContext(), "email", email);
+                            PreferenceManager.setString(getContext(), "password", password);
+
                             runOnUiThread(() -> Toast.makeText(getContext(), "로그인 성공", Toast.LENGTH_SHORT).show());
                             getActivity().finish();
                             startActivity(new Intent(getContext(), MainActivity.class));
@@ -106,12 +112,13 @@ public class SignInFragment extends Fragment {
                         else{
                             if (response.code() != 200) {
                                 try {
-                                    Log.v("Error code",response.errorBody().string()+ " "+response.errorBody().contentType());
+                                    Log.v("Error code 400",response.errorBody().string()+ " "+response.errorBody().contentType());
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }
                             }
                             runOnUiThread(() -> Toast.makeText(getContext(), "로그인 실패: "+response.message(), Toast.LENGTH_SHORT).show());
+                            System.out.println("login error: "+response.message());
                         }
                     }
 
@@ -124,7 +131,7 @@ public class SignInFragment extends Fragment {
 
             @Override
             public void onError(Exception e) {
-                runOnUiThread(() -> Toast.makeText(getContext(), e.toString(), Toast.LENGTH_SHORT).show());
+                runOnUiThread(() -> Toast.makeText(getContext(), "로그인 실패", Toast.LENGTH_SHORT).show());
             }
         });
     }

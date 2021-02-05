@@ -6,65 +6,60 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.MultiTransformation;
-import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
-import com.ondi.android_ondi.Model.ProductModel;
-import com.ondi.android_ondi.Model.ReviewModel;
-import com.ondi.android_ondi.Model.ScoreModel;
+import com.ondi.android_ondi.Model.AuctionModel;
 import com.ondi.android_ondi.R;
-import com.ondi.android_ondi.View.Menu.Detail.ProductDetailActivity;
 
 import java.util.ArrayList;
 
-public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ItemViewHolder> {
+public class AuctionAdapter extends RecyclerView.Adapter<AuctionAdapter.ItemViewHolder> {
     Context context;
-    ArrayList<ScoreModel> reviewList;
+    ArrayList<AuctionModel> auctionList;
 
-    public ReviewAdapter(Context context, ArrayList<ScoreModel> list) {
+    public AuctionAdapter(Context context, ArrayList<AuctionModel> list) {
         this.context = context;
-        this.reviewList = list;
+        this.auctionList = list;
     }
 
     @NonNull
     @Override
     public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view  =  LayoutInflater.from(context).inflate(R.layout.item_review, parent, false);
+        View view  =  LayoutInflater.from(context).inflate(R.layout.item_auction, parent, false);
         ItemViewHolder itemViewHolder = new ItemViewHolder(view);
         return itemViewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
-        holder.bind(reviewList.get(position),context);
+        AuctionModel.Product product = auctionList.get(position).getL_product();
+        Glide.with(context).load("https://c9e33e74f42d.ngrok.io" + product.getP_image())
+                .apply(RequestOptions.bitmapTransform(new RoundedCorners(20))).into(holder.productIv);
+        holder.productName.setText(product.getP_name());
+        holder.productPrice.setText(String.valueOf(product.getP_price()));
     }
 
     @Override
     public int getItemCount() {
-        return reviewList.size();
+        return auctionList != null? auctionList.size() : 0;
     }
 
     public static class ItemViewHolder extends RecyclerView.ViewHolder {
-        RatingBar rating_bar;
-        TextView text_review;
+        ImageView productIv;
+        TextView productName;
+        TextView productPrice;
 
         public ItemViewHolder(@NonNull View itemView) {
             super(itemView);
-            rating_bar = itemView.findViewById(R.id.rating_bar);
-            text_review = itemView.findViewById(R.id.text_review);
-        }
-
-        public void bind(ScoreModel score,Context context){
-            rating_bar.setRating(score.getScore());
-            text_review.setText(score.getComment());
+            productIv = itemView.findViewById(R.id.iv_auction_item);
+            productName = itemView.findViewById(R.id.tv_auction_item_title);
+            productPrice = itemView.findViewById(R.id.tv_auction_item_price);
         }
     }
 

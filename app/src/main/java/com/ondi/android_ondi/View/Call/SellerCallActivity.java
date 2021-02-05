@@ -1,4 +1,4 @@
-package com.ondi.android_ondi.View;
+package com.ondi.android_ondi.View.Call;
 
 import android.content.Context;
 import android.content.Intent;
@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -21,6 +23,7 @@ import com.ondi.android_ondi.Signaling.Model.Message;
 import com.ondi.android_ondi.Signaling.SignalingListener;
 import com.ondi.android_ondi.Signaling.Tyrus.SignalingServiceWebSocketClient;
 import com.ondi.android_ondi.Utils.AwsV4Signer;
+import com.ondi.android_ondi.View.Payment.PaymentActivity;
 import com.ondi.android_ondi.Webrtc.KinesisVideoPeerConnection;
 import com.ondi.android_ondi.Webrtc.KinesisVideoSdpObserver;
 
@@ -56,17 +59,17 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.Executors;
 
-import static com.ondi.android_ondi.View.ReadyCallActivity.KEY_CAMERA_FRONT_FACING;
-import static com.ondi.android_ondi.View.ReadyCallActivity.KEY_CHANNEL_ARN;
-import static com.ondi.android_ondi.View.ReadyCallActivity.KEY_CLIENT_ID;
-import static com.ondi.android_ondi.View.ReadyCallActivity.KEY_ICE_SERVER_PASSWORD;
-import static com.ondi.android_ondi.View.ReadyCallActivity.KEY_ICE_SERVER_TTL;
-import static com.ondi.android_ondi.View.ReadyCallActivity.KEY_ICE_SERVER_URI;
-import static com.ondi.android_ondi.View.ReadyCallActivity.KEY_ICE_SERVER_USER_NAME;
-import static com.ondi.android_ondi.View.ReadyCallActivity.KEY_IS_MASTER;
-import static com.ondi.android_ondi.View.ReadyCallActivity.KEY_REGION;
-import static com.ondi.android_ondi.View.ReadyCallActivity.KEY_SEND_AUDIO;
-import static com.ondi.android_ondi.View.ReadyCallActivity.KEY_WSS_ENDPOINT;
+import static com.ondi.android_ondi.View.Chat.ChatActivity.KEY_CAMERA_FRONT_FACING;
+import static com.ondi.android_ondi.View.Chat.ChatActivity.KEY_CHANNEL_ARN;
+import static com.ondi.android_ondi.View.Chat.ChatActivity.KEY_CLIENT_ID;
+import static com.ondi.android_ondi.View.Chat.ChatActivity.KEY_ICE_SERVER_PASSWORD;
+import static com.ondi.android_ondi.View.Chat.ChatActivity.KEY_ICE_SERVER_TTL;
+import static com.ondi.android_ondi.View.Chat.ChatActivity.KEY_ICE_SERVER_URI;
+import static com.ondi.android_ondi.View.Chat.ChatActivity.KEY_ICE_SERVER_USER_NAME;
+import static com.ondi.android_ondi.View.Chat.ChatActivity.KEY_IS_MASTER;
+import static com.ondi.android_ondi.View.Chat.ChatActivity.KEY_REGION;
+import static com.ondi.android_ondi.View.Chat.ChatActivity.KEY_SEND_AUDIO;
+import static com.ondi.android_ondi.View.Chat.ChatActivity.KEY_WSS_ENDPOINT;
 
 public class SellerCallActivity extends AppCompatActivity {
     private static final String TAG = "zzanzu";
@@ -78,7 +81,7 @@ public class SellerCallActivity extends AppCompatActivity {
     private String mRegion;
 
     private boolean master = true;
-    private boolean isAudioSent = false;
+    private boolean isAudioSent = true;
 
     private boolean mCameraFacingFront = true;
 
@@ -113,8 +116,8 @@ public class SellerCallActivity extends AppCompatActivity {
     private int originalAudioMode;
     private boolean originalSpeakerphoneOn;
 
-    private static final int VIDEO_SIZE_WIDTH = 400;
-    private static final int VIDEO_SIZE_HEIGHT = 300;
+    private static final int VIDEO_SIZE_WIDTH = 720;
+    private static final int VIDEO_SIZE_HEIGHT = 1280;
     private static final int VIDEO_FPS = 30;
 
     private boolean gotException = false;
@@ -201,6 +204,10 @@ public class SellerCallActivity extends AppCompatActivity {
          */
         videoCapturer.startCapture(VIDEO_SIZE_WIDTH, VIDEO_SIZE_HEIGHT, VIDEO_FPS);
         localVideoTrack.setEnabled(true);
+
+        ImageView endIv = findViewById(R.id.btn_seller_call_end);
+
+        endIv.setOnClickListener(v -> finish());
     }
 
     @Override
@@ -495,7 +502,7 @@ public class SellerCallActivity extends AppCompatActivity {
             mClientId = UUID.randomUUID().toString();
         }
         master = intent.getBooleanExtra(KEY_IS_MASTER, true);
-        isAudioSent = intent.getBooleanExtra(KEY_SEND_AUDIO, false);
+        isAudioSent = intent.getBooleanExtra(KEY_SEND_AUDIO, true);
         mUserNames = intent.getStringArrayListExtra(KEY_ICE_SERVER_USER_NAME);
         mPasswords = intent.getStringArrayListExtra(KEY_ICE_SERVER_PASSWORD);
         mTTLs = intent.getIntegerArrayListExtra(KEY_ICE_SERVER_TTL);

@@ -12,11 +12,17 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.amazonaws.mobile.client.AWSMobileClient;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.ondi.android_ondi.R;
+import com.ondi.android_ondi.View.Chat.ChatActivity;
+import com.ondi.android_ondi.View.Login.LoginActivity;
 import com.ondi.android_ondi.View.Menu.Category.CategoryFragment;
 import com.ondi.android_ondi.View.Menu.Category.ListFragment;
 import com.ondi.android_ondi.View.Menu.Auction.AuctionFragment;
@@ -101,6 +107,13 @@ public class MainActivity extends AppCompatActivity {
         actionBar.setDisplayShowCustomEnabled(true);
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setDisplayHomeAsUpEnabled(true);
+
+        ImageView chatBtn = findViewById(R.id.iv_main_chat);
+        chatBtn.setOnClickListener(v -> {
+            AWSMobileClient.getInstance().signOut();
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
+        });
     }
 
     /** 마이페이지 화면 이동**/
@@ -144,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
                 if (data.getClipData() != null) { // 사진 여러개 선택한 경우
                     int count = data.getClipData().getItemCount();
                     if (count > 12) {
-                        Toast.makeText(this, "사진은 최대 12장 선택 가능합니다.", Toast.LENGTH_SHORT);
+                        Toast.makeText(this, "사진은 최대 12장 선택 가능합니다.", Toast.LENGTH_SHORT).show();
                         return;
                     }
                     for (int i = 0; i < data.getClipData().getItemCount(); i++) {
@@ -160,6 +173,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                         //이미지 들고있다가 등록 버튼 누를 시 서버에 저장.
                     }
+                    Log.d("bitmaplist", "onActivityResult: " + bitmapList.size());
                     registerFragment.setImageView(bitmapList, data.getClipData().getItemCount());
                 }
             }

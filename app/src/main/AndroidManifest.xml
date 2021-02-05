@@ -4,6 +4,11 @@
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
 
     <application
         android:name=".OndiApplication"
@@ -15,14 +20,14 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
       
-        <activity android:name=".View.Menu.Detail.SellerDetailActivity"></activity>
+        <activity android:name=".View.Menu.Detail.SellerDetailActivity"/>
         <activity android:name=".View.Payment.PaymentActivity" />
         <activity android:name=".View.Menu.Detail.ProductDetailActivity" />
         <activity android:name=".View.Login.LoginActivity" />
         <activity android:name=".View.Menu.MainActivity" android:windowSoftInputMode="adjustPan"/>
-        <activity android:name=".View.ReadyCallActivity"/>
-        <activity android:name=".View.SellerCallActivity" />
-        <activity android:name=".View.BuyerCallActivity" />
+        <activity android:name=".View.Chat.ChatActivity"/>
+        <activity android:name=".View.Call.SellerCallActivity" />
+        <activity android:name=".View.Call.BuyerCallActivity" />
            <activity android:name=".View.Splash.SplashActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

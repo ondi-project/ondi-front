@@ -131,6 +131,7 @@ public class RegisterFragment extends Fragment {
     }
 
     public void setImageView(ArrayList<Bitmap> bitmapList,int count){
+        Log.d("bitmaplist", "setImageView: " + bitmapList.size());
         this.bitmapList = bitmapList;
         RecyclerView recyclerView = mainView.findViewById(R.id.recycler_photo);
         recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
@@ -173,7 +174,7 @@ public class RegisterFragment extends Fragment {
 
         if(bitmapList.isEmpty()){
             //사진 없음
-            Toast.makeText(context,"이미지를 선택해주세요.", Toast.LENGTH_SHORT);
+            Toast.makeText(context,"이미지를 선택해주세요.", Toast.LENGTH_SHORT).show();
         }
         else
         {

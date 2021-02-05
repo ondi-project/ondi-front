@@ -1,4 +1,4 @@
-package com.ondi.android_ondi.View;
+package com.ondi.android_ondi.View.Call;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,7 +8,7 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -23,6 +23,7 @@ import com.ondi.android_ondi.Signaling.Model.Message;
 import com.ondi.android_ondi.Signaling.SignalingListener;
 import com.ondi.android_ondi.Signaling.Tyrus.SignalingServiceWebSocketClient;
 import com.ondi.android_ondi.Utils.AwsV4Signer;
+import com.ondi.android_ondi.View.Payment.PaymentActivity;
 import com.ondi.android_ondi.Webrtc.KinesisVideoPeerConnection;
 import com.ondi.android_ondi.Webrtc.KinesisVideoSdpObserver;
 
@@ -57,17 +58,16 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.Executors;
 
-import static com.ondi.android_ondi.View.ReadyCallActivity.KEY_CAMERA_FRONT_FACING;
-import static com.ondi.android_ondi.View.ReadyCallActivity.KEY_CHANNEL_ARN;
-import static com.ondi.android_ondi.View.ReadyCallActivity.KEY_CLIENT_ID;
-import static com.ondi.android_ondi.View.ReadyCallActivity.KEY_ICE_SERVER_PASSWORD;
-import static com.ondi.android_ondi.View.ReadyCallActivity.KEY_ICE_SERVER_TTL;
-import static com.ondi.android_ondi.View.ReadyCallActivity.KEY_ICE_SERVER_URI;
-import static com.ondi.android_ondi.View.ReadyCallActivity.KEY_ICE_SERVER_USER_NAME;
-import static com.ondi.android_ondi.View.ReadyCallActivity.KEY_IS_MASTER;
-import static com.ondi.android_ondi.View.ReadyCallActivity.KEY_REGION;
-import static com.ondi.android_ondi.View.ReadyCallActivity.KEY_SEND_AUDIO;
-import static com.ondi.android_ondi.View.ReadyCallActivity.KEY_WSS_ENDPOINT;
+import static com.ondi.android_ondi.View.Chat.ChatActivity.KEY_CAMERA_FRONT_FACING;
+import static com.ondi.android_ondi.View.Chat.ChatActivity.KEY_CHANNEL_ARN;
+import static com.ondi.android_ondi.View.Chat.ChatActivity.KEY_CLIENT_ID;
+import static com.ondi.android_ondi.View.Chat.ChatActivity.KEY_ICE_SERVER_PASSWORD;
+import static com.ondi.android_ondi.View.Chat.ChatActivity.KEY_ICE_SERVER_TTL;
+import static com.ondi.android_ondi.View.Chat.ChatActivity.KEY_ICE_SERVER_URI;
+import static com.ondi.android_ondi.View.Chat.ChatActivity.KEY_ICE_SERVER_USER_NAME;
+import static com.ondi.android_ondi.View.Chat.ChatActivity.KEY_IS_MASTER;
+import static com.ondi.android_ondi.View.Chat.ChatActivity.KEY_REGION;
+import static com.ondi.android_ondi.View.Chat.ChatActivity.KEY_WSS_ENDPOINT;
 
 public class BuyerCallActivity extends AppCompatActivity {
 
@@ -75,8 +75,8 @@ public class BuyerCallActivity extends AppCompatActivity {
     private static final String AudioTrackID = "KvsAudioTrack";
     private static final String VideoTrackID = "KvsVideoTrack";
     private static final String LOCAL_MEDIA_STREAM_LABEL = "KvsLocalMediaStream";
-    private static final int VIDEO_SIZE_WIDTH = 400;
-    private static final int VIDEO_SIZE_HEIGHT = 300;
+    private static final int VIDEO_SIZE_WIDTH = 720;
+    private static final int VIDEO_SIZE_HEIGHT = 1280;
     private static final int VIDEO_FPS = 30;
     private static final boolean ENABLE_INTEL_VP8_ENCODER = true;
     private static final boolean ENABLE_H264_HIGH_PROFILE = true;
@@ -106,7 +106,7 @@ public class BuyerCallActivity extends AppCompatActivity {
 
     private String recipientClientId;
 
-    private boolean master = true;
+    private boolean master;
     private boolean isAudioSent = false;
 
     private String mChannelArn;
@@ -294,8 +294,7 @@ public class BuyerCallActivity extends AppCompatActivity {
         if (mClientId == null || mClientId.isEmpty()) {
             mClientId = UUID.randomUUID().toString();
         }
-        master = intent.getBooleanExtra(KEY_IS_MASTER, true);
-        isAudioSent = intent.getBooleanExtra(KEY_SEND_AUDIO, false);
+        master = intent.getBooleanExtra(KEY_IS_MASTER, false);
         ArrayList<String> mUserNames = intent.getStringArrayListExtra(KEY_ICE_SERVER_USER_NAME);
         ArrayList<String> mPasswords = intent.getStringArrayListExtra(KEY_ICE_SERVER_PASSWORD);
         ArrayList<Integer> mTTLs = intent.getIntegerArrayListExtra(KEY_ICE_SERVER_TTL);
@@ -365,6 +364,15 @@ public class BuyerCallActivity extends AppCompatActivity {
 
         remoteView = findViewById(R.id.remote_view);
         remoteView.init(rootEglBase.getEglBaseContext(), null);
+
+        ImageView endIv = findViewById(R.id.btn_buyer_call_end);
+        Button paymentBtn = findViewById(R.id.btn_buyer_call_payment);
+
+        endIv.setOnClickListener(v -> finish());
+        paymentBtn.setOnClickListener(v -> {
+            startActivity(new Intent(this, PaymentActivity.class));
+            finish();
+        });
     }
 
     private VideoCapturer createVideoCapturer() {

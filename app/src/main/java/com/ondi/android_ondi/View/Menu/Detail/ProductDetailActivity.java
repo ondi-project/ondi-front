@@ -28,6 +28,7 @@ import com.ondi.android_ondi.Dialog.AuctionDialog;
 import com.ondi.android_ondi.Model.AuthModel;
 import com.ondi.android_ondi.Model.ProductModel;
 import com.ondi.android_ondi.R;
+import com.ondi.android_ondi.View.Chat.ChatActivity;
 import com.ondi.android_ondi.View.Payment.PaymentActivity;
 
 import java.util.ArrayList;
@@ -46,7 +47,6 @@ public class ProductDetailActivity extends AppCompatActivity {
     ArrayList<String> imgList = new ArrayList<>();
     ArrayList<String> hashTagList = new ArrayList<>();
 
-    String baseUrl = "http://3.34.125.92:8000";
     int p_id;
 
     @Override
@@ -64,7 +64,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         context = this;
 
         ImageView img_seller = findViewById(R.id.img_seller_detail);
-        Glide.with(this).load(baseUrl+product.getP_name()).circleCrop().into(img_seller);
+        Glide.with(this).load("https://c9e33e74f42d.ngrok.io" + product.getP_image()).circleCrop().into(img_seller);
 
         TextView text_price_detail = findViewById(R.id.text_price_detail);
         text_price_detail.setText(product.getP_price());
@@ -145,7 +145,7 @@ public class ProductDetailActivity extends AppCompatActivity {
     }
 
     private void setViewPager() {
-        imgList.add(baseUrl+product.getP_image());
+        imgList.add(product.getP_image());
         viewPager = findViewById(R.id.viewpager_product_detail);
         layoutIndicator = findViewById(R.id.layout_indicators);
 
@@ -246,11 +246,14 @@ public class ProductDetailActivity extends AppCompatActivity {
                     break;
                 }
                 case R.id.btn_chat :{
-                    //거래하기 페이지 (채팅)
+                    Intent intent = new Intent(context, ChatActivity.class);
+                    intent.putExtra("seller", product.getP_seller());
+                    startActivity(intent);
                     break;
                 }
                 case R.id.img_seller_detail:{
                     Intent intent = new Intent(context,SellerDetailActivity.class);
+                    intent.putExtra("u_id",product.getP_seller());
                     startActivity(intent);
                     break;
                 }
