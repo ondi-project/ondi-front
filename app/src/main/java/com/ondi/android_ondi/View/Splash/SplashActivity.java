@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.amazonaws.mobile.client.AWSMobileClient;
+import com.ondi.android_ondi.View.Chat.ChatActivity;
 import com.ondi.android_ondi.View.Login.LoginActivity;
 import com.ondi.android_ondi.View.Menu.MainActivity;
 import com.ondi.android_ondi.R;
@@ -23,12 +24,9 @@ public class SplashActivity extends AppCompatActivity {
         final Runnable r = () -> {
             final AWSMobileClient auth = AWSMobileClient.getInstance();
 
-            //임시
-            auth.signOut();
-
             AsyncTask.execute(() -> {
                 if (auth.isSignedIn()) {
-                    startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 } else {
                     startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                 }

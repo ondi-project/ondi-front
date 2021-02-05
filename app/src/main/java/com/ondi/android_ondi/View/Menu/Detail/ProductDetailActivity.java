@@ -24,6 +24,7 @@ import com.ondi.android_ondi.Adapter.TagAdapter;
 import com.ondi.android_ondi.Adapter.ViewPagerAdapter;
 import com.ondi.android_ondi.Dialog.AuctionDialog;
 import com.ondi.android_ondi.R;
+import com.ondi.android_ondi.View.Chat.ChatActivity;
 import com.ondi.android_ondi.View.Payment.PaymentActivity;
 
 import java.util.ArrayList;
@@ -166,7 +167,8 @@ public class ProductDetailActivity extends AppCompatActivity {
                     break;
                 }
                 case R.id.btn_chat :{
-                    //거래하기 페이지 (채팅)
+                    Intent intent = new Intent(context, ChatActivity.class);
+                    startActivity(intent);
                     break;
                 }
                 case R.id.img_seller_detail:{

@@ -1,4 +1,4 @@
-package com.ondi.android_ondi.View;
+package com.ondi.android_ondi.View.Call;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,7 +8,7 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -23,6 +23,7 @@ import com.ondi.android_ondi.Signaling.Model.Message;
 import com.ondi.android_ondi.Signaling.SignalingListener;
 import com.ondi.android_ondi.Signaling.Tyrus.SignalingServiceWebSocketClient;
 import com.ondi.android_ondi.Utils.AwsV4Signer;
+import com.ondi.android_ondi.View.Payment.PaymentActivity;
 import com.ondi.android_ondi.Webrtc.KinesisVideoPeerConnection;
 import com.ondi.android_ondi.Webrtc.KinesisVideoSdpObserver;
 
@@ -57,17 +58,16 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.Executors;
 
-import static com.ondi.android_ondi.View.ReadyCallActivity.KEY_CAMERA_FRONT_FACING;
-import static com.ondi.android_ondi.View.ReadyCallActivity.KEY_CHANNEL_ARN;
-import static com.ondi.android_ondi.View.ReadyCallActivity.KEY_CLIENT_ID;
-import static com.ondi.android_ondi.View.ReadyCallActivity.KEY_ICE_SERVER_PASSWORD;
-import static com.ondi.android_ondi.View.ReadyCallActivity.KEY_ICE_SERVER_TTL;
-import static com.ondi.android_ondi.View.ReadyCallActivity.KEY_ICE_SERVER_URI;
-import static com.ondi.android_ondi.View.ReadyCallActivity.KEY_ICE_SERVER_USER_NAME;
-import static com.ondi.android_ondi.View.ReadyCallActivity.KEY_IS_MASTER;
-import static com.ondi.android_ondi.View.ReadyCallActivity.KEY_REGION;
-import static com.ondi.android_ondi.View.ReadyCallActivity.KEY_SEND_AUDIO;
-import static com.ondi.android_ondi.View.ReadyCallActivity.KEY_WSS_ENDPOINT;
+import static com.ondi.android_ondi.View.Chat.ChatActivity.KEY_CAMERA_FRONT_FACING;
+import static com.ondi.android_ondi.View.Chat.ChatActivity.KEY_CHANNEL_ARN;
+import static com.ondi.android_ondi.View.Chat.ChatActivity.KEY_CLIENT_ID;
+import static com.ondi.android_ondi.View.Chat.ChatActivity.KEY_ICE_SERVER_PASSWORD;
+import static com.ondi.android_ondi.View.Chat.ChatActivity.KEY_ICE_SERVER_TTL;
+import static com.ondi.android_ondi.View.Chat.ChatActivity.KEY_ICE_SERVER_URI;
+import static com.ondi.android_ondi.View.Chat.ChatActivity.KEY_ICE_SERVER_USER_NAME;
+import static com.ondi.android_ondi.View.Chat.ChatActivity.KEY_IS_MASTER;
+import static com.ondi.android_ondi.View.Chat.ChatActivity.KEY_REGION;
+import static com.ondi.android_ondi.View.Chat.ChatActivity.KEY_WSS_ENDPOINT;
 
 public class BuyerCallActivity extends AppCompatActivity {
 
@@ -364,6 +364,15 @@ public class BuyerCallActivity extends AppCompatActivity {
 
         remoteView = findViewById(R.id.remote_view);
         remoteView.init(rootEglBase.getEglBaseContext(), null);
+
+        ImageView endIv = findViewById(R.id.btn_buyer_call_end);
+        Button paymentBtn = findViewById(R.id.btn_buyer_call_payment);
+
+        endIv.setOnClickListener(v -> finish());
+        paymentBtn.setOnClickListener(v -> {
+            startActivity(new Intent(this, PaymentActivity.class));
+            finish();
+        });
     }
 
     private VideoCapturer createVideoCapturer() {

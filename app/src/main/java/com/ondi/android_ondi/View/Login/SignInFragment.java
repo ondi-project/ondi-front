@@ -93,37 +93,38 @@ public class SignInFragment extends Fragment {
         AWSMobileClient.getInstance().signIn(email, password, null, new Callback<SignInResult>() {
             @Override
             public void onResult(SignInResult result) {
-                Call<AuthModel> call = RetrofitClient.getApiService().loginUser(new PostLogin(name,email,password));
-                call.enqueue(new retrofit2.Callback<AuthModel>() {
-                    @Override
-                    public void onResponse(Call<AuthModel> call, Response<AuthModel> response) {
-                        if(response.isSuccessful()){
-                            AuthModel.getInstance().user = response.body().user;
-                            runOnUiThread(() -> Toast.makeText(getContext(), "로그인 성공", Toast.LENGTH_SHORT).show());
-                            startActivity(new Intent(getContext(), MainActivity.class));
-                        }
-                        else{
-                            if (response.code() != 200) {
-                                try {
-                                    Log.v("Error code 400",response.errorBody().string()+ " "+response.errorBody().contentType());
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                            runOnUiThread(() -> Toast.makeText(getContext(), "로그인 실패: "+response.message(), Toast.LENGTH_SHORT).show());
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<AuthModel> call, Throwable t) {
-                        t.printStackTrace();
-                    }
-                });
+                runOnUiThread(() -> Toast.makeText(getContext(), "로그인 성공", Toast.LENGTH_SHORT).show());
+                startActivity(new Intent(getContext(), MainActivity.class));
+//                Call<AuthModel> call = RetrofitClient.getApiService().loginUser(new PostLogin(name,email,password));
+//                call.enqueue(new retrofit2.Callback<AuthModel>() {
+//                    @Override
+//                    public void onResponse(Call<AuthModel> call, Response<AuthModel> response) {
+//                        if(response.isSuccessful()){
+//                            AuthModel.getInstance().user = response.body().user;
+//
+//                        }
+//                        else{
+//                            if (response.code() != 200) {
+//                                try {
+//                                    Log.v("Error code 400",response.errorBody().string()+ " "+response.errorBody().contentType());
+//                                } catch (IOException e) {
+//                                    e.printStackTrace();
+//                                }
+//                            }
+//                            runOnUiThread(() -> Toast.makeText(getContext(), "로그인 실패: "+response.message(), Toast.LENGTH_SHORT).show());
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<AuthModel> call, Throwable t) {
+//                        t.printStackTrace();
+//                    }
+//                });
             }
 
             @Override
             public void onError(Exception e) {
-                runOnUiThread(() -> Toast.makeText(getContext(), e.toString(), Toast.LENGTH_SHORT).show());
+                runOnUiThread(() -> Toast.makeText(getContext(), "로그인 실패", Toast.LENGTH_SHORT).show());
             }
         });
     }

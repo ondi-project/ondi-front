@@ -1,4 +1,4 @@
-package com.ondi.android_ondi.View;
+package com.ondi.android_ondi.View.Chat;
 
 import android.Manifest;
 import android.content.Intent;
@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -33,12 +33,14 @@ import com.amazonaws.services.kinesisvideosignaling.model.GetIceServerConfigResu
 import com.amazonaws.services.kinesisvideosignaling.model.IceServer;
 import com.ondi.android_ondi.OndiApplication;
 import com.ondi.android_ondi.R;
+import com.ondi.android_ondi.View.Call.BuyerCallActivity;
 import com.ondi.android_ondi.View.Login.LoginActivity;
+import com.ondi.android_ondi.View.Call.SellerCallActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ReadyCallActivity extends AppCompatActivity {
+public class ChatActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
 
     private static final String KEY_CHANNEL_NAME = "channelName";
@@ -67,8 +69,6 @@ public class ReadyCallActivity extends AppCompatActivity {
 
     private boolean isMaster = true;
 
-    private EditText channelNameEdt;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,24 +78,30 @@ public class ReadyCallActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO}, 9393);
         }
 
-        setContentView(R.layout.activity_ready_call);
+        setContentView(R.layout.activity_chat);
 
-        channelNameEdt = findViewById(R.id.edt_channel_name);
-        Button logout_btn = findViewById(R.id.btn_logout);
-        logout_btn.setOnClickListener(view -> {
-            AWSMobileClient.getInstance().signOut();
-            startActivity(new Intent(ReadyCallActivity.this, LoginActivity.class));
-            finish();
-        });
-        Button viewerBtn = findViewById(R.id.btn_viewer);
-        viewerBtn.setOnClickListener(view -> {
-            isMaster = false;
+//        Button logout_btn = findViewById(R.id.btn_logout);
+//        logout_btn.setOnClickListener(view -> {
+//            AWSMobileClient.getInstance().signOut();
+//            startActivity(new Intent(ChatActivity.this, LoginActivity.class));
+//            finish();
+//        });
+
+        ImageView backBtn = findViewById(R.id.iv_chat_back);
+        Button paymentBtn = findViewById(R.id.btn_chat_payment);
+        Button callBtn = findViewById(R.id.btn_chat_call);
+
+        backBtn.setOnClickListener(v -> finish());
+        callBtn.setOnClickListener(this::callButtonClick);
+        //임시
+        paymentBtn.setOnClickListener(v -> {
+            isMaster = !isMaster;
         });
     }
 
-    public void startButtonClick(View view) {
+    public void callButtonClick(View view) {
         String region = OndiApplication.getRegion();
-        String channelName = channelNameEdt.getText().toString();
+        String channelName = "sss";
 
         if (isMaster) {
             startStreaming(region, channelName, ChannelRole.MASTER, SellerCallActivity.class);
@@ -129,7 +135,7 @@ public class ReadyCallActivity extends AppCompatActivity {
 
     private Bundle setExtras() {
         final Bundle extras = new Bundle();
-        final String channelName = channelNameEdt.getText().toString();
+        final String channelName = "sss";
         final String clientId = MY_CLIENT_ID;
         final String region = OndiApplication.getRegion();
 
