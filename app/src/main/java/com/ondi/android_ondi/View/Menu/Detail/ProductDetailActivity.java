@@ -18,6 +18,7 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.ondi.android_ondi.API.RetrofitClient;
@@ -40,10 +41,13 @@ public class ProductDetailActivity extends AppCompatActivity {
     ViewPager2 viewPager;
     LinearLayout layoutIndicator;
 
-    //데이터 받아서 처리해야함
+    ProductModel.Product product;
+    ProductModel.Product status;
+
     ArrayList<String> imgList = new ArrayList<>();
     ArrayList<String> hashTagList = new ArrayList<>();
 
+    String baseUrl = "http://3.34.125.92:8000";
     int p_id;
 
     @Override
@@ -53,9 +57,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         p_id = getIntent().getIntExtra("p_id",0);
         getData();
 
-        initView();
         setToolbar(); //커스텀 툴바 적용
-        setViewPager();
         setClickListener();
     }
 
@@ -63,16 +65,74 @@ public class ProductDetailActivity extends AppCompatActivity {
         context = this;
 
         ImageView img_seller = findViewById(R.id.img_seller_detail);
-        Glide.with(this).load(R.drawable.test_user).circleCrop().into(img_seller);
+        Glide.with(this).load(baseUrl+product.getP_name()).circleCrop().into(img_seller);
 
-        Switch btn_live = findViewById(R.id.btn_live);
-        btn_live.setOnCheckedChangeListener(new CheckChangeListener());
+        TextView text_price_detail = findViewById(R.id.text_price_detail);
+        text_price_detail.setText(product.getP_price());
+
+        TextView text_name_detail = findViewById(R.id.text_name_detail);
+        text_name_detail.setText(product.getP_name());
+
+        TextView text_category_detail = findViewById(R.id.text_category_detail);
+        text_category_detail.setText(product.getP_category());
+
+        TextView text_views_detail = findViewById(R.id.text_views_detail);
+        text_views_detail.setText(String.valueOf(product.getP_viewcount()));
+
+        TextView text_favorite_detail = findViewById(R.id.text_favorite_detail);
+        text_favorite_detail.setText(String.valueOf(product.getP_likecount()));
+
+
+        checkLike();
+        checkLive();
+        parsingTag();
 
         RecyclerView recyclerView = findViewById(R.id.recycler_hash_tag);
         recyclerView.setLayoutManager(new GridLayoutManager(this,3));
-
         TagAdapter adapter = new TagAdapter(this,hashTagList);
         recyclerView.setAdapter(adapter);
+    }
+
+    private void parsingTag() {
+        TextView text_content_detail = findViewById(R.id.text_content_detail);
+        text_content_detail.setText(product.getP_content());
+        //태그 파싱해서 list에 add
+        String tags = product.getP_tag();
+        String[] tagList = tags.split("/");
+        for(String tag : tagList){
+            hashTagList.add(tag);
+        }
+    }
+
+    private void checkLive() {
+        LinearLayout layout_on_air = findViewById(R.id.layout_on_air);
+        if(product.getP_seller() == AuthModel.getInstance().user.getId()){
+            //라이브 버튼 보이게
+            layout_on_air.setVisibility(View.VISIBLE);
+        }
+        else{
+            layout_on_air.setVisibility(View.GONE);
+        }
+
+        Switch btn_live = findViewById(R.id.btn_live);
+        btn_live.setOnCheckedChangeListener(new CheckChangeListener());
+        if(status.livebutton){
+            //live상태
+            btn_live.setChecked(true);
+        }
+        else{
+            btn_live.setChecked(false);
+        }
+    }
+
+    private void checkLike() {
+        ImageView btn_favorite_detail = findViewById(R.id.btn_favorite_detail);
+        if(status.like){
+            Glide.with(context).load(R.drawable.ic_baseline_favorite_24).into(btn_favorite_detail);
+        }
+        else{
+            Glide.with(context).load(R.drawable.ic_baseline_favorite_border_24).into(btn_favorite_detail);
+        }
     }
 
     private void setClickListener() {
@@ -86,6 +146,7 @@ public class ProductDetailActivity extends AppCompatActivity {
     }
 
     private void setViewPager() {
+        imgList.add(baseUrl+product.getP_image());
         viewPager = findViewById(R.id.viewpager_product_detail);
         layoutIndicator = findViewById(R.id.layout_indicators);
 
@@ -104,34 +165,23 @@ public class ProductDetailActivity extends AppCompatActivity {
     }
 
     private void getData() {
-
-        //AuthModel.getInstance().user.getId()
-        Call<ProductModel.ProductDetail> call = RetrofitClient.getApiService().getProductDetail(p_id,8);
-        call.enqueue(new retrofit2.Callback<ProductModel.ProductDetail>() {
+        Call<ArrayList<ProductModel.Product>> call = RetrofitClient.getApiService().getProductDetail(p_id,AuthModel.getInstance().user.getId());
+        call.enqueue(new retrofit2.Callback<ArrayList<ProductModel.Product>>() {
             @Override
-            public void onResponse(Call<ProductModel.ProductDetail> call, Response<ProductModel.ProductDetail> response) {
-                ProductModel.ProductDetail detail = response.body();
-                System.out.println("테스트 :"+detail.info.p.getP_name());
+            public void onResponse(Call<ArrayList<ProductModel.Product>> call, Response<ArrayList<ProductModel.Product>> response) {
+                ArrayList<ProductModel.Product> body= response.body();
+                product = body.get(0);
+                status = body.get(1);
+                initView();
+                setViewPager();
             }
 
             @Override
-            public void onFailure(Call<ProductModel.ProductDetail> call, Throwable t) {
-
+            public void onFailure(Call<ArrayList<ProductModel.Product>> call, Throwable t) {
                 t.printStackTrace();
             }
 
         });
-
-
-//        imgList.add("https://cdn.pixabay.com/photo/2014/03/03/16/15/mosque-279015_1280.jpg");
-//        imgList.add("https://cdn.pixabay.com/photo/2014/03/03/16/15/mosque-279015_1280.jpg");
-//        imgList.add("https://cdn.pixabay.com/photo/2014/03/03/16/15/mosque-279015_1280.jpg");
-//        imgList.add("https://cdn.pixabay.com/photo/2014/03/03/16/15/mosque-279015_1280.jpg");
-//        imgList.add("https://cdn.pixabay.com/photo/2014/03/03/16/15/mosque-279015_1280.jpg");
-//
-//        hashTagList.add("전자제품");
-//        hashTagList.add("노트북");
-//        hashTagList.add("삼성");
     }
 
     private void setToolbar() {
@@ -219,7 +269,6 @@ public class ProductDetailActivity extends AppCompatActivity {
                 auctionDialog.show();
             }
             else{
-                //on->off 동작할게 있나
             }
         }
     }

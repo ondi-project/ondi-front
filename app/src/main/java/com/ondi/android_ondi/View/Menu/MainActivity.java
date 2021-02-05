@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
-        //actionBar.setHomeAsUpIndicator(R.drawable.icon_ionic_ios_arrow_back);
+        actionBar.setHomeAsUpIndicator(R.drawable.icon_ionic_ios_arrow_back);
         actionBar.setDisplayShowCustomEnabled(true);
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -191,8 +191,10 @@ public class MainActivity extends AppCompatActivity {
                 }
                 return true;
             }
+
         }
         return super.onOptionsItemSelected(item);
     }
+
 
 }

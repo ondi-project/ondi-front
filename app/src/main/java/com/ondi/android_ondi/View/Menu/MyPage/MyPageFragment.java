@@ -47,30 +47,31 @@ public class MyPageFragment extends Fragment {
     }
 
     private void getData() {
-        Call<AuthModel> call = RetrofitClient.getApiService().getUserInfo();
-        call.enqueue(new retrofit2.Callback<AuthModel>() {
-            @Override
-            public void onResponse(Call<AuthModel> call, Response<AuthModel> response) {
-                if(response.isSuccessful()){
-                    user = response.body().user;
-                    initView();
-                }
-                else{
-                    if (response.code() != 200) {
-                        try {
-                            Log.v("Error code",response.errorBody().string()+ " "+response.errorBody().contentType());
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<AuthModel> call, Throwable t) {
-                t.printStackTrace();
-            }
-        });
+        user = AuthModel.getInstance().user;
+//        Call<AuthModel> call = RetrofitClient.getApiService().getUserInfo();
+//        call.enqueue(new retrofit2.Callback<AuthModel>() {
+//            @Override
+//            public void onResponse(Call<AuthModel> call, Response<AuthModel> response) {
+//                if(response.isSuccessful()){
+//                    user = response.body().user;
+//                    initView();
+//                }
+//                else{
+//                    if (response.code() != 200) {
+//                        try {
+//                            Log.v("Error code",response.errorBody().string()+ " "+response.errorBody().contentType());
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<AuthModel> call, Throwable t) {
+//                t.printStackTrace();
+//            }
+//        });
     }
 
     @Override
@@ -78,19 +79,24 @@ public class MyPageFragment extends Fragment {
                              Bundle savedInstanceState) {
         mainView = inflater.inflate(R.layout.fragment_my_page, container, false);
         getData();
+        initView();
         return mainView;
     }
 
     private void initView() {
 
         LinearLayout btn_edit_profile = mainView.findViewById(R.id.btn_edit_profile);
-        //메뉴
+        btn_edit_profile.setOnClickListener(new ClickListener());
+
         RelativeLayout btn_sale_history = mainView.findViewById(R.id.btn_sale_history);
         RelativeLayout btn_purchase_history = mainView.findViewById(R.id.btn_purchase_history);
         RelativeLayout btn_like = mainView.findViewById(R.id.btn_like);
         RelativeLayout btn_review = mainView.findViewById(R.id.btn_review);
 
         TextView text_user_name = mainView.findViewById(R.id.text_user_name);
+        text_user_name.setText(user.getUsername());
+        TextView text_user_email = mainView.findViewById(R.id.text_user_email);
+        text_user_email.setText(user.getEmail());
 
         btn_sale_history.setOnClickListener(new ClickListener());
         btn_purchase_history.setOnClickListener(new ClickListener());

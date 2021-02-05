@@ -57,6 +57,7 @@ public class ProductAdapter2 extends RecyclerView.Adapter<ProductAdapter2.ItemVi
     }
 
     public static class ItemViewHolder extends RecyclerView.ViewHolder {
+        String baseUrl = "http://3.34.125.92:8000";
         TextView text_product_name;
         TextView text_product_price;
         ImageView img_product;
@@ -70,7 +71,7 @@ public class ProductAdapter2 extends RecyclerView.Adapter<ProductAdapter2.ItemVi
 
         public void bind(ProductModel.Product product,Context context){
             MultiTransformation multiOption = new MultiTransformation(new CenterCrop(), new RoundedCorners(16));
-            Glide.with(context).load(R.drawable.test).apply(RequestOptions.bitmapTransform(multiOption)).override(120,120).into(img_product);
+            Glide.with(context).load(baseUrl+product.getP_image()).apply(RequestOptions.bitmapTransform(multiOption)).override(120,120).into(img_product);
             text_product_name.setText(product.getP_name());
             text_product_price.setText(product.getP_price());
         }
@@ -87,10 +88,6 @@ public class ProductAdapter2 extends RecyclerView.Adapter<ProductAdapter2.ItemVi
         public void onClick(View view) {
             switch (view.getId()){
                 case R.id.img_product :{
-                    //상세페이지로 이동
-                    Intent intent = new Intent(context, ProductDetailActivity.class);
-                    context.startActivity(intent);
-                    break;
                 }
             }
         }

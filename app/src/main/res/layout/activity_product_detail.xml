@@ -87,7 +87,7 @@
                     </LinearLayout>
 
                     <TextView
-                        android:id="@+id/text_price_name"
+                        android:id="@+id/text_name_detail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="삼성 지포스 노트북"
@@ -167,7 +167,7 @@
 
                     <LinearLayout
                         android:id="@+id/layout_on_air"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:layout_marginTop="5dp"
@@ -184,36 +184,36 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             tools:ignore="UseSwitchCompatOrMaterialXml" />
-
-                        <RelativeLayout
-                            android:id="@+id/btn_report"
+                    </LinearLayout>
+                    <RelativeLayout
+                        android:id="@+id/btn_report"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/custom_round_rectangle_stroke_grey"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_gravity="center_vertical"
+                        android:foreground="@drawable/custom_ripple_effect"
+                        android:clickable="true"
+                        android:focusable="true">
+                        <TextView
+                            android:id="@+id/text_report"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/custom_round_rectangle_stroke_grey"
-                            android:paddingStart="10dp"
-                            android:paddingEnd="10dp"
-                            android:paddingTop="5dp"
-                            android:paddingBottom="5dp"
-                            android:layout_gravity="center_vertical"
-                            android:foreground="@drawable/custom_ripple_effect"
-                            android:clickable="true"
-                            android:focusable="true">
-                            <TextView
-                                android:id="@+id/text_report"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="신고하기"
-                                android:textColor="@color/blue_grey_two"
-                                android:textSize="8sp"/>
-                            <ImageView
-                                android:layout_width="10dp"
-                                android:layout_height="10dp"
-                                android:src="@drawable/icon_map_police"
-                                android:layout_toEndOf="@id/text_report"
-                                android:layout_marginStart="5dp"
-                                app:tint="@color/blue_grey" />
-                        </RelativeLayout>
-                    </LinearLayout>
+                            android:text="신고하기"
+                            android:textColor="@color/blue_grey_two"
+                            android:textSize="8sp"/>
+                        <ImageView
+                            android:layout_width="10dp"
+                            android:layout_height="10dp"
+                            android:src="@drawable/icon_map_police"
+                            android:layout_toEndOf="@id/text_report"
+                            android:layout_marginStart="5dp"
+                            app:tint="@color/blue_grey" />
+                    </RelativeLayout>
 
                 </LinearLayout>
             </LinearLayout>
@@ -238,6 +238,7 @@
                 android:layout_marginTop="5dp"/>
 
             <TextView
+                android:id="@+id/text_content_detail"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textColor="@color/dark_slate_blue"

@@ -40,10 +40,12 @@ import java.util.Date;
 import java.util.HashMap;
 
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.http.Part;
 
 import static com.amazonaws.mobile.auth.core.internal.util.ThreadUtils.runOnUiThread;
 
@@ -178,10 +180,24 @@ public class RegisterFragment extends Fragment {
         {
             //서버측에서 사진을 1장만 받게해놔서 우선은 맨 첫번째 장 보냄.
             File imageFile = createFileFromBitmap(bitmapList.get(0));
+            MultipartBody.Part p_image = MultipartBody.Part.createFormData("file", imageFile.getName(), RequestBody.create(MediaType.parse("image/*"), imageFile));
+            //map.put("p_image",p_image);
+            RequestBody p_category = RequestBody.create(MediaType.parse("text/plain"), spinnerType);
+            //map.put("p_category",p_category);
+            RequestBody p_name = RequestBody.create(MediaType.parse("text/plain"), name);
+            //map.put("p_name",p_name);
+            RequestBody p_price = RequestBody.create(MediaType.parse("text/plain"), price);
+            //map.put("p_price",p_price);
+            RequestBody p_content = RequestBody.create(MediaType.parse("text/plain"), content);
+            //map.put("p_content",p_content);
+            RequestBody p_tag = RequestBody.create(MediaType.parse("text/plain"), tag);
+            //map.put("p_tag",p_tag);
+            RequestBody p_deal = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(deal));
+            //map.put("p_nego",p_deal);
+            RequestBody p_seller = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(AuthModel.getInstance().user.getId()));
+            //map.put("p_seller",id);
 
-            createRequestBody(map, name, price, content, deal, tag, imageFile);
-
-            Call<ResponseModel> call = RetrofitClient.getApiService().postProduct(map);
+            Call<ResponseModel> call = RetrofitClient.getApiService().postProduct(p_category,p_name,p_price,p_content, p_image,p_tag,p_deal,p_seller);
             call.enqueue(new Callback<ResponseModel>() {
                 @Override
                 public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
@@ -192,6 +208,7 @@ public class RegisterFragment extends Fragment {
                     else{
                         if (response.code() != 200) {
                             try {
+                                System.out.println("실패: code: "+response.code()+ "메시지 "+response.message());
                                 Log.v("Error code",response.errorBody().string()+ " "+response.errorBody().contentType());
                             } catch (IOException e) {
                                 e.printStackTrace();
@@ -210,24 +227,6 @@ public class RegisterFragment extends Fragment {
         }
     }
 
-    private void createRequestBody(HashMap<String, RequestBody> map, String name, String price, String content, boolean deal, String tag, File imageFile) {
-        RequestBody p_image = RequestBody.create(MediaType.parse("image/*"),imageFile);
-        map.put("p_image",p_image);
-        RequestBody p_category = RequestBody.create(MediaType.parse("text/plain"), spinnerType);
-        map.put("p_category",p_category);
-        RequestBody p_name = RequestBody.create(MediaType.parse("text/plain"), name);
-        map.put("p_name",p_name);
-        RequestBody p_price = RequestBody.create(MediaType.parse("text/plain"), price);
-        map.put("p_price",p_price);
-        RequestBody p_content = RequestBody.create(MediaType.parse("text/plain"), content);
-        map.put("p_content",p_content);
-        RequestBody p_tag = RequestBody.create(MediaType.parse("text/plain"), tag);
-        map.put("p_tag",p_tag);
-        RequestBody p_deal = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(deal));
-        map.put("p_nego",p_deal);
-        RequestBody id = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(AuthModel.getInstance().user.getId()));
-        map.put("p_seller",id);
-    }
 
     private File createFileFromBitmap(Bitmap bitmap) throws IOException {
         File newFile = new File(getActivity().getFilesDir(),makeImageFileName());

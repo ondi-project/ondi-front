@@ -106,6 +106,7 @@ public class SignInFragment extends Fragment {
                             PreferenceManager.setString(getContext(), "password", password);
 
                             runOnUiThread(() -> Toast.makeText(getContext(), "로그인 성공", Toast.LENGTH_SHORT).show());
+                            getActivity().finish();
                             startActivity(new Intent(getContext(), MainActivity.class));
                         }
                         else{

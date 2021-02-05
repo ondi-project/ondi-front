@@ -47,6 +47,7 @@ public class ViewPagerAdapter  extends RecyclerView.Adapter<ViewPagerAdapter.Ite
     }
 
     public static class ItemViewHolder extends RecyclerView.ViewHolder {
+        String baseUrl = "http://3.34.125.92:8000";
         ImageView img_product;
 
         public ItemViewHolder(@NonNull View itemView) {
@@ -56,7 +57,7 @@ public class ViewPagerAdapter  extends RecyclerView.Adapter<ViewPagerAdapter.Ite
 
         public void bind(String imgUrl,Context context){
             MultiTransformation multiOption = new MultiTransformation(new CenterCrop(), new RoundedCorners(30));
-            Glide.with(context).load(R.drawable.test).apply(RequestOptions.bitmapTransform(multiOption)).into(img_product);
+            Glide.with(context).load(baseUrl+imgUrl).apply(RequestOptions.bitmapTransform(multiOption)).into(img_product);
         }
     }
 }
