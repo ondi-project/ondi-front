@@ -18,7 +18,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.ondi.android_ondi.Model.ProductModel;
 import com.ondi.android_ondi.R;
-import com.ondi.android_ondi.View.Menu.ProductDetail.ProductDetailActivity;
+import com.ondi.android_ondi.View.Menu.Detail.ProductDetailActivity;
 
 import java.util.ArrayList;
 
