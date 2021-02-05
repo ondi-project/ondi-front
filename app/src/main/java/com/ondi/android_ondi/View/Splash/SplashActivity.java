@@ -24,6 +24,7 @@ public class SplashActivity extends AppCompatActivity {
                 finish();
             }
         };
-        handler.postDelayed(r,2000);
+        handler.postDelayed(r,0);
+        //2000
     }
 }

@@ -4,8 +4,9 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.content.Intent;
+import android.content.Context;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -15,8 +16,8 @@ import com.bumptech.glide.load.MultiTransformation;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
+import com.ondi.android_ondi.Dialog.PaymentDialog;
 import com.ondi.android_ondi.R;
-import com.ondi.android_ondi.View.Menu.ProductDetail.ProductDetailActivity;
 
 public class PaymentActivity extends AppCompatActivity {
 
@@ -39,12 +40,15 @@ public class PaymentActivity extends AppCompatActivity {
     }
 
     private void setClickListener() {
-        LinearLayout btn_credit = findViewById(R.id.btn_payment_credit_card);
-        btn_credit.setOnClickListener(new ClickListener());
-        LinearLayout btn_kakao = findViewById(R.id.btn_payment_kakao);
-        btn_credit.setOnClickListener(new ClickListener());
-        LinearLayout btn_phone = findViewById(R.id.btn_payment_phone);
-        btn_credit.setOnClickListener(new ClickListener());
+        LinearLayout btn_credit = findViewById(R.id.btn_credit_card);
+        btn_credit.setOnClickListener(new ClickListener(this));
+        LinearLayout btn_kakao = findViewById(R.id.btn_kakao);
+        btn_kakao.setOnClickListener(new ClickListener(this));
+        LinearLayout btn_phone = findViewById(R.id.btn_phone);
+        btn_phone.setOnClickListener(new ClickListener(this));
+        LinearLayout btn_payment = findViewById(R.id.btn_payment);
+        btn_payment.setOnClickListener(new ClickListener(this));
+
     }
 
     private void setToolbar() {
@@ -53,21 +57,43 @@ public class PaymentActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowCustomEnabled(true);
         actionBar.setDisplayShowTitleEnabled(false);
-        actionBar.setHomeAsUpIndicator(R.drawable.ic_baseline_arrow_back_ios_24);
+        actionBar.setHomeAsUpIndicator(R.drawable.icon_ionic_ios_arrow_back);
         actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
     public class ClickListener implements View.OnClickListener {
+        Context context;
+
+        public ClickListener(Context context) {
+            this.context = context;
+        }
+
         @Override
         public void onClick(View view) {
             switch (view.getId()){
-                case R.id.btn_payment_credit_card :{
+                case R.id.btn_credit_card:{
                 }
-                case R.id.btn_payment_kakao :{
+                case R.id.btn_kakao:{
                 }
-                case R.id.btn_payment_phone:{
+                case R.id.btn_phone:{
+                }
+                case R.id.btn_payment:{
+                    PaymentDialog dialog = new PaymentDialog(context);
+                    dialog.show();
                 }
             }
         }
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:{
+                finish();
+                return true;
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 }

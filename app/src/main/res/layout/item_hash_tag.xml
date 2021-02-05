@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    xmlns:tools="http://schemas.android.com/tools">
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/custom_round_rectangle_stroke_grey"
+        android:paddingStart="25dp"
+        android:paddingEnd="25dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp">
+        <TextView
+            android:id="@+id/text_hash_tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="해시태그"
+            android:textColor="@color/blue_grey_two"
+            android:textSize="8sp"/>
+        <ImageView
+            android:id="@+id/img_hash_tag"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:src="@drawable/icon_awesome_bell"
+            android:layout_toEndOf="@id/text_hash_tag"
+            android:layout_marginStart="5dp"
+            app:tint="@color/blue_grey" />
+    </RelativeLayout>
+
+
+</LinearLayout>

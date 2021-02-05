@@ -15,8 +15,8 @@
         <activity android:name=".View.Payment.PaymentActivity"></activity>
         <activity android:name=".View.Menu.ProductDetail.ProductDetailActivity" />
         <activity android:name=".View.Login.LoginActivity" />
-        <activity android:name=".View.Splash.SplashActivity" />
-        <activity android:name=".View.Menu.MainActivity">
+        <activity android:name=".View.Menu.MainActivity" />
+        <activity android:name=".View.Splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
