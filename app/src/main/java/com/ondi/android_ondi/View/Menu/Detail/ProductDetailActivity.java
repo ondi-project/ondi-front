@@ -81,15 +81,29 @@ public class ProductDetailActivity extends AppCompatActivity {
         TextView text_favorite_detail = findViewById(R.id.text_favorite_detail);
         text_favorite_detail.setText(String.valueOf(product.getP_likecount()));
 
-        ImageView btn_favorite_detail = findViewById(R.id.btn_favorite_detail);
-        if(status.like){
-            //todo 하트 바꾸기
-            Glide.with(context).load(R.drawable.ic_baseline_favorite_24).into(btn_favorite_detail);
-        }
-        else{
-            Glide.with(context).load(R.drawable.ic_baseline_favorite_border_24).into(btn_favorite_detail);
-        }
 
+        checkLike();
+        checkLive();
+        parsingTag();
+
+        RecyclerView recyclerView = findViewById(R.id.recycler_hash_tag);
+        recyclerView.setLayoutManager(new GridLayoutManager(this,3));
+        TagAdapter adapter = new TagAdapter(this,hashTagList);
+        recyclerView.setAdapter(adapter);
+    }
+
+    private void parsingTag() {
+        TextView text_content_detail = findViewById(R.id.text_content_detail);
+        text_content_detail.setText(product.getP_content());
+        //태그 파싱해서 list에 add
+        String tags = product.getP_tag();
+        String[] tagList = tags.split("/");
+        for(String tag : tagList){
+            hashTagList.add(tag);
+        }
+    }
+
+    private void checkLive() {
         LinearLayout layout_on_air = findViewById(R.id.layout_on_air);
         if(product.getP_seller() == AuthModel.getInstance().user.getId()){
             //라이브 버튼 보이게
@@ -108,21 +122,16 @@ public class ProductDetailActivity extends AppCompatActivity {
         else{
             btn_live.setChecked(false);
         }
+    }
 
-        TextView text_content_detail = findViewById(R.id.text_content_detail);
-        text_content_detail.setText(product.getP_content());
-
-        //태그 파싱해서 list에 add
-        String tags = product.getP_tag();
-        String[] tagList = tags.split("/");
-        for(String tag : tagList){
-            hashTagList.add(tag);
+    private void checkLike() {
+        ImageView btn_favorite_detail = findViewById(R.id.btn_favorite_detail);
+        if(status.like){
+            Glide.with(context).load(R.drawable.ic_baseline_favorite_24).into(btn_favorite_detail);
         }
-
-        RecyclerView recyclerView = findViewById(R.id.recycler_hash_tag);
-        recyclerView.setLayoutManager(new GridLayoutManager(this,3));
-        TagAdapter adapter = new TagAdapter(this,hashTagList);
-        recyclerView.setAdapter(adapter);
+        else{
+            Glide.with(context).load(R.drawable.ic_baseline_favorite_border_24).into(btn_favorite_detail);
+        }
     }
 
     private void setClickListener() {
