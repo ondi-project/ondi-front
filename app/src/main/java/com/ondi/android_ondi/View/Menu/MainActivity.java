@@ -12,6 +12,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -152,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
                 if (data.getClipData() != null) { // 사진 여러개 선택한 경우
                     int count = data.getClipData().getItemCount();
                     if (count > 12) {
-                        Toast.makeText(this, "사진은 최대 12장 선택 가능합니다.", Toast.LENGTH_SHORT);
+                        Toast.makeText(this, "사진은 최대 12장 선택 가능합니다.", Toast.LENGTH_SHORT).show();
                         return;
                     }
                     for (int i = 0; i < data.getClipData().getItemCount(); i++) {
@@ -168,6 +169,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                         //이미지 들고있다가 등록 버튼 누를 시 서버에 저장.
                     }
+                    Log.d("bitmaplist", "onActivityResult: " + bitmapList.size());
                     registerFragment.setImageView(bitmapList, data.getClipData().getItemCount());
                 }
             }

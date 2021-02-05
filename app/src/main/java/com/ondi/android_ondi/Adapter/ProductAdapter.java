@@ -55,7 +55,7 @@ public class ProductAdapter  extends RecyclerView.Adapter<ProductAdapter.ItemVie
 
     @Override
     public int getItemCount() {
-        return productList.size();
+        return productList != null? productList.size() : 0;
     }
 
     public static class ItemViewHolder extends RecyclerView.ViewHolder {
@@ -74,7 +74,7 @@ public class ProductAdapter  extends RecyclerView.Adapter<ProductAdapter.ItemVie
 
         public void bind(ProductModel.Product product,Context context){
             MultiTransformation multiOption = new MultiTransformation(new CenterCrop(), new RoundedCorners(16));
-            Glide.with(context).load(product.getP_image()).apply(RequestOptions.bitmapTransform(multiOption)).override(150,150).into(img_product);
+            Glide.with(context).load("http://3.34.125.92:8000" + product.getP_image()).apply(RequestOptions.bitmapTransform(multiOption)).override(150,150).into(img_product);
             text_product_name.setText(product.getP_name());
             text_product_price.setText(product.getP_price());
 

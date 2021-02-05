@@ -39,7 +39,7 @@ public class AuctionAdapter extends RecyclerView.Adapter<AuctionAdapter.ItemView
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
         ProductModel.Product product = auctionList.get(position).getL_product();
-        Glide.with(context).load(product.getP_image())
+        Glide.with(context).load("http://3.34.125.92:8000" + product.getP_image())
                 .apply(RequestOptions.bitmapTransform(new RoundedCorners(20))).into(holder.productIv);
         holder.productName.setText(product.getP_name());
         holder.productPrice.setText(product.getP_price());
