@@ -29,12 +29,6 @@
                    android:layout_height="match_parent"
                    android:src="@drawable/avatar_18"
                    android:padding="15dp"/>
-               <ImageView
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:src="@drawable/icon_material_camera_alt"
-                   android:layout_alignParentBottom="true"
-                   android:layout_alignParentEnd="true"/>
            </RelativeLayout>
 
            <LinearLayout
@@ -44,6 +38,7 @@
                android:gravity="center_vertical"
                android:layout_marginStart="40dp">
                <TextView
+                   android:id="@+id/text_user_name"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
                    android:fontFamily="sans-serif"
@@ -54,6 +49,7 @@
                    android:lineSpacingExtra="6sp"
                    android:text="name" />
                <TextView
+                   android:id="@+id/text_user_email"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
                    android:textStyle="normal"
@@ -61,7 +57,7 @@
                    android:textColor="@color/dark_slate_blue"
                    android:letterSpacing="-0.01"
                    android:lineSpacingExtra="22sp"
-                   android:text="# 상점이름"
+                   android:text="email"
                    android:layout_marginTop="10dp"/>
            </LinearLayout>
        </LinearLayout>

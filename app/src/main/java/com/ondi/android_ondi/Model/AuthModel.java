@@ -1,5 +1,8 @@
 package com.ondi.android_ondi.Model;
 
+import android.view.ViewDebug;
+
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.ondi.android_ondi.Defined.DefinedCategory;
 import com.ondi.android_ondi.Dialog.AuctionDialog;
@@ -32,9 +35,12 @@ public class AuthModel {
         boolean is_staff;
         boolean is_active;
         boolean is_superuser;
+        @Expose
         String  date_joined;
+        @Expose
         String last_login;
         String phone;
+        @Expose
         String image;
 
         public User(int id,String username, String first_name, String last_name, String email, List<String> groups, List<String> user_permissions, boolean is_staff, boolean is_active, boolean is_superuser, String date_joined, String last_login, String phone, String image) {

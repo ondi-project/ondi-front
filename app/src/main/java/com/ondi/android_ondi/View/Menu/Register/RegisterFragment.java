@@ -2,10 +2,8 @@ package com.ondi.android_ondi.View.Menu.Register;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.os.Bundle;
 
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,16 +23,12 @@ import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ondi.android_ondi.API.Data.PostProduct;
-import com.ondi.android_ondi.API.Data.PostRegister;
 import com.ondi.android_ondi.API.RetrofitClient;
 import com.ondi.android_ondi.Adapter.PhotoAdapter;
 import com.ondi.android_ondi.Defined.DefinedCategory;
 import com.ondi.android_ondi.Model.AuthModel;
-import com.ondi.android_ondi.Model.ProductModel;
 import com.ondi.android_ondi.Model.ResponseModel;
 import com.ondi.android_ondi.R;
-import com.ondi.android_ondi.View.Login.LoginActivity;
 import com.ondi.android_ondi.View.Menu.MainActivity;
 
 import java.io.File;
@@ -43,10 +37,9 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.function.ToLongBiFunction;
+import java.util.HashMap;
 
 import okhttp3.MediaType;
-import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -116,7 +109,7 @@ public class RegisterFragment extends Fragment {
         spinnerList.add(DefinedCategory.getInstance().ACCESSORY);
         spinnerList.add(DefinedCategory.getInstance().FURNITURE);
         spinnerList.add(DefinedCategory.getInstance().BABY);
-        spinnerList.add(DefinedCategory.getInstance().SPORTS);
+        spinnerList.add(DefinedCategory.getInstance().TICKET);
         spinnerList.add(DefinedCategory.getInstance().ETC);
     }
 
@@ -168,6 +161,8 @@ public class RegisterFragment extends Fragment {
     }
 
     private void postProduct() throws IOException {
+        HashMap<String, RequestBody> map = new HashMap<>();
+
        String name =  input_product_name.getText().toString();
        String price = input_product_price.getText().toString();
        String content = input_product_description.getText().toString();
@@ -180,12 +175,12 @@ public class RegisterFragment extends Fragment {
         }
         else
         {
+            //서버측에서 사진을 1장만 받게해놔서 우선은 맨 첫번째 장 보냄.
             File imageFile = createFileFromBitmap(bitmapList.get(0));
-            RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"),imageFile);
-            MultipartBody.Part uploadFile = MultipartBody.Part.createFormData("file",imageFile.getPath(),requestBody);
 
-            //Call<ResponseModel> call = RetrofitClient.getApiService().postProduct(spinnerType,name,Integer.parseInt(price),content,tag,deal,AuthModel.getInstance().user.getId(),uploadFile);
-            Call<ResponseModel> call = RetrofitClient.getApiService().postProduct(new PostProduct(spinnerType,name,Integer.parseInt(price),content,uploadFile,tag,deal,AuthModel.getInstance().user.getId()));
+            createRequestBody(map, name, price, content, deal, tag, imageFile);
+
+            Call<ResponseModel> call = RetrofitClient.getApiService().postProduct(map);
             call.enqueue(new Callback<ResponseModel>() {
                 @Override
                 public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
@@ -201,7 +196,7 @@ public class RegisterFragment extends Fragment {
                                 e.printStackTrace();
                             }
                         }
-                        runOnUiThread(() -> Toast.makeText(getContext(), "물품 등록 실패: "+response.message(), Toast.LENGTH_SHORT).show());
+                        runOnUiThread(() -> Toast.makeText(getContext(), "물품 등록 실패: "+response.errorBody() , Toast.LENGTH_SHORT).show());
                     }
                 }
 
@@ -212,6 +207,25 @@ public class RegisterFragment extends Fragment {
                 }
             });
         }
+    }
+
+    private void createRequestBody(HashMap<String, RequestBody> map, String name, String price, String content, boolean deal, String tag, File imageFile) {
+        RequestBody p_image = RequestBody.create(MediaType.parse("image/*"),imageFile);
+        map.put("p_image",p_image);
+        RequestBody p_category = RequestBody.create(MediaType.parse("text/plain"), spinnerType);
+        map.put("p_category",p_category);
+        RequestBody p_name = RequestBody.create(MediaType.parse("text/plain"), name);
+        map.put("p_name",p_name);
+        RequestBody p_price = RequestBody.create(MediaType.parse("text/plain"), price);
+        map.put("p_price",p_price);
+        RequestBody p_content = RequestBody.create(MediaType.parse("text/plain"), content);
+        map.put("p_content",p_content);
+        RequestBody p_tag = RequestBody.create(MediaType.parse("text/plain"), tag);
+        map.put("p_tag",p_tag);
+        RequestBody p_deal = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(deal));
+        map.put("p_nego",p_deal);
+        RequestBody id = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(AuthModel.getInstance().user.getId()));
+        map.put("p_seller",id);
     }
 
     private File createFileFromBitmap(Bitmap bitmap) throws IOException {

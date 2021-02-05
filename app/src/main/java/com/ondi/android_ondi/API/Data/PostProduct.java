@@ -5,19 +5,7 @@ import java.io.File;
 import okhttp3.MultipartBody;
 
 public class PostProduct {
-    //null값 없이
-
-    String p_category;
-    String p_name;
-    int p_price;
-    String p_content;
-    MultipartBody.Part p_image; //file
-    String p_tag; // /로구분
-    boolean p_nego;
-    int p_seller;
-
-
-    public PostProduct(String p_category, String p_name, int p_price, String p_content, MultipartBody.Part p_image, String p_tag, boolean p_nego, int p_seller) {
+    public PostProduct(String p_category, String p_name, int p_price, String p_content, File p_image, String p_tag, boolean p_nego, int p_seller) {
         this.p_category = p_category;
         this.p_name = p_name;
         this.p_price = p_price;
@@ -27,6 +15,17 @@ public class PostProduct {
         this.p_nego = p_nego;
         this.p_seller = p_seller;
     }
+    //null값 없이
+
+    String p_category;
+    String p_name;
+    int p_price;
+    String p_content;
+    File p_image; //file
+    String p_tag; // /로구분
+    boolean p_nego;
+    int p_seller;
+
 
     public String getP_category() {
         return p_category;
@@ -60,11 +59,11 @@ public class PostProduct {
         this.p_content = p_content;
     }
 
-    public MultipartBody.Part getP_image() {
+    public File getP_image() {
         return p_image;
     }
 
-    public void setP_image(MultipartBody.Part p_image) {
+    public void setP_image(File p_image) {
         this.p_image = p_image;
     }
 

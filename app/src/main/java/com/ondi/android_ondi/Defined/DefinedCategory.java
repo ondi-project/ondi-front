@@ -15,7 +15,7 @@ public class DefinedCategory {
     public final String ACCESSORY = "가방 및 악세사리";
     public final String FURNITURE = "가구";
     public final String BABY = "유아용품";
-    public final String SPORTS = "스포츠용품";
+    public final String TICKET = "티켓/도서";
     public final String ETC = "기타";
 
 }

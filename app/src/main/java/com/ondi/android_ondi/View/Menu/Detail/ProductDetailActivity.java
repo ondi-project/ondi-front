@@ -20,14 +20,20 @@ import android.widget.LinearLayout;
 import android.widget.Switch;
 
 import com.bumptech.glide.Glide;
+import com.ondi.android_ondi.API.RetrofitClient;
 import com.ondi.android_ondi.Adapter.TagAdapter;
 import com.ondi.android_ondi.Adapter.ViewPagerAdapter;
 import com.ondi.android_ondi.Dialog.AuctionDialog;
+import com.ondi.android_ondi.Model.AuthModel;
+import com.ondi.android_ondi.Model.ProductModel;
 import com.ondi.android_ondi.R;
 import com.ondi.android_ondi.View.Chat.ChatActivity;
 import com.ondi.android_ondi.View.Payment.PaymentActivity;
 
 import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Response;
 
 public class ProductDetailActivity extends AppCompatActivity {
     Context context;
@@ -38,11 +44,14 @@ public class ProductDetailActivity extends AppCompatActivity {
     ArrayList<String> imgList = new ArrayList<>();
     ArrayList<String> hashTagList = new ArrayList<>();
 
+    int p_id;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_detail);
-        test_insertData();
+        p_id = getIntent().getIntExtra("p_id",0);
+        getData();
 
         initView();
         setToolbar(); //커스텀 툴바 적용
@@ -52,6 +61,7 @@ public class ProductDetailActivity extends AppCompatActivity {
 
     private void initView() {
         context = this;
+
         ImageView img_seller = findViewById(R.id.img_seller_detail);
         Glide.with(this).load(R.drawable.test_user).circleCrop().into(img_seller);
 
@@ -60,6 +70,7 @@ public class ProductDetailActivity extends AppCompatActivity {
 
         RecyclerView recyclerView = findViewById(R.id.recycler_hash_tag);
         recyclerView.setLayoutManager(new GridLayoutManager(this,3));
+
         TagAdapter adapter = new TagAdapter(this,hashTagList);
         recyclerView.setAdapter(adapter);
     }
@@ -92,16 +103,35 @@ public class ProductDetailActivity extends AppCompatActivity {
         setupIndicators(imgList.size());
     }
 
-    private void test_insertData() {
-        imgList.add("https://cdn.pixabay.com/photo/2014/03/03/16/15/mosque-279015_1280.jpg");
-        imgList.add("https://cdn.pixabay.com/photo/2014/03/03/16/15/mosque-279015_1280.jpg");
-        imgList.add("https://cdn.pixabay.com/photo/2014/03/03/16/15/mosque-279015_1280.jpg");
-        imgList.add("https://cdn.pixabay.com/photo/2014/03/03/16/15/mosque-279015_1280.jpg");
-        imgList.add("https://cdn.pixabay.com/photo/2014/03/03/16/15/mosque-279015_1280.jpg");
+    private void getData() {
 
-        hashTagList.add("전자제품");
-        hashTagList.add("노트북");
-        hashTagList.add("삼성");
+        //AuthModel.getInstance().user.getId()
+        Call<ProductModel.ProductDetail> call = RetrofitClient.getApiService().getProductDetail(p_id,8);
+        call.enqueue(new retrofit2.Callback<ProductModel.ProductDetail>() {
+            @Override
+            public void onResponse(Call<ProductModel.ProductDetail> call, Response<ProductModel.ProductDetail> response) {
+                ProductModel.ProductDetail detail = response.body();
+                System.out.println("테스트 :"+detail.info.p.getP_name());
+            }
+
+            @Override
+            public void onFailure(Call<ProductModel.ProductDetail> call, Throwable t) {
+
+                t.printStackTrace();
+            }
+
+        });
+
+
+//        imgList.add("https://cdn.pixabay.com/photo/2014/03/03/16/15/mosque-279015_1280.jpg");
+//        imgList.add("https://cdn.pixabay.com/photo/2014/03/03/16/15/mosque-279015_1280.jpg");
+//        imgList.add("https://cdn.pixabay.com/photo/2014/03/03/16/15/mosque-279015_1280.jpg");
+//        imgList.add("https://cdn.pixabay.com/photo/2014/03/03/16/15/mosque-279015_1280.jpg");
+//        imgList.add("https://cdn.pixabay.com/photo/2014/03/03/16/15/mosque-279015_1280.jpg");
+//
+//        hashTagList.add("전자제품");
+//        hashTagList.add("노트북");
+//        hashTagList.add("삼성");
     }
 
     private void setToolbar() {
