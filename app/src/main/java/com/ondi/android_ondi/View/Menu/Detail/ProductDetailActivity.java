@@ -1,4 +1,4 @@
-package com.ondi.android_ondi.View.Menu.ProductDetail;
+package com.ondi.android_ondi.View.Menu.Detail;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,7 +20,6 @@ import android.widget.LinearLayout;
 import android.widget.Switch;
 
 import com.bumptech.glide.Glide;
-import com.ondi.android_ondi.Adapter.ProductAdapter;
 import com.ondi.android_ondi.Adapter.TagAdapter;
 import com.ondi.android_ondi.Adapter.ViewPagerAdapter;
 import com.ondi.android_ondi.Dialog.AuctionDialog;
@@ -70,6 +69,8 @@ public class ProductDetailActivity extends AppCompatActivity {
         LinearLayout btn_chat = findViewById(R.id.btn_chat);
         btn_chat.setOnClickListener(new ClickListener(this));
 
+        ImageView img_seller = findViewById(R.id.img_seller_detail);
+        img_seller.setOnClickListener(new ClickListener(this));
     }
 
     private void setViewPager() {
@@ -162,9 +163,16 @@ public class ProductDetailActivity extends AppCompatActivity {
                     //결제하기 페이지
                     Intent intent = new Intent(context,PaymentActivity.class);
                     startActivity(intent);
+                    break;
                 }
                 case R.id.btn_chat :{
                     //거래하기 페이지 (채팅)
+                    break;
+                }
+                case R.id.img_seller_detail:{
+                    Intent intent = new Intent(context,SellerDetailActivity.class);
+                    startActivity(intent);
+                    break;
                 }
             }
         }

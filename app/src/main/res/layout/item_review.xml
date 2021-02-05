@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="5dp"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        android:layout_margin="5dp"
+        android:background="@drawable/custom_round_rectangle_white">
+
+        <RelativeLayout
+            android:id="@+id/btn_upload_photo_mypage"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@drawable/custom_circle_grey">
+            <ImageView
+                android:id="@+id/img_profile"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/avatar"
+                android:padding="15dp"/>
+        </RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center_vertical"
+            android:layout_marginStart="5dp">
+        <TextView
+            android:id="@+id/text_review_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-medium"
+            android:textStyle="normal"
+            android:textSize="7sp"
+            android:textColor="#222222"
+            android:lineSpacingExtra="20sp"
+            android:text="어제" />
+
+        <TextView
+            android:id="@+id/text_review"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:textStyle="normal"
+            android:textSize="11sp"
+            android:textColor="@color/dark_slate_blue"
+            android:lineSpacingExtra="4sp"
+            android:text="좋은 물건 합리적인 가격에 &#10;가져갑니다~" />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>
