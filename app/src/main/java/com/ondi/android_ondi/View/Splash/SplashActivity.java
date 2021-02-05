@@ -23,6 +23,9 @@ public class SplashActivity extends AppCompatActivity {
         final Runnable r = () -> {
             final AWSMobileClient auth = AWSMobileClient.getInstance();
 
+            //임시
+            auth.signOut();
+
             AsyncTask.execute(() -> {
                 if (auth.isSignedIn()) {
                     startActivity(new Intent(getApplicationContext(),MainActivity.class));

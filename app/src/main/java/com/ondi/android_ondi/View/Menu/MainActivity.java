@@ -139,7 +139,6 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
-                ArrayList<Uri> uriArrayList = new ArrayList<>();
                 ArrayList<Bitmap> bitmapList = new ArrayList<>();
                 if (data.getClipData() != null) { // 사진 여러개 선택한 경우
                     int count = data.getClipData().getItemCount();
@@ -158,8 +157,6 @@ public class MainActivity extends AppCompatActivity {
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-                        Uri imageUri = data.getClipData().getItemAt(i).getUri();
-                        uriArrayList.add(imageUri);
                         //이미지 들고있다가 등록 버튼 누를 시 서버에 저장.
                     }
                     registerFragment.setImageView(bitmapList, data.getClipData().getItemCount());

@@ -24,9 +24,9 @@ import java.util.ArrayList;
 
 public class ProductAdapter  extends RecyclerView.Adapter<ProductAdapter.ItemViewHolder> {
     Context context;
-    ArrayList<ProductModel> productList;
+    ArrayList<ProductModel.Product> productList;
 
-    public ProductAdapter(Context context, ArrayList<ProductModel> list) {
+    public ProductAdapter(Context context, ArrayList<ProductModel.Product> list) {
         this.context = context;
         this.productList = list;
     }
@@ -72,11 +72,11 @@ public class ProductAdapter  extends RecyclerView.Adapter<ProductAdapter.ItemVie
             btn_like = itemView.findViewById(R.id.btn_like);
         }
 
-        public void bind(ProductModel product,Context context){
+        public void bind(ProductModel.Product product,Context context){
             MultiTransformation multiOption = new MultiTransformation(new CenterCrop(), new RoundedCorners(16));
             Glide.with(context).load(R.drawable.test).apply(RequestOptions.bitmapTransform(multiOption)).override(150,150).into(img_product);
-            text_product_name.setText(product.getProductName());
-            text_product_price.setText(product.getProductPrice());
+            text_product_name.setText(product.getP_name());
+            text_product_price.setText(product.getP_price());
 
             if(product.isFavorite_check()){
                 //좋아요 설정 됨
