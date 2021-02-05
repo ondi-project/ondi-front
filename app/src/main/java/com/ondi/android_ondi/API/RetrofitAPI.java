@@ -44,7 +44,6 @@ public interface RetrofitAPI {
     @GET("/user/users/scores")
     Call<ArrayList<ScoreModel>> getScoreList();
 
-
     /**MAIN API**/
     @GET("/main")
     Call<ArrayList<ProductModel.Product>> getMainList();
