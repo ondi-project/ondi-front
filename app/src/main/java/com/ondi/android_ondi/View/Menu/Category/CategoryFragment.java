@@ -1,5 +1,6 @@
 package com.ondi.android_ondi.View.Menu.Category;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 
@@ -9,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ViewFlipper;
 
 import com.bumptech.glide.Glide;
@@ -16,7 +18,10 @@ import com.bumptech.glide.load.MultiTransformation;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
+import com.ondi.android_ondi.Defined.DefinedCategory;
 import com.ondi.android_ondi.R;
+import com.ondi.android_ondi.View.Login.SignInFragment;
+import com.ondi.android_ondi.View.Menu.MainActivity;
 
 import java.util.ArrayList;
 
@@ -54,11 +59,17 @@ public class CategoryFragment extends Fragment {
         context = getContext();
 
         viewFlipper = mainView.findViewById(R.id.category_view_flipper);
-
         for(int image : imageList){
             addFilpperImage(image);
         }
 
+        setClickListener();
+
+    }
+
+    private void setClickListener() {
+        LinearLayout btn_digital = mainView.findViewById(R.id.btn_digital);
+        btn_digital.setOnClickListener(new ClickListener());
     }
 
     public void test_insertData(){
@@ -81,5 +92,17 @@ public class CategoryFragment extends Fragment {
 
         viewFlipper.setInAnimation(context,android.R.anim.slide_in_left);
         viewFlipper.setOutAnimation(context,android.R.anim.slide_out_right);
+    }
+
+    public class ClickListener implements View.OnClickListener {
+        @Override
+        public void onClick(View view) {
+            switch (view.getId()){
+                case R.id.btn_digital :{
+                    ((MainActivity)getActivity()).goToCategory(DefinedCategory.getInstance().DIGITAL);
+                    break;
+                }
+            }
+        }
     }
 }

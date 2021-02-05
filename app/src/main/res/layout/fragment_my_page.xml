@@ -1,14 +1,232 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".View.Menu.MyPage.MyPageFragment">
+    tools:context=".View.Menu.MyPage.MyPageFragment"
+    android:orientation="vertical"
+    android:background="@color/white">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:orientation="vertical"
+       android:layout_margin="30dp"
+       android:gravity="center">
 
-</FrameLayout>
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:orientation="horizontal">
+           <RelativeLayout
+               android:id="@+id/btn_upload_photo_mypage"
+               android:layout_width="115dp"
+               android:layout_height="115dp"
+               android:background="@drawable/custom_circle_grey">
+               <ImageView
+                   android:id="@+id/img_profile"
+                   android:layout_width="match_parent"
+                   android:layout_height="match_parent"
+                   android:src="@drawable/avatar_18"
+                   android:padding="15dp"/>
+               <ImageView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:src="@drawable/icon_material_camera_alt"
+                   android:layout_alignParentBottom="true"
+                   android:layout_alignParentEnd="true"/>
+           </RelativeLayout>
+
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="match_parent"
+               android:orientation="vertical"
+               android:gravity="center_vertical"
+               android:layout_marginStart="40dp">
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:fontFamily="sans-serif"
+                   android:textStyle="bold"
+                   android:textSize="35sp"
+                   android:textColor="@color/dark_slate_blue"
+                   android:letterSpacing="-0.01"
+                   android:lineSpacingExtra="6sp"
+                   android:text="name" />
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:textStyle="normal"
+                   android:textSize="15sp"
+                   android:textColor="@color/dark_slate_blue"
+                   android:letterSpacing="-0.01"
+                   android:lineSpacingExtra="22sp"
+                   android:text="# 상점이름"
+                   android:layout_marginTop="10dp"/>
+           </LinearLayout>
+       </LinearLayout>
+
+       <LinearLayout
+           android:id="@+id/btn_edit_profile"
+           android:layout_width="200dp"
+           android:layout_height="wrap_content"
+           android:background="@drawable/custom_round_rectangle_dark_blue"
+           android:layout_gravity="center"
+           android:layout_marginStart="10dp"
+           android:layout_marginEnd="5dp"
+           android:layout_marginTop="30dp"
+           android:foreground="@drawable/custom_ripple_effect"
+           android:clickable="true"
+           android:focusable="true">
+           <TextView
+               android:layout_width="match_parent"
+               android:layout_height="match_parent"
+               android:gravity="center"
+               android:text="프로필 편집"
+               android:textColor="@color/colorWhite"
+               android:textStyle="bold"
+               android:padding="12dp" />
+       </LinearLayout>
+
+       <RelativeLayout
+           android:id="@+id/btn_sale_history"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:background="@drawable/custom_round_rectangle_white"
+           android:layout_gravity="center"
+           android:elevation="5dp"
+           android:layout_marginStart="20dp"
+           android:layout_marginEnd="20dp"
+           android:layout_marginTop="30dp"
+           android:padding="10dp"
+           android:foreground="@drawable/custom_ripple_effect"
+           android:clickable="true"
+           android:focusable="true">
+           <ImageView
+               android:id="@+id/img_receipt"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:src="@drawable/icon_awesome_receipt"
+               android:layout_alignParentStart="true"
+               android:layout_marginStart="10dp"/>
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:textStyle="normal"
+               android:textSize="14sp"
+               android:textColor="@color/blue_grey"
+               android:letterSpacing="-0.01"
+               android:lineSpacingExtra="22sp"
+               android:text="판매내역"
+               android:layout_toEndOf="@id/img_receipt"
+               android:layout_marginStart="20dp"/>
+       </RelativeLayout>
+
+       <RelativeLayout
+           android:id="@+id/btn_purchase_history"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:background="@drawable/custom_round_rectangle_white"
+           android:layout_gravity="center"
+           android:elevation="5dp"
+           android:layout_marginStart="20dp"
+           android:layout_marginEnd="20dp"
+           android:layout_marginTop="30dp"
+           android:padding="10dp"
+           android:foreground="@drawable/custom_ripple_effect"
+           android:clickable="true"
+           android:focusable="true">
+           <ImageView
+               android:id="@+id/img_history"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:src="@drawable/icon_awesome_shopping_bag"
+               android:layout_alignParentStart="true"
+               android:layout_marginStart="10dp"/>
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:textStyle="normal"
+               android:textSize="14sp"
+               android:textColor="@color/blue_grey"
+               android:letterSpacing="-0.01"
+               android:lineSpacingExtra="22sp"
+               android:text="구매내역"
+               android:layout_toEndOf="@id/img_history"
+               android:layout_marginStart="20dp"/>
+       </RelativeLayout>
+
+       <RelativeLayout
+           android:id="@+id/btn_like"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:background="@drawable/custom_round_rectangle_white"
+           android:layout_gravity="center"
+           android:elevation="5dp"
+           android:layout_marginStart="20dp"
+           android:layout_marginEnd="20dp"
+           android:layout_marginTop="30dp"
+           android:padding="10dp"
+           android:foreground="@drawable/custom_ripple_effect"
+           android:clickable="true"
+           android:focusable="true">
+           <ImageView
+               android:id="@+id/img_heart"
+               android:layout_width="20dp"
+               android:layout_height="20dp"
+               android:src="@drawable/icon_ionic_ios_heart"
+               android:layout_alignParentStart="true"
+               android:layout_marginStart="10dp"/>
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:textStyle="normal"
+               android:textSize="14sp"
+               android:textColor="@color/blue_grey"
+               android:letterSpacing="-0.01"
+               android:lineSpacingExtra="22sp"
+               android:text="관심목록"
+               android:layout_toEndOf="@id/img_heart"
+               android:layout_marginStart="20dp"/>
+       </RelativeLayout>
+
+       <RelativeLayout
+           android:id="@+id/btn_review"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:background="@drawable/custom_round_rectangle_white"
+           android:layout_gravity="center"
+           android:elevation="5dp"
+           android:layout_marginStart="20dp"
+           android:layout_marginEnd="20dp"
+           android:layout_marginTop="30dp"
+           android:padding="10dp"
+           android:foreground="@drawable/custom_ripple_effect"
+           android:clickable="true"
+           android:focusable="true">
+           <ImageView
+               android:id="@+id/img_review"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:src="@drawable/icon_material_rate_review"
+               android:layout_alignParentStart="true"
+               android:layout_marginStart="10dp"/>
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:textStyle="normal"
+               android:textSize="14sp"
+               android:textColor="@color/blue_grey"
+               android:letterSpacing="-0.01"
+               android:lineSpacingExtra="22sp"
+               android:text="받은 거래 후기"
+               android:layout_toEndOf="@id/img_review"
+               android:layout_marginStart="20dp"/>
+       </RelativeLayout>
+
+       <View
+           android:layout_width="match_parent"
+           android:layout_height="50dp"/>
+   </LinearLayout>
+
+</ScrollView>
