@@ -69,7 +69,21 @@ public class CategoryFragment extends Fragment {
 
     private void setClickListener() {
         LinearLayout btn_digital = mainView.findViewById(R.id.btn_digital);
+        LinearLayout btn_cloth = mainView.findViewById(R.id.btn_cloth);
+        LinearLayout btn_beauty = mainView.findViewById(R.id.btn_beauty);
+        LinearLayout btn_accessory = mainView.findViewById(R.id.btn_accessory);
+        LinearLayout btn_furniture = mainView.findViewById(R.id.btn_furniture);
+        LinearLayout btn_baby = mainView.findViewById(R.id.btn_baby);
+        LinearLayout btn_ticket = mainView.findViewById(R.id.btn_ticket);
+
         btn_digital.setOnClickListener(new ClickListener());
+        btn_cloth.setOnClickListener(new ClickListener());
+        btn_beauty.setOnClickListener(new ClickListener());
+        btn_accessory.setOnClickListener(new ClickListener());
+        btn_furniture.setOnClickListener(new ClickListener());
+        btn_baby.setOnClickListener(new ClickListener());
+        btn_ticket.setOnClickListener(new ClickListener());
+
     }
 
     public void test_insertData(){
@@ -83,8 +97,6 @@ public class CategoryFragment extends Fragment {
         ImageView imageView = new ImageView(context);
         imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         imageView.setBackgroundResource(image);
-//        MultiTransformation multiOption = new MultiTransformation(new CenterCrop(), new RoundedCorners(16));
-//        Glide.with(context).load(image).apply(RequestOptions.bitmapTransform(multiOption)).into(imageView);
 
         viewFlipper.addView(imageView);
         viewFlipper.setFlipInterval(3000);
@@ -100,6 +112,30 @@ public class CategoryFragment extends Fragment {
             switch (view.getId()){
                 case R.id.btn_digital :{
                     ((MainActivity)getActivity()).goToCategory(DefinedCategory.getInstance().DIGITAL);
+                    break;
+                }
+                case R.id.btn_cloth :{
+                    ((MainActivity)getActivity()).goToCategory(DefinedCategory.getInstance().CLOTH);
+                    break;
+                }
+                case R.id.btn_beauty :{
+                    ((MainActivity)getActivity()).goToCategory(DefinedCategory.getInstance().BEAUTY);
+                    break;
+                }
+                case R.id.btn_accessory :{
+                    ((MainActivity)getActivity()).goToCategory(DefinedCategory.getInstance().ACCESSORY);
+                    break;
+                }
+                case R.id.btn_furniture :{
+                    ((MainActivity)getActivity()).goToCategory(DefinedCategory.getInstance().FURNITURE);
+                    break;
+                }
+                case R.id.btn_baby :{
+                    ((MainActivity)getActivity()).goToCategory(DefinedCategory.getInstance().BABY);
+                    break;
+                }
+                case R.id.btn_ticket :{
+                    ((MainActivity)getActivity()).goToCategory(DefinedCategory.getInstance().TICKET);
                     break;
                 }
             }

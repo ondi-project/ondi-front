@@ -13,13 +13,17 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import com.ondi.android_ondi.API.RetrofitClient;
 import com.ondi.android_ondi.Adapter.ProductAdapter;
 import com.ondi.android_ondi.Model.ProductModel;
 import com.ondi.android_ondi.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Response;
@@ -43,21 +47,29 @@ public class HomeFragment extends Fragment {
     }
 
     private void getData() {
-        Call<ArrayList<ProductModel.Product>> call = RetrofitClient.getApiService().getMainList();
-        call.enqueue(new retrofit2.Callback<ArrayList<ProductModel.Product>>() {
-            @Override
-            public void onResponse(Call<ArrayList<ProductModel.Product>> call, Response<ArrayList<ProductModel.Product>> response) {
-                productList = (ArrayList<ProductModel.Product>) response.body();
-                System.out.println("test: "+productList.get(0).getP_name());
-                setRecyclerView();
-            }
+        try {
 
-            @Override
-            public void onFailure(Call<ArrayList<ProductModel.Product>> call, Throwable t) {
-                t.printStackTrace();
-            }
+            Call<ArrayList<ProductModel.Product>> call = RetrofitClient.getApiService().getMainList();
+            call.enqueue(new retrofit2.Callback<ArrayList<ProductModel.Product>>() {
+                @Override
+                public void onResponse(Call<ArrayList<ProductModel.Product>> call, Response<ArrayList<ProductModel.Product>> response) {
+                    productList = (ArrayList<ProductModel.Product>) response.body();
+                    setRecyclerView();
+                }
 
-        });
+                @Override
+                public void onFailure(Call<ArrayList<ProductModel.Product>> call, Throwable t) {
+
+                    t.printStackTrace();
+                }
+
+            });
+        }
+        catch(IllegalStateException | JsonSyntaxException exception)
+        {
+            System.out.println("에러 : ");
+            exception.printStackTrace();
+        }
     }
 
     @Override
@@ -73,7 +85,23 @@ public class HomeFragment extends Fragment {
             @Override
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
-                   //검색 api 인자값 전달 후 화면 전환
+                   //검색 api 인자값 전달 후 화면 refresh
+                    Call<List<ProductModel.Product>> call = RetrofitClient.getApiService().getSearchList(textView.getText().toString());
+                    call.enqueue(new retrofit2.Callback<List<ProductModel.Product>>() {
+                        @Override
+                        public void onResponse(Call<List<ProductModel.Product>> call, Response<List<ProductModel.Product>> response) {
+                            productList = (ArrayList<ProductModel.Product>) response.body();
+                            setRecyclerView();
+                        }
+
+                        @Override
+                        public void onFailure(Call<List<ProductModel.Product>> call, Throwable t) {
+                            Toast.makeText(getContext(),"검색 실패",Toast.LENGTH_SHORT);
+                            t.printStackTrace();
+                        }
+
+                    });
+
                 }
                return false;
             }

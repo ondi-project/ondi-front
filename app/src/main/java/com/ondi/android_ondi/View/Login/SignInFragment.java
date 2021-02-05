@@ -105,7 +105,7 @@ public class SignInFragment extends Fragment {
                         else{
                             if (response.code() != 200) {
                                 try {
-                                    Log.v("Error code 400",response.errorBody().string()+ " "+response.errorBody().contentType());
+                                    Log.v("Error code",response.errorBody().string()+ " "+response.errorBody().contentType());
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }

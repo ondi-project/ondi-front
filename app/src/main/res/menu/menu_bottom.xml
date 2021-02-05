@@ -11,7 +11,7 @@
         android:icon="@drawable/icon_material_perm_contact_calendar"
         android:enabled="true"
         android:checked="true"
-        android:title="거래내역" />
+        android:title="라이브옥션" />
     <item
         android:id="@+id/navigation_menu_transaction"
         android:icon="@drawable/icon_material_library_add"
