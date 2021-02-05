@@ -39,7 +39,7 @@
                android:layout_marginStart="40dp">
                <TextView
                    android:id="@+id/text_user_name"
-                   android:layout_width="wrap_content"
+                   android:layout_width="match_parent"
                    android:layout_height="wrap_content"
                    android:fontFamily="sans-serif"
                    android:textStyle="bold"
@@ -47,7 +47,9 @@
                    android:textColor="@color/dark_slate_blue"
                    android:letterSpacing="-0.01"
                    android:lineSpacingExtra="6sp"
-                   android:text="name" />
+                   android:text="name"
+                   android:maxLength="10"
+                   android:ellipsize="end"/>
                <TextView
                    android:id="@+id/text_user_email"
                    android:layout_width="wrap_content"

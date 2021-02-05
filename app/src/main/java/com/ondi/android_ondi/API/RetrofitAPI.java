@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -20,6 +21,7 @@ import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.PartMap;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface RetrofitAPI {
@@ -41,16 +43,25 @@ public interface RetrofitAPI {
     @GET("/main/search")
     Call<List<ProductModel.Product>> getSearchList(@Query("p_search") String search);
 
-    @POST("/main/post/")
+    @POST("/main/post")
     @Multipart
-    Call<ResponseModel> postProduct(@PartMap HashMap<String,RequestBody> fields); //todo error
+    Call<ResponseModel> postProduct(@Part("p_category") RequestBody category, @Part("p_name")RequestBody name,
+                                    @Part("p_price") RequestBody price, @Part("p_content")RequestBody content,
+                                    @Part MultipartBody.Part p_image,@Part("p_tag")RequestBody tag,
+                                    @Part("p_nego")RequestBody nego,@Part("p_seller")RequestBody seller);
+    //Call<ResponseModel> postProduct(@PartMap HashMap<String,RequestBody> fields); //todo error
 
     @GET("/main/view_product")
-    Call<ProductModel.ProductDetail> getProductDetail(@Query("p_id") int p_id,@Query("u_id") int u_id);
+    Call<ArrayList<ProductModel.Product>> getProductDetail(@Query("p_id") int p_id,@Query("u_id") int u_id);
 
     @GET("/main/category")
     Call<ArrayList<ProductModel.Product>> getCategoryList(@Query("p_category") String p_category,@Query("view_option") String option);
 
+    @GET("/user/users/{id}/selling")
+    Call<ArrayList<ProductModel.Product>> getSellingList(@Path("id") int u_id);
+
+    @GET("/user/users/{id}/sold")
+    Call<ArrayList<ProductModel.Product>> getSoldList(@Path("id") int u_id);
 
 
 
