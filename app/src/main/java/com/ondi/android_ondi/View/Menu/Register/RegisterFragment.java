@@ -26,6 +26,7 @@ import android.widget.Toast;
 import com.ondi.android_ondi.API.RetrofitClient;
 import com.ondi.android_ondi.Adapter.PhotoAdapter;
 import com.ondi.android_ondi.Defined.DefinedCategory;
+import com.ondi.android_ondi.Model.AuthModel;
 import com.ondi.android_ondi.Model.ResponseModel;
 import com.ondi.android_ondi.R;
 import com.ondi.android_ondi.View.Menu.MainActivity;
@@ -174,25 +175,11 @@ public class RegisterFragment extends Fragment {
         }
         else
         {
+            //서버측에서 사진을 1장만 받게해놔서 우선은 맨 첫번째 장 보냄.
             File imageFile = createFileFromBitmap(bitmapList.get(0));
-            RequestBody p_image = RequestBody.create(MediaType.parse("image/*"),imageFile);
-            map.put("p_image",p_image);
-            RequestBody p_category = RequestBody.create(MediaType.parse("text/plain"), spinnerType);
-            map.put("p_category",p_category);
-            RequestBody p_name = RequestBody.create(MediaType.parse("text/plain"), name);
-            map.put("p_name",p_name);
-            RequestBody p_price = RequestBody.create(MediaType.parse("text/plain"), price);
-            map.put("p_price",p_price);
-            RequestBody p_content = RequestBody.create(MediaType.parse("text/plain"), content);
-            map.put("p_content",p_content);
-            RequestBody p_tag = RequestBody.create(MediaType.parse("text/plain"), tag);
-            map.put("p_tag",p_tag);
-            RequestBody p_deal = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(deal));
-            map.put("p_nego",p_deal);
-            RequestBody id = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(8));
-            map.put("p_seller",id);
 
-            //todo AuthModel.getInstance().user.getId()
+            createRequestBody(map, name, price, content, deal, tag, imageFile);
+
             Call<ResponseModel> call = RetrofitClient.getApiService().postProduct(map);
             call.enqueue(new Callback<ResponseModel>() {
                 @Override
@@ -220,6 +207,25 @@ public class RegisterFragment extends Fragment {
                 }
             });
         }
+    }
+
+    private void createRequestBody(HashMap<String, RequestBody> map, String name, String price, String content, boolean deal, String tag, File imageFile) {
+        RequestBody p_image = RequestBody.create(MediaType.parse("image/*"),imageFile);
+        map.put("p_image",p_image);
+        RequestBody p_category = RequestBody.create(MediaType.parse("text/plain"), spinnerType);
+        map.put("p_category",p_category);
+        RequestBody p_name = RequestBody.create(MediaType.parse("text/plain"), name);
+        map.put("p_name",p_name);
+        RequestBody p_price = RequestBody.create(MediaType.parse("text/plain"), price);
+        map.put("p_price",p_price);
+        RequestBody p_content = RequestBody.create(MediaType.parse("text/plain"), content);
+        map.put("p_content",p_content);
+        RequestBody p_tag = RequestBody.create(MediaType.parse("text/plain"), tag);
+        map.put("p_tag",p_tag);
+        RequestBody p_deal = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(deal));
+        map.put("p_nego",p_deal);
+        RequestBody id = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(AuthModel.getInstance().user.getId()));
+        map.put("p_seller",id);
     }
 
     private File createFileFromBitmap(Bitmap bitmap) throws IOException {
