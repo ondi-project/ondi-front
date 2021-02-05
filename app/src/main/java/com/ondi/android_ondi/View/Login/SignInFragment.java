@@ -118,6 +118,7 @@ public class SignInFragment extends Fragment {
                                 }
                             }
                             runOnUiThread(() -> Toast.makeText(getContext(), "로그인 실패: "+response.message(), Toast.LENGTH_SHORT).show());
+                            System.out.println("login error: "+response.message());
                         }
                     }
 

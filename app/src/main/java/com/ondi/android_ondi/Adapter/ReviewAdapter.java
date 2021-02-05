@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,6 +19,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.ondi.android_ondi.Model.ProductModel;
 import com.ondi.android_ondi.Model.ReviewModel;
+import com.ondi.android_ondi.Model.ScoreModel;
 import com.ondi.android_ondi.R;
 import com.ondi.android_ondi.View.Menu.Detail.ProductDetailActivity;
 
@@ -25,9 +27,9 @@ import java.util.ArrayList;
 
 public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ItemViewHolder> {
     Context context;
-    ArrayList<ReviewModel> reviewList;
+    ArrayList<ScoreModel> reviewList;
 
-    public ReviewAdapter(Context context, ArrayList<ReviewModel> list) {
+    public ReviewAdapter(Context context, ArrayList<ScoreModel> list) {
         this.context = context;
         this.reviewList = list;
     }
@@ -51,18 +53,18 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ItemViewHo
     }
 
     public static class ItemViewHolder extends RecyclerView.ViewHolder {
-        TextView text_date;
+        RatingBar rating_bar;
         TextView text_review;
 
         public ItemViewHolder(@NonNull View itemView) {
             super(itemView);
-            text_date = itemView.findViewById(R.id.text_review_date);
+            rating_bar = itemView.findViewById(R.id.rating_bar);
             text_review = itemView.findViewById(R.id.text_review);
         }
 
-        public void bind(ReviewModel review,Context context){
-            text_date.setText(review.getDate());
-            text_review.setText(review.getReview());
+        public void bind(ScoreModel score,Context context){
+            rating_bar.setRating(score.getScore());
+            text_review.setText(score.getComment());
         }
     }
 

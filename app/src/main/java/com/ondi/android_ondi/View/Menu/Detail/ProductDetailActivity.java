@@ -253,6 +253,7 @@ public class ProductDetailActivity extends AppCompatActivity {
                 }
                 case R.id.img_seller_detail:{
                     Intent intent = new Intent(context,SellerDetailActivity.class);
+                    intent.putExtra("u_id",product.getP_seller());
                     startActivity(intent);
                     break;
                 }

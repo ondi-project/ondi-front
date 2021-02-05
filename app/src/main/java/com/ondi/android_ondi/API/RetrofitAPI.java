@@ -6,6 +6,7 @@ import com.ondi.android_ondi.Model.AuctionModel;
 import com.ondi.android_ondi.Model.AuthModel;
 import com.ondi.android_ondi.Model.ProductModel;
 import com.ondi.android_ondi.Model.ResponseModel;
+import com.ondi.android_ondi.Model.ScoreModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +32,14 @@ public interface RetrofitAPI {
     Call<AuthModel> loginUser(@Body PostLogin user);
 
     @GET("/auth/user")
-    Call<AuthModel> getUserInfo();
+    Call<AuthModel.User> getUserInfo();
+
+    /**USER API**/
+    @GET("/user/users/{id}")
+    Call<ArrayList<AuthModel.User>> getUserInfo(@Path("id") int u_id);
+
+    @GET("/user/users/scores")
+    Call<ArrayList<ScoreModel>> getScoreList();
 
     /**MAIN API**/
     @GET("/main")
@@ -62,6 +70,7 @@ public interface RetrofitAPI {
 
     @GET("/user/users/{id}/sold")
     Call<ArrayList<ProductModel.Product>> getSoldList(@Path("id") int u_id);
+
 
 
 
