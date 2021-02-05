@@ -3,22 +3,18 @@ package com.ondi.android_ondi.API;
 import com.ondi.android_ondi.API.Data.PostLogin;
 import com.ondi.android_ondi.API.Data.PostProduct;
 import com.ondi.android_ondi.API.Data.PostRegister;
+import com.ondi.android_ondi.Model.AuctionModel;
 import com.ondi.android_ondi.Model.AuthModel;
 import com.ondi.android_ondi.Model.ProductModel;
 import com.ondi.android_ondi.Model.ResponseModel;
 
 import java.util.ArrayList;
 
-import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.Field;
 import retrofit2.http.GET;
-import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
-import retrofit2.http.Part;
-import retrofit2.http.Query;
 
 public interface RetrofitAPI {
 
@@ -56,5 +52,6 @@ public interface RetrofitAPI {
 
     //@Query("lastUID")lastUID: Int , @Query("perPage")perPage: Int
 
-
+    @GET("/main/livelist/")
+    Call<ArrayList<AuctionModel>> getAuctionList();
 }
