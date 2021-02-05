@@ -33,7 +33,7 @@ public class LoginActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("");
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_baseline_arrow_back_ios_24);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.icon_ionic_ios_arrow_back);
     }
 
     private void setFragmentManager() {
