@@ -75,13 +75,11 @@
                             android:id="@+id/text_price_detail"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="270,000"
                             android:textColor="@color/carmine"
                             android:textSize="20sp" />
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="원"
                             android:textColor="@color/carmine"
                             android:textSize="20sp" />
                     </LinearLayout>
@@ -90,7 +88,6 @@
                         android:id="@+id/text_name_detail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="삼성 지포스 노트북"
                         android:textColor="@color/black"
                         android:textSize="22sp"
                         android:textStyle="bold"
@@ -171,6 +168,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:layout_marginTop="5dp"
+                        android:visibility="gone"
                         android:layout_gravity="center_vertical">
                         <TextView
                             android:layout_width="wrap_content"
@@ -243,7 +241,6 @@
                 android:layout_height="match_parent"
                 android:textColor="@color/dark_slate_blue"
                 android:textSize="12sp"
-                android:text="사양은 홈페이지 랄랄라랄. 속도 빠르고 랄라라. &#10;사양은 홈페이지 랄랄라랄. 속도 빠르고 랄라라.사양은 홈페이지 랄랄라랄. 속도 빠르고 랄라라."
                 android:layout_marginTop="10dp"
                 android:paddingBottom="20dp"
                 android:letterSpacing="-0.01"

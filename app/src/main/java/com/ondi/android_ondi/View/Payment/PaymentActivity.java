@@ -36,7 +36,7 @@ public class PaymentActivity extends AppCompatActivity {
 
         ImageView img_product = findViewById(R.id.img_product_payment);
         MultiTransformation multiOption = new MultiTransformation(new CenterCrop(), new RoundedCorners(16));
-        Glide.with(this).load(R.drawable.test).apply(RequestOptions.bitmapTransform(multiOption)).into(img_product);
+        Glide.with(this).load(R.drawable.ic_notebook).apply(RequestOptions.bitmapTransform(multiOption)).into(img_product);
     }
 
     private void setClickListener() {
